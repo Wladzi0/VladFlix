@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block title %}Enter PIN{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+{% block javascripts  %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}<br>
+    <form class="form" action="{{ path('add_profile') }}" method="post"><br>
+
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert-{{ type }}" role="alert">
+                    {{ message}}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="container col-3"><br>
+            <h1 >Please enter PIN</h1>
+            <input type="password" name="pin" id="pin" class="form-control col-3" placeholder="PIN" required="required"  autofocus="autofocus"><br>
+            <button class="btn btn-success " type="submit">
+                Check access
+            </button>
+            <br>
+            <br>
+
+
+        </div>
+    </form>
+    <div class="container d-flex col-3">
+    <button class="btn registration " onclick="window.location.href='/'">
+    Back to profile selection
+</button>
+    </div>
+
+{% endblock %}

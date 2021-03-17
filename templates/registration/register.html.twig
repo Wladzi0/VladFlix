@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+
+<div class="container"><br>
+    {% set formErrors = registrationForm.vars.errors.form.getErrors(true) %}
+    {% if formErrors | length %}
+
+        <ul class="col-5 alert-danger" >
+            {% for error in formErrors %}
+                <li >{{ error.message }}</li>
+            {% endfor %}
+        </ul>
+
+    {% endif %}
+</div>
+    <div class="container">
+        <div class="col ">
+        <h1 >Create new account</h1>
+        </div>
+        <div class="col-5">
+    {{ form_start(registrationForm, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_label(registrationForm.firstName) }}<br>
+    {{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+    {{ form_label(registrationForm.lastName) }}<br>
+    {{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+    {{ form_label(registrationForm.email) }}<br>
+    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control','required': 'true'}}) }}<br>
+    {{ form_label(registrationForm.defaultLanguage) }}<br>
+    {{ form_widget(registrationForm.defaultLanguage, {'attr': {'class': 'form-control','required': 'true'}}) }}<br>
+    {{ form_label(registrationForm.pin) }}
+    {{ form_widget(registrationForm.pin, {'attr': {'class': 'form-control','required': 'true', 'autocomplete':'off'}}) }}<br>
+    {{ form_label(registrationForm.plainPassword.first) }}<br>
+    {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+    {{ form_label(registrationForm.plainPassword.second) }}<br>
+    {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+    <button  class="btn  btn-success" type="submit">
+        Sign up
+    </button>
+    {{ form_end(registrationForm) }}
+    <hr>
+    <button  class="btn btn-info" onclick="window.location.href='/login'">
+        Back to sign in</button>
+        </div>
+    </div>
+{% endblock %}

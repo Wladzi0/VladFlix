@@ -1,0 +1,18 @@
+{% extends 'registration/register.html.twig' %}
+{% block title %}Confirm{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+{% block javascripts  %}
+    {{ parent() }}
+{% endblock %}
+{% block body  %}
+{% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+<div class="alert-{{ type }}" role="alert">
+    {{ message}}
+</div>
+{% endfor %}
+{% endfor %}
+{% endblock %}

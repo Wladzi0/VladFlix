@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Select your profile{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+  <div class="container">
+      {% for type, messages in app.session.flashbag.all() %}
+          {% for message in messages %}
+              <div class=" alert-{{ type }}" role="alert">
+                  {{ message}}
+              </div>
+          {% endfor %}
+      {% endfor %}
+  </div>
+
+    <div class="container d-flex justify-content-center">
+
+        <div class="" style="margin-top: 300px; ">
+
+            <div class="row"><h2>Choose profile</h2><br></div>
+            <div class="row">
+        <a class="row" href="{{ path('enter_pin') }}">
+            <i class="fas fa-plus-circle display-4" ></i>
+        </a>
+
+            {% if profiles %}
+                {% for profile in profiles %}
+                <a href="{{ path('enter_pin',{ 'profile': profile.id }) }}" class="border rounded-circle" style="margin-left: 40px; width: 60px;text-decoration: none;
+                align-items:center; text-align:center;background-color: {{ profile.backgroundColor }}">
+                    <p>{{ profile.nickname }}
+                    </p>
+
+                </a>
+                {% endfor %}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
