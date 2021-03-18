@@ -12,101 +12,90 @@ class CategoryFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $action= new Category();
+        $action = new Category();
         $action->setName('Action ');
 
-        $animation= new Category();
+        $animation = new Category();
         $animation->setName('Animation ');
 
-        $comedy= new Category();
+        $comedy = new Category();
         $comedy->setName('Comedy ');
 
-        $crime= new Category();
+        $crime = new Category();
         $crime->setName('Crime ');
 
-        $experimental= new Category();
+        $experimental = new Category();
         $experimental->setName('Experimental ');
 
-        $fantasy= new Category();
+        $fantasy = new Category();
         $fantasy->setName('Fantasy ');
 
-        $historical= new Category();
+        $historical = new Category();
         $historical->setName('Historical ');
 
-        $horror= new Category();
+        $horror = new Category();
         $horror->setName('Horror ');
 
-        $romance= new Category();
+        $romance = new Category();
         $romance->setName('Romance ');
 
-        $science= new Category();
+        $science = new Category();
         $science->setName('Science Fiction  ');
 
-        $thriller= new Category();
+        $thriller = new Category();
         $thriller->setName('Thriller ');
 
-        $western= new Category();
+        $western = new Category();
         $western->setName('Western ');
-        $first= new Film();
 
-        $first=new Film();
+        $first = new Film();
         $first->setName("One Night in Miami");
         $first->setCountry('USA');
         $first->setYear(new \DateTime("01-09-2015"));
-        $first->setCategory($comedy);
+        $first->addCategory($comedy);
 
-        $second=new Film();
+        $second = new Film();
         $second->setName("Toy Story 3");
         $second->setCountry('USA');
         $second->setYear(new \DateTime("01-09-2017"));
-        $second->setCategory($comedy);
+        $second->addCategory($comedy);
 
-        $third=new Film();
+        $third = new Film();
         $third->setName("1917");
         $third->setCountry('USA');
         $third->setYear(new \DateTime("01-09-2020"));
-        $third->setCategory($horror);
+        $third->addCategory($horror);
 
-        $fourth=new Film();
+        $fourth = new Film();
         $fourth->setName("THE FAREWELL");
         $fourth->setCountry('USA');
         $fourth->setYear(new \DateTime("01-09-2013"));
-        $fourth->setCategory($horror);
+        $fourth->addCategory($horror);
 
-        $firstSerial=new Serial();
+        $firstSerial = new Serial();
         $firstSerial->setName("THE TERROR: SEASON 1");
         $firstSerial->setCountry('USA');
         $firstSerial->setYear(new \DateTime("01-09-2015"));
-        $firstSerial->setCategory($comedy);
+        $firstSerial->addCategory($comedy);
 
-        $secondSerial=new Serial();
+        $secondSerial = new Serial();
         $secondSerial->setName("LUPIN: SEASON 1 ");
         $secondSerial->setCountry('USA');
         $secondSerial->setYear(new \DateTime("01-09-2018"));
-        $secondSerial->setCategory($comedy);
+        $secondSerial->addCategory($comedy);
 
-        $thirdSerial=new Serial();
+        $thirdSerial = new Serial();
         $thirdSerial->setName("BIG MOUTH: SEASON 4");
         $thirdSerial->setCountry('USA');
         $thirdSerial->setYear(new \DateTime("01-09-2029"));
-        $thirdSerial->setCategory($horror);
+        $thirdSerial->addCategory($horror);
 
-        $fourthSerial=new Serial();
+        $fourthSerial = new Serial();
         $fourthSerial->setName("THE FARE SEASON 5");
         $fourthSerial->setCountry('USA');
         $fourthSerial->setYear(new \DateTime("01-09-2013"));
-        $fourthSerial->setCategory($horror);
+        $fourthSerial->addCategory($horror);
 
-
-        $manager->persist($first);
-        $manager->persist($second);
-        $manager->persist($third);
-        $manager->persist($fourth);
-
-        $manager->persist($firstSerial);
-        $manager->persist($secondSerial);
-        $manager->persist($thirdSerial);
-        $manager->persist($fourthSerial);
 
         $manager->persist($action);
         $manager->persist($animation);
@@ -119,6 +108,16 @@ class CategoryFixtures extends Fixture
         $manager->persist($science);
         $manager->persist($thriller);
         $manager->persist($western);
+
+        $manager->persist($first);
+        $manager->persist($second);
+        $manager->persist($third);
+        $manager->persist($fourth);
+
+        $manager->persist($firstSerial);
+        $manager->persist($secondSerial);
+        $manager->persist($thirdSerial);
+        $manager->persist($fourthSerial);
         $manager->flush();
     }
 }

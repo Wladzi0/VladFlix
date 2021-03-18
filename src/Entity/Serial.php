@@ -35,19 +35,20 @@ class Serial
     private $year;
 
     /**
-     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="serial")
-     */
-    private $category;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Season::class, mappedBy="serial")
+     * @ORM\OneToMany(targetEntity=Season::class, mappedBy="serial",cascade={"persist", "remove"})
      */
     private $season;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="serials",cascade={"persist", "remove"})
+     */
+    private $categories;
+
     public function __construct()
     {
-        $this->category = new ArrayCollection();
+
         $this->season = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,36 +93,6 @@ class Serial
     }
 
     /**
-     * @return Collection|Category[]
-     */
-    public function getCategory(): Collection
-    {
-        return $this->category;
-    }
-
-    public function addCategory(Category $category): self
-    {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
-            $category->setSerial($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): self
-    {
-        if ($this->category->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getSerial() === $this) {
-                $category->setSerial(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Season[]
      */
     public function getSeason(): Collection
@@ -152,11 +123,30 @@ class Serial
     }
 
     /**
-     * @param ArrayCollection $category
+     * @return Collection|Category[]
      */
-    public function setCategory(ArrayCollection $category): void
+    public function getCategories(): Collection
     {
-        $this->category = $category;
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->addSerial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeSerial($this);
+        }
+
+        return $this;
     }
 
 }

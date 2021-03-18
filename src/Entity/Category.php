@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  */
-class Category extends \Doctrine\Common\Collections\ArrayCollection
+class Category
 {
     /**
      * @ORM\Id
@@ -25,15 +25,20 @@ class Category extends \Doctrine\Common\Collections\ArrayCollection
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Serial::class, inversedBy="category")
+     * @ORM\ManyToMany(targetEntity=Film::class, inversedBy="categories")
      */
-    private $serial;
+    private $films;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Film::class, inversedBy="category")
+     * @ORM\ManyToMany(targetEntity=Serial::class, inversedBy="categories")
      */
-    private $film;
+    private $serials;
 
+    public function __construct()
+    {
+        $this->films = new ArrayCollection();
+        $this->serials = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,28 +57,55 @@ class Category extends \Doctrine\Common\Collections\ArrayCollection
         return $this;
     }
 
-
-    public function getSerial(): ?Serial
+    /**
+     * @return Collection|Film[]
+     */
+    public function getFilms(): Collection
     {
-        return $this->serial;
+        return $this->films;
     }
 
-    public function setSerial(?Serial $serial): self
+    public function addFilm(Film $film): self
     {
-        $this->serial = $serial;
+        if (!$this->films->contains($film)) {
+            $this->films[] = $film;
+        }
 
         return $this;
     }
 
-    public function getFilm(): ?Film
+    public function removeFilm(Film $film): self
     {
-        return $this->film;
-    }
-
-    public function setFilm(?Film $film): self
-    {
-        $this->film = $film;
+        $this->films->removeElement($film);
 
         return $this;
     }
+
+    /**
+     * @return Collection|Serial[]
+     */
+    public function getSerials(): Collection
+    {
+        return $this->serials;
+    }
+
+    public function addSerial(Serial $serial): self
+    {
+        if (!$this->serials->contains($serial)) {
+            $this->serials[] = $serial;
+        }
+
+        return $this;
+    }
+
+    public function removeSerial(Serial $serial): self
+    {
+        $this->serials->removeElement($serial);
+
+        return $this;
+    }
+
+
+
+
 }
