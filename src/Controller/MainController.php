@@ -4,7 +4,9 @@ namespace App\Controller;
 
 
 use App\Repository\CategoryRepository;
+use App\Repository\FilmRepository;
 use App\Repository\ProfileRepository;
+use App\Repository\SerialRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -27,7 +29,6 @@ class MainController extends AbstractController
     {
         $pin=$request->get('pin');
         $profileId=$request->get('profile');
-            dump($pin);
         if(!$pin || !$profileId){
             $request->getSession()
                     ->getFlashBag()
@@ -36,8 +37,10 @@ class MainController extends AbstractController
         }
         $profile=$profileRepository->find($profileId);
         $profilePin=$profile->getPin();
-        $dataProfile=array($pin,$profilePin);
-        if(!$this->isGranted("SHOW",$dataProfile)){
+        $requestedData=array(
+            'enteredPin'=>$pin,
+            'profilePin'=>$profilePin);
+        if(!$this->isGranted("MAIN_ACCESS",$requestedData)){
             $request->getSession()
                 ->getFlashBag()
                 ->add('danger', 'Invalid PIN! Please try again');
@@ -67,5 +70,24 @@ class MainController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/all-Films-Serials", name="allFilmsSerials")
+     */
+    public function allFilms(Request $request,FilmRepository $filmRepository,SerialRepository $serialRepository): Response
+    {
+        $typeSearch=$request->get('typeSearch');
+        if($typeSearch==="films"){
+            $films=$filmRepository->findAll();
+            return $this->render('films_content/films_page.html.twig',[
+                'films'=>$films
+            ]);
+        }
+        else{
+            $serials=$serialRepository->findAll();
+            return $this->render('serials_content/serials_page.html.twig',[
+                'serials'=>$serials
+            ]);
+        }
+    }
 
 }

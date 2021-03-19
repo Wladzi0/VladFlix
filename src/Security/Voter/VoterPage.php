@@ -13,8 +13,7 @@ use Symfony\Component\Security\Core\Security;
 class VoterPage extends Voter
 {
 
-    const SHOW = 'SHOW';
-    const ADD = 'ADD';
+    const MAIN_ACCESS = 'MAIN_ACCESS';
     private $security;
 
     public function __construct(Security $security)
@@ -24,7 +23,7 @@ class VoterPage extends Voter
 
     protected function supports(string $attribute, $subject)
     {
-        if (!in_array($attribute, array(self::SHOW))) {
+        if (!in_array($attribute, array(self::MAIN_ACCESS))) {
             return false;
         }
         if (!$subject) {
@@ -43,20 +42,17 @@ class VoterPage extends Voter
         switch ($attribute) {
 //            case self::ADD:
 //                return $this->canShow($subject, $user);
-            case self::SHOW:
+            case self::MAIN_ACCESS:
                 return $this->canShow($subject);
         }
         throw new \LogicException('This code');
     }
 
-    public function canShow($dataProfile): bool
+    public function canShow($requestedData): bool
     {
-//       var_dump($dataProfile);
+        $pin = $requestedData['enteredPin'];
+        $profilePin = $requestedData['profilePin'];
 
-        $pin = $dataProfile[0];
-        $profilePin = $dataProfile[1];
-//        var_dump($pin === $profilePin);
-//        die;
         if ($pin === $profilePin) {
             return true;
         }

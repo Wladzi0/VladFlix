@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All serials{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert-{{ type }}" role="alert">
+                {{ message}}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% include 'navigation.html.twig' %}
+    <div class="container flex-column d-flex pt-5">
+
+        {% if serials %}
+            {% for serial in serials %}
+                <div class="card d-flex flex-row mb-1 ">
+                    <img src="" alt="">
+                    <a href="">  <img  src="{{ asset('images/defaultImage.png') }}"/></a>
+                    <div class="card pl-3 pt-3" style="width: 100%">
+                        <p style="color: #000000">{{ serial.name }}
+                        </p>
+                        <p style="color: #000000">{{ serial.country }}
+                        </p>
+                        <p style="color: #000000">{{ serial.year| date("Y") }}
+                        </p>
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% endif %}
+        {#            {% for category in categories %}#}
+
+        {#                <a class="pl-4 mt-4 text-dark col-9" href="{{ path('allInCategory', {'category' : category.id}) }}">#}
+        {#                    {{ category.name }}#}
+        {#                </a>#}
+
+        {#            {% endfor %}#}
+    </div>
+
+{% endblock %}

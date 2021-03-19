@@ -12,20 +12,20 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
-                {{ message}}
+                {{ message }}
             </div>
         {% endfor %}
     {% endfor %}
-
+    {% include 'navigation.html.twig' %}
     <div class="container row col-2 ">
         <div class="row bg-light mt-5">
-        {% for category in categories %}
+            {% for category in categories %}
 
                 <a class="pl-4 mt-4 text-dark col-9" href="{{ path('allInCategory', {'category' : category.id}) }}">
                     {{ category.name }}
                 </a>
 
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 

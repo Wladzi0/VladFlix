@@ -16,8 +16,17 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         {% endblock %}
-    </head>
+
     <body>
+{#    <div class="d-flex justify-content-center bg-light">#}
+{#        <a  style="text-decoration: none" class=" mt-4 text-dark bg-info display-4" href="{{ path('allFilmsSerials',{'typeSearch' : 'films' }) }}">#}
+{#            Films#}
+{#        </a>#}
+{#        <a  style="text-decoration: none" class="mt-4 ml-3 bg-warning text-dark display-4"#}
+{#            href="{{ path('allFilmsSerials',{'typeSearch' : 'serials' }) }}">#}
+{#            Serials#}
+{#        </a>#}
+{#    </div>#}
         {% block body %}{% endblock %}
     </body>
 </html>

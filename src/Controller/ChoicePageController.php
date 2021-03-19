@@ -37,15 +37,16 @@ class ChoicePageController extends AbstractController
     {
         $this->denyAccessUnlessGranted("ROLE_USER");
         $pin=$request->get('pin');
-        if($pin) {
-            throw $this->createAccessDeniedException();
-        }
         if($pin!==$user->getPin()){
             $request->getSession()
                 ->getFlashBag()
                 ->add('danger', 'PIN is not correct');
             return $this->redirectToRoute('enter_pin');
         }
+//        if($pin) {
+//            throw $this->createAccessDeniedException();
+//        }
+
         $profile= new Profile();
         $formProfile=$this->createForm(ProfileType::class, $profile);
         $colorArray=['51, 51, 51', '102, 102, 102', '153, 153, 153', '204, 204, 204',
