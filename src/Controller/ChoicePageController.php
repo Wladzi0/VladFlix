@@ -35,19 +35,16 @@ class ChoicePageController extends AbstractController
      */
     public function addProfile(Request $request, UserInterface $user, ProfileRepository $profileRepository):Response
     {
+        $this->denyAccessUnlessGranted("ROLE_USER");
         $pin=$request->get('pin');
         if($pin) {
-            if($pin===$user->getPin()){
-                $this->denyAccessUnlessGranted("ROLE_USER");
-            }
-            else{
-                $request->getSession()
-                    ->getFlashBag()
-                    ->add('danger', 'PIN is not correct');
-                return $this->redirectToRoute('enter_pin');
-            }
-
-
+            throw $this->createAccessDeniedException();
+        }
+        if($pin!==$user->getPin()){
+            $request->getSession()
+                ->getFlashBag()
+                ->add('danger', 'PIN is not correct');
+            return $this->redirectToRoute('enter_pin');
         }
         $profile= new Profile();
         $formProfile=$this->createForm(ProfileType::class, $profile);
@@ -132,12 +129,24 @@ class ChoicePageController extends AbstractController
     /**
      * @Route("/enterPin", name="enter_pin", methods={"GET", "POST"})
      */
-    public function enterPin(Request $request): Response
+    public function enterPin(Request $request, ProfileRepository $profileRepository): Response
     {
-        $profile=$request->get('profile');
-        if($profile){
-            return $this->render('security/enterPinSub.html.twig',[
-                'profile'=>$profile]);
+        $profileId=$request->get('profile');
+        if($profileId){
+            $profile=$profileRepository->find($profileId);
+            $profilePin=$profile->getPin();
+            if($profilePin===null){
+                return $this->redirect($this->generateUrl('main_page',
+                array(
+                    'profile'=>$profileId,
+                    'pin'=>'1234',
+                )));
+            }
+            else{
+                return $this->render('security/enterPinSub.html.twig',[
+                    'profile'=>$profileId]);
+            }
+
         }
         else{
         return $this->render('security/enterPinAdd.html.twig');

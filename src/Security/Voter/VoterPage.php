@@ -14,7 +14,7 @@ class VoterPage extends Voter
 {
 
     const SHOW = 'SHOW';
-    const ADD= 'ADD';
+    const ADD = 'ADD';
     private $security;
 
     public function __construct(Security $security)
@@ -44,20 +44,25 @@ class VoterPage extends Voter
 //            case self::ADD:
 //                return $this->canShow($subject, $user);
             case self::SHOW:
-                return$this->canShow($subject);
+                return $this->canShow($subject);
         }
         throw new \LogicException('This code');
-}
+    }
 
     public function canShow($dataProfile): bool
     {
-        dump($dataProfile);
-        $pin=$dataProfile[0];
-        $profilePin=$dataProfile[1];
+//       var_dump($dataProfile);
 
-        if($pin===$profilePin){
-        return true;
-    }
+        $pin = $dataProfile[0];
+        $profilePin = $dataProfile[1];
+//        var_dump($pin === $profilePin);
+//        die;
+        if ($pin === $profilePin) {
+            return true;
+        }
+        if ($profilePin === null) {
+            return true;
+        }
         return false;
     }
 

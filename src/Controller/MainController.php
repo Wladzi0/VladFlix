@@ -27,7 +27,7 @@ class MainController extends AbstractController
     {
         $pin=$request->get('pin');
         $profileId=$request->get('profile');
-
+            dump($pin);
         if(!$pin || !$profileId){
             $request->getSession()
                     ->getFlashBag()
@@ -38,15 +38,12 @@ class MainController extends AbstractController
         $profilePin=$profile->getPin();
         $dataProfile=array($pin,$profilePin);
         if(!$this->isGranted("SHOW",$dataProfile)){
-//            throw new \Exception("Access denied :(");
             $request->getSession()
                 ->getFlashBag()
                 ->add('danger', 'Invalid PIN! Please try again');
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
         }
-
-
 
         $categories= $categoryRepository->findAll();
         $profiles =$profileRepository->findAllByUser($user);
