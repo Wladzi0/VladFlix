@@ -7,6 +7,7 @@ use App\Form\ProfileType;
 use App\Repository\ProfileRepository;
 use App\Security\Voter\VoterPage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +31,7 @@ class ChoicePageController extends AbstractController
     }
 
     /**
-     * @Route("/addProfile", name="add_profile", methods={"POST"})
+     * @Route("/addProfile", name="add_profile")
      */
     public function addProfile(Request $request, UserInterface $user, ProfileRepository $profileRepository):Response
     {
@@ -100,7 +101,8 @@ class ChoicePageController extends AbstractController
                     $request->getSession()
                         ->getFlashBag()
                         ->add('danger', 'Nickname "' . $nick . '" is already exists');
-                    return $this->redirectToRoute('enter_pin');
+                    $referer = $request->headers->get('referer');
+                    return new RedirectResponse($referer);
                 }
                 while ($usersProfile->getBackgroundColor() === $randomColor) {
                     $random = array_rand($colorArray);

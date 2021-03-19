@@ -7,6 +7,8 @@ use App\Repository\CategoryRepository;
 use App\Repository\ProfileRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,22 +21,34 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/main", name="main_page", methods={"POST"})
+     * @Route("/main", name="main_page")
      */
-    public function index(Request $request, UserInterface $user,ProfileRepository $profileRepository,CategoryRepository $categoryRepository): Response
+    public function index(Request $request, UserInterface $user,ProfileRepository $profileRepository,CategoryRepository $categoryRepository)
     {
-            $categories= $categoryRepository->findAll();
-//        $pin=$request->get('pin');
-//        if($pin) {
-//        $this->denyAccessUnlessGranted(VoterPage::SHOW,$pin);
-//            }
-//            else{
-//                $request->getSession()
-//                    ->getFlashBag()
-//                    ->add('danger', 'PIN is not correct');
-//                return $this->redirectToRoute('enter_pin');
-//            }
+        $pin=$request->get('pin');
+        $profileId=$request->get('profile');
 
+        if(!$pin || !$profileId){
+            $request->getSession()
+                    ->getFlashBag()
+                    ->add('danger', 'You forgot to log in with your profile');
+                return $this->redirectToRoute('select_profile');
+        }
+        $profile=$profileRepository->find($profileId);
+        $profilePin=$profile->getPin();
+        $dataProfile=array($pin,$profilePin);
+        if(!$this->isGranted("SHOW",$dataProfile)){
+//            throw new \Exception("Access denied :(");
+            $request->getSession()
+                ->getFlashBag()
+                ->add('danger', 'Invalid PIN! Please try again');
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+        }
+
+
+
+        $categories= $categoryRepository->findAll();
         $profiles =$profileRepository->findAllByUser($user);
         return $this->render('main_content/main_page.html.twig', [
             'profiles'=>$profiles,
@@ -43,7 +57,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/all-in-Category/{id}", name="allInCategory", methods={"GET", "POST"})
+     * @Route("/all-in-Category", name="allInCategory")
      */
     public function allInCategory(Request $request,CategoryRepository $categoryRepository)
     {
@@ -55,4 +69,6 @@ class MainController extends AbstractController
             'allResults'=>$AllFileResults
         ]);
     }
+
+
 }

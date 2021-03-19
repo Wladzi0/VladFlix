@@ -132,17 +132,24 @@ class Profile
         return $this;
     }
 
-    public function getPin(): ?int
+
+    /**
+     * @return mixed
+     */
+    public function getPin()
     {
         return $this->pin;
     }
 
-    public function setPin(int $pin): self
+    /**
+     * @param mixed $pin
+     */
+    public function setPin($pin): void
     {
         $this->pin = $pin;
-
-        return $this;
     }
+
+
 
     /**
      * @return mixed

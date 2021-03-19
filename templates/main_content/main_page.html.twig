@@ -8,9 +8,7 @@
     {{ parent() }}
 {% endblock %}
 {% block body %}
-    <div class="nav">
 
-    </div>
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
@@ -19,14 +17,13 @@
         {% endfor %}
     {% endfor %}
 
-    <div class="container row col-2">
-        <div class="row bg-light ma">
+    <div class="container row col-2 ">
+        <div class="row bg-light mt-5">
         {% for category in categories %}
 
-                <a class="pl-4 mt-4 text-dark col-9" href="{{ path('allInCategory', {'category': category.id}) }}">
+                <a class="pl-4 mt-4 text-dark col-9" href="{{ path('allInCategory', {'category' : category.id}) }}">
                     {{ category.name }}
                 </a>
-
 
         {% endfor %}
         </div>

@@ -4,6 +4,7 @@ namespace App\Security\Voter;
 
 use App\Entity\Profile;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -13,6 +14,7 @@ class VoterPage extends Voter
 {
 
     const SHOW = 'SHOW';
+    const ADD= 'ADD';
     private $security;
 
     public function __construct(Security $security)
@@ -40,16 +42,20 @@ class VoterPage extends Voter
         }
         switch ($attribute) {
 //            case self::ADD:
-//                return $this->canAdd($subject, $user);
+//                return $this->canShow($subject, $user);
             case self::SHOW:
                 return$this->canShow($subject);
         }
         throw new \LogicException('This code');
 }
 
-    public function canShow($pin): bool
+    public function canShow($dataProfile): bool
     {
-        if($pin){
+        dump($dataProfile);
+        $pin=$dataProfile[0];
+        $profilePin=$dataProfile[1];
+
+        if($pin===$profilePin){
         return true;
     }
         return false;
