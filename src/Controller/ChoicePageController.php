@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -22,8 +23,8 @@ class ChoicePageController extends AbstractController
     /**
      * @Route("/", name="select_profile")
      */
-    public function index(Request $request, UserInterface $user, ProfileRepository $profileRepository): Response
-    {
+    public function index(SessionInterface $session,Request $request, UserInterface $user, ProfileRepository $profileRepository): Response
+    {   $session->remove('profileId');
         $profiles = $profileRepository->findAllByUser($user);
         return $this->render('profiles/change_profile.html.twig', [
             'profiles' => $profiles
@@ -37,12 +38,12 @@ class ChoicePageController extends AbstractController
     {
 
         $pin = $request->get('pin');
-        if (!$this->isGranted("ADD_ACCESS", $pin)){
-            $request->getSession()
-                ->getFlashBag()
-                ->add('danger', 'Please select your profile');
-            return $this->redirectToRoute('select_profile');
-        }
+//        if (!$this->isGranted("ADD_ACCESS", $pin)){
+//            $request->getSession()
+//                ->getFlashBag()
+//                ->add('danger', 'PIN is not correct');
+//            return $this->redirectToRoute('enter_pin');
+//        }
 //        if ($pin !== $user->getPin()) {
 //            $request->getSession()
 //                ->getFlashBag()
@@ -50,9 +51,7 @@ class ChoicePageController extends AbstractController
 //            return $this->redirectToRoute('enter_pin');
 //        }
 
-//        if($pin) {
-//            throw $this->createAccessDeniedException();
-//        }
+
 
         $profile = new Profile();
         $formProfile = $this->createForm(ProfileType::class, $profile);
@@ -115,6 +114,10 @@ class ChoicePageController extends AbstractController
                     $randomColor = 'rgb(' . $colorArray[$random] . ')';
                 }
             }
+
+            $profile->setInterfaceLanguage("en");
+            $profile->setPreferredLanguage("en");
+            $profile->setPreferredAudio("en");
             $profile->setProfilePin($profilePin);
             $profile->setBackgroundColor($randomColor);
 
@@ -138,7 +141,7 @@ class ChoicePageController extends AbstractController
     /**
      * @Route("/enterPin", name="enter_pin", methods={"GET", "POST"})
      */
-    public function enterPin(Request $request, ProfileRepository $profileRepository): Response
+    public function enterPin(SessionInterface $session, Request $request, ProfileRepository $profileRepository): Response
     {
         $profileId = $request->get('profile');
         if ($profileId) {
@@ -148,7 +151,7 @@ class ChoicePageController extends AbstractController
                 return $this->redirect($this->generateUrl('main_page',
                     array(
                         'profile' => $profileId,
-                        'profilePin' => '1234',// na to nie patrz :)
+                        'pin' => '1234',// na to nie patrz :)
                     )));
             } else {
                 return $this->render('security/enterPinSub.html.twig', [
@@ -161,20 +164,20 @@ class ChoicePageController extends AbstractController
 
     }
 
-    /**
-     * @Route("/check-pin", name="checkPin", methods={"GET", "POST"})
-     */
-    public function checkAddPin(Request $request)
-    {
-        $pin = $request->get('pin');
-        if (!$this->isGranted("ADD_ACCESS", $pin)) {
-            $request->getSession()
-                ->getFlashBag()
-                ->add('danger', 'PIN is not correct!');
-            return $this->redirectToRoute('enter_pin');
-        } else {
-            return $this->redirectToRoute('add_profile',['pin'=>$pin]);
-        }
-    }
+//    /**
+//     * @Route("/check-pin", name="checkPin", methods={"GET", "POST"})
+//     */
+//    public function checkAddPin(Request $request)
+//    {
+//        $pin = $request->get('pin');
+//        if (!$this->isGranted("ADD_ACCESS", $pin)) {
+//            $request->getSession()
+//                ->getFlashBag()
+//                ->add('danger', 'PIN is not correct!');
+//            return $this->redirectToRoute('enter_pin');
+//        } else {
+//            return $this->redirectToRoute('add_profile');
+//        }
+//    }
 
 }

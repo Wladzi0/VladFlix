@@ -17,23 +17,16 @@
         {% endfor %}
     {% endfor %}
     {% include 'navigation.html.twig' %}
-    <div class="container row col-2 ">
-        <h3>Hello  {{   profile.nickname|default('undefined') }}</h3>
+    <div class="container row  ">
+        <div class="container col-7">
+        <h3>Hello  {{   profile.nickname}}</h3>
+                <label> Interface language:  {{profile.interfaceLanguage}}</label><br>
+            <label> Interface language:  {{profile.preferredLanguage}}</label><br>
+            <label> Interface language:  {{profile.preferredAudio}}</label><br>
 
-{#        <label> First name:  {{}}</label><br>#}
-{#        <label> Last name:  {{ app.user.lastName}}</label><br>#}
-{#        <label> Email:  {{ app.user.email}}</label><br>#}
-{#        {% if app.user.dateOfBirth  %}#}
-{#            <label> Date of Birth: {{ app.user.dateOfBirth|date('d-m-Y') }}</label><br>#}
-{#        {% endif %}#}
-{#        {% if app.user.phoneNumber  %}#}
-{#            <label> Phone number: {{ app.user.phoneNumber }}</label><br>#}
-{#        {% endif %}#}
-        <button class="btn-data-edit "> <a href="
-{#{{ path('personal_data_edit') }}#}
-">Edit your personal data</a></button>
-
-
+        <button class="btn-data-edit "> <a href="{{ path('editProfileSettings') }}">Edit your personal data</a></button>
+            <br><br>
+            <a style=" padding: 5px;" href="{{ path('profileLogout') }}" class="btn-danger">Logout</a>
     </div>
-
+    </div>
 {% endblock %}

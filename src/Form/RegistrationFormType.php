@@ -27,7 +27,7 @@ class RegistrationFormType extends AbstractType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('email', EmailType::class)
-            ->add('defaultLanguage',languageType::class,[
+            ->add('defaultLanguage',LanguageType::class,[
                 'placeholder' => false,
                 'required' => true,
 ])

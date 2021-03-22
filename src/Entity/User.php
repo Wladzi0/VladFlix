@@ -83,7 +83,7 @@ class User implements UserInterface
     private $profiles;
 
     /**
-     * @ORM\Column (type="string", nullable=false)
+     * @ORM\Column (type="string", nullable=false, length=4)
      * @Assert\Regex(pattern="/^[0-9]+$/", message="Pin`s field must contain only numbers ")
      *
      */

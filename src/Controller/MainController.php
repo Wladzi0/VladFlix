@@ -13,6 +13,7 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -25,8 +26,17 @@ class MainController extends AbstractController
     /**
      * @Route("/main", name="main_page")
      */
-    public function index(Request $request, UserInterface $user,ProfileRepository $profileRepository,CategoryRepository $categoryRepository)
-    {
+    public function index(SessionInterface $session, Request $request, UserInterface $user,ProfileRepository $profileRepository,CategoryRepository $categoryRepository)
+    {   $sessionProfile=$session->get('profileId');
+        if($sessionProfile){
+            $categories= $categoryRepository->findAll();
+            return $this->render('main_content/main_page.html.twig', [
+                'categories'=>$categories
+            ]);
+
+        }
+        else{
+
         $pin=$request->get('pin');
         $profileId=$request->get('profile');
         if(!$pin || !$profileId){
@@ -35,6 +45,7 @@ class MainController extends AbstractController
                     ->add('danger', 'You forgot to log in with your profile');
                 return $this->redirectToRoute('select_profile');
         }
+
         $profile=$profileRepository->find($profileId);
         $profilePin=$profile->getProfilePin();
         $requestedData=array(
@@ -47,14 +58,17 @@ class MainController extends AbstractController
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
         }
+        else{
+
+            $session->set('profileId',$profileId);
+        }
+
 
         $categories= $categoryRepository->findAll();
-        $profiles =$profileRepository->findAllByUser($user);
         return $this->render('main_content/main_page.html.twig', [
-            'currentProfile'=>$profileId,
-            'profiles'=>$profiles,
             'categories'=>$categories
         ]);
+        }
     }
 
     /**
@@ -74,7 +88,7 @@ class MainController extends AbstractController
     /**
      * @Route("/all-Films-Serials", name="allFilmsSerials")
      */
-    public function allFilms(Request $request,FilmRepository $filmRepository,SerialRepository $serialRepository): Response
+    public function allFilms(SessionInterface $session,Request $request,FilmRepository $filmRepository,SerialRepository $serialRepository): Response
     {
         $typeSearch=$request->get('typeSearch');
         if($typeSearch==="films"){

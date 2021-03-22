@@ -18,7 +18,6 @@ class Profile
      */
     private $id;
 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      * @Assert\Length(
@@ -29,10 +28,6 @@ class Profile
      * )
      */
     private $nickname;
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = ['ROLE_USER'];
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -50,7 +45,7 @@ class Profile
     private $user;
 
     /**
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string",nullable=true,  length=4)
      * @Assert\Length(
      *      min = 4,
      *      max = 4,
@@ -66,9 +61,15 @@ class Profile
     private $interfaceLanguage;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $isActive;
+    private $preferredLanguage;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $preferredAudio;
+
 
     public function getId(): ?int
     {
@@ -99,21 +100,6 @@ class Profile
         return $this;
     }
 
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
     public function getAge()
     {
         return $this->age;
@@ -154,8 +140,6 @@ class Profile
         $this->profilePin = $profilePin;
     }
 
-
-
     /**
      * @return mixed
      */
@@ -172,17 +156,30 @@ class Profile
         $this->interfaceLanguage = $interfaceLanguage;
     }
 
-    public function getIsActive(): ?bool
+    public function getPreferredLanguage(): ?string
     {
-        return $this->isActive;
+        return $this->preferredLanguage;
     }
 
-    public function setIsActive(?bool $isActive): self
+    public function setPreferredLanguage(?string $preferredLanguage): self
     {
-        $this->isActive = $isActive;
+        $this->preferredLanguage = $preferredLanguage;
 
         return $this;
     }
+
+    public function getPreferredAudio(): ?string
+    {
+        return $this->preferredAudio;
+    }
+
+    public function setPreferredAudio(?string $preferredAudio): self
+    {
+        $this->preferredAudio = $preferredAudio;
+
+        return $this;
+    }
+
 
 
 }

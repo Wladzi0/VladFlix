@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block body %}<br>
-    <form class="form" action="{{ path('checkPin') }}" method="post"><br>
+    <form class="form" action="{{ path('add_profile') }}" method="post"><br>
 
         {% for type, messages in app.session.flashbag.all() %}
             {% for message in messages %}

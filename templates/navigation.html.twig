@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center bg-light">
+<div class="d-flex justify-content-center bg-light position-relative">
 
             <a  style="position: absolute; left: 10px;" class="text-dark display-4 " href="{{ path('main_page') }}">
                 VladFlix</a>
@@ -10,32 +10,11 @@
                 href="{{ path('allFilmsSerials',{'typeSearch' : 'serials' }) }}">
                 Serials
             </a>
-    <div id="Dropdown" class="dropdown-content">
-        <a href="{{ path('profileSettings',{'profile': currentProfile}) }}">Settings</a>
-{#        <a href="{{ path('preferences') }}">Preferences</a>#}
-        <a href="">Favourites</a>
-{#        <a href="{{ path('logout_profile') }}">Logout</a>#}
-    </div>
+    <a style=" text-decoration: none; width: 60px; height: 60px;text-align: center;align-self: center; align-items: center" href="{{ path('profileMenu') }}" class="ml-5 position-relative rounded-circle text-light bg-dark ">
+      Menu
+    </a>
 
-    {% if app.user %}
-        <div class="field-avatar"></div>
-    {% else %}
-        <div class="field-avatar"></div>
-    {% endif %}
-    <div class="hamburger-menu">
-        <div class="line line-1"></div>
-        <div class="line line-2"></div>
-        <div class="line line-3"></div>
-    </div>
-    <div class="navbar">
-        <ul>
-            <li><a class="nav-link" href="">Home</a></li>
-            <li><a class="nav-link" href="">News</a></li>
-            <li><a class="nav-link" href="">Contact</a></li>
-            <li><a class="nav-link" href="">About</a></li>
-        </ul>
 
-    </div>
-</div>
-    </div>
+        </div>
+
 
