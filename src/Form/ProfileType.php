@@ -28,7 +28,10 @@ class ProfileType extends AbstractType
                     'Teenager (13-18 years)' => false,
                     'Adults (+18 years)' => true,
                 ],])
-        ->add('pin', PasswordType::class,[
+        ->add('profilePin', PasswordType::class,[
+            'label'=>'PIN',
+            'data_class' => null,
+        'mapped' => false,
         'required' =>false,
         'constraints' => [
             new Length([

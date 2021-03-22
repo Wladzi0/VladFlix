@@ -34,12 +34,14 @@
             </div>
             <div class="col-5">
                 {{ form_start(profileForm, {'attr': {'class': 'form-horizontal', 'id':'addForm'}}) }}
+
                 {{ form_label(profileForm.nickname) }}<br>
                 {{ form_widget(profileForm.nickname, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
                 {{ form_label(profileForm.age) }}<br>
                 {{ form_widget(profileForm.age, {'attr': {'class': 'form-control','required': 'true'}}) }}<br>
-                {{ form_label(profileForm.pin) }}<br>
-                {{ form_widget(profileForm.pin, {'attr': {'class': 'form-control'}}) }}<br>
+                {{ form_label(profileForm.profilePin) }}<br>
+                {{ form_widget(profileForm.profilePin, {'attr': {'class': 'form-control'}}) }}<br>
+
                 <button  class="btn  btn-success" type="submit">
                     Add profile
                 </button>

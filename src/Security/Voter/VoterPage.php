@@ -14,6 +14,7 @@ class VoterPage extends Voter
 {
 
     const MAIN_ACCESS = 'MAIN_ACCESS';
+    const ADD_ACCESS = 'ADD_ACCESS';
     private $security;
 
     public function __construct(Security $security)
@@ -23,7 +24,7 @@ class VoterPage extends Voter
 
     protected function supports(string $attribute, $subject)
     {
-        if (!in_array($attribute, array(self::MAIN_ACCESS))) {
+        if (!in_array($attribute, array(self::MAIN_ACCESS,self::ADD_ACCESS))) {
             return false;
         }
         if (!$subject) {
@@ -40,14 +41,22 @@ class VoterPage extends Voter
             return false;
         }
         switch ($attribute) {
-//            case self::ADD:
-//                return $this->canShow($subject, $user);
+            case self::ADD_ACCESS:
+                return $this->canAdd($subject, $user);
             case self::MAIN_ACCESS:
                 return $this->canShow($subject);
         }
         throw new \LogicException('This code');
     }
 
+    public function canAdd($pin, $user): bool
+    {
+        if ($pin === $user->getPin()) {
+//            $user->setRoles(array("ROLE_USER"));
+            return true;
+        }
+        return false;
+    }
     public function canShow($requestedData): bool
     {
         $pin = $requestedData['enteredPin'];

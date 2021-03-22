@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile settings {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert-{{ type }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% include 'navigation.html.twig' %}
+    <div class="container row col-2 ">
+        <h3>Hello  {{   profile.nickname|default('undefined') }}</h3>
+
+{#        <label> First name:  {{}}</label><br>#}
+{#        <label> Last name:  {{ app.user.lastName}}</label><br>#}
+{#        <label> Email:  {{ app.user.email}}</label><br>#}
+{#        {% if app.user.dateOfBirth  %}#}
+{#            <label> Date of Birth: {{ app.user.dateOfBirth|date('d-m-Y') }}</label><br>#}
+{#        {% endif %}#}
+{#        {% if app.user.phoneNumber  %}#}
+{#            <label> Phone number: {{ app.user.phoneNumber }}</label><br>#}
+{#        {% endif %}#}
+        <button class="btn-data-edit "> <a href="
+{#{{ path('personal_data_edit') }}#}
+">Edit your personal data</a></button>
+
+
+    </div>
+
+{% endblock %}

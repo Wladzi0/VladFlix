@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  *
- * @IsGranted("ROLE_USER")
+ * @IsGranted("ROLE_FRIENDLY_USER")
  */
 class MainController extends AbstractController
 {
@@ -36,7 +36,7 @@ class MainController extends AbstractController
                 return $this->redirectToRoute('select_profile');
         }
         $profile=$profileRepository->find($profileId);
-        $profilePin=$profile->getPin();
+        $profilePin=$profile->getProfilePin();
         $requestedData=array(
             'enteredPin'=>$pin,
             'profilePin'=>$profilePin);
@@ -51,6 +51,7 @@ class MainController extends AbstractController
         $categories= $categoryRepository->findAll();
         $profiles =$profileRepository->findAllByUser($user);
         return $this->render('main_content/main_page.html.twig', [
+            'currentProfile'=>$profileId,
             'profiles'=>$profiles,
             'categories'=>$categories
         ]);

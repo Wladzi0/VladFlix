@@ -58,12 +58,17 @@ class Profile
      *      maxMessage = "Your pin cannot be longer than {{ limit }} characters"
      * )
      */
-    private $pin;
+    private $profilePin;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $interfaceLanguage;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isActive;
 
     public function getId(): ?int
     {
@@ -136,17 +141,17 @@ class Profile
     /**
      * @return mixed
      */
-    public function getPin()
+    public function getProfilePin()
     {
-        return $this->pin;
+        return $this->profilePin;
     }
 
     /**
-     * @param mixed $pin
+     * @param mixed $profilePin
      */
-    public function setPin($pin): void
+    public function setProfilePin($profilePin): void
     {
-        $this->pin = $pin;
+        $this->profilePin = $profilePin;
     }
 
 
@@ -165,6 +170,18 @@ class Profile
     public function setInterfaceLanguage($interfaceLanguage): void
     {
         $this->interfaceLanguage = $interfaceLanguage;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(?bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
     }
 
 
