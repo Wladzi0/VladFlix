@@ -58,7 +58,7 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', ' ' . $fistName . ', link with confirm was sent to your mail!');
+                ->add('success', ' ' . $fistName . ', Link with confirm was sent to your mail!');
             return $this->render('registration/waiting_to_confirm_email.html.twig');
         }
 

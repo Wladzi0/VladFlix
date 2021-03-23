@@ -46,7 +46,7 @@ class ProfileController extends AbstractController
                 ->add('success', 'Your settings has been edited successfully ');
 
 
-            return $this->redirectToRoute('profileMenu');
+            return $this->redirectToRoute('profile_menu');
 
         }
         return $this->render('profileMenu/editSettings.html.twig',[

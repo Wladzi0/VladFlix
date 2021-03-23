@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ProfileType extends AbstractType
 {
@@ -34,6 +36,12 @@ class ProfileType extends AbstractType
         'mapped' => false,
         'required' =>false,
         'constraints' => [
+                new NotBlank(),
+                new Regex(array(
+                        'pattern' => '/^[0-9]\d*$/',
+                        'message' => 'Please use only positive numbers.'
+                    )
+                ),
             new Length([
                 'min' => 4,
                 'minMessage' => 'Your pin must contain at least {{ limit }} digits',

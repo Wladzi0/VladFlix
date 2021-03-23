@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
+{% block title %}{% trans %}Select your profile{% endtrans %}{% endblock %}
 {% block javascripts %}
     {{ parent() }}
 {% endblock %}
@@ -11,7 +12,7 @@
       {% for type, messages in app.session.flashbag.all() %}
           {% for message in messages %}
               <div class=" alert-{{ type }}" role="alert">
-                  {{ message}}
+                  {{ message|trans }}
               </div>
           {% endfor %}
       {% endfor %}

@@ -4,11 +4,11 @@
                 VladFlix</a>
 
             <a  style="text-decoration: none" class=" mt-4 text-dark bg-info display-4" href="{{ path('all_films_serials',{'typeSearch' : 'films' }) }}">
-                Films
+               {% trans%} Films {% endtrans%}
             </a>
             <a  style="text-decoration: none" class="mt-4 ml-3 bg-warning text-dark display-4"
                 href="{{ path('all_films_serials',{'typeSearch' : 'serials' }) }}">
-                Serials
+                {% trans%}   Serials {% endtrans%}
             </a>
     <a style=" text-decoration: none; width: 60px; height: 60px;text-align: center;align-self: center; align-items: center" href="{{ path('profile_menu') }}" class="ml-5 position-relative rounded-circle text-light bg-dark ">
       Menu

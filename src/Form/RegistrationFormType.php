@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
@@ -35,6 +36,11 @@ class RegistrationFormType extends AbstractType
                 'required' =>true,
                 'attr'=>['autocomplete' => 'off'],
                 'constraints' => [
+                    new Regex(array(
+                            'pattern' => '/^[0-9]\d*$/',
+                            'message' => 'Please use only positive numbers.'
+                        )
+                    ),
                 new Length([
                     'min' => 4,
                     'max' => 4,

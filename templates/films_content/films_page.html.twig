@@ -12,7 +12,7 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
-                {{ message}}
+                {{ message|trans}}
             </div>
         {% endfor %}
     {% endfor %}
@@ -25,7 +25,7 @@
                     <img src="" alt="">
                     <a href="">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
                 <div class="card pl-3 pt-3" style="width: 100%">
-                    <p style="color: #000000">{{ film.name }}
+                    <p style="color: #000000">`{{ film.name|trans }}
                     </p>
                     <p style="color: #000000">{{ film.country }}
                     </p>

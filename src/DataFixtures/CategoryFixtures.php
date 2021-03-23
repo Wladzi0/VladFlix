@@ -13,40 +13,40 @@ class CategoryFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $action = new Category();
-        $action->setName('Action ');
+        $action->setName("Action");
 
         $animation = new Category();
-        $animation->setName('Animation ');
+        $animation->setName("Animation");
 
         $comedy = new Category();
-        $comedy->setName('Comedy ');
+        $comedy->setName("Comedy");
 
         $crime = new Category();
-        $crime->setName('Crime ');
+        $crime->setName("Crime");
 
         $experimental = new Category();
-        $experimental->setName('Experimental ');
+        $experimental->setName("Experimental");
 
         $fantasy = new Category();
-        $fantasy->setName('Fantasy ');
+        $fantasy->setName("Fantasy");
 
         $historical = new Category();
-        $historical->setName('Historical ');
+        $historical->setName("Historical");
 
         $horror = new Category();
-        $horror->setName('Horror ');
+        $horror->setName("Horror");
 
         $romance = new Category();
-        $romance->setName('Romance ');
+        $romance->setName("Romance");
 
         $science = new Category();
-        $science->setName('Science Fiction  ');
+        $science->setName("Science Fiction");
 
         $thriller = new Category();
-        $thriller->setName('Thriller ');
+        $thriller->setName("Thriller");
 
         $western = new Category();
-        $western->setName('Western ');
+        $western->setName("Western");
 
         $first = new Film();
         $first->setName("One Night in Miami");

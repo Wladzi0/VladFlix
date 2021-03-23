@@ -12,7 +12,7 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
-                {{ message }}
+                {{ message|trans }}
             </div>
         {% endfor %}
     {% endfor %}
@@ -21,8 +21,8 @@
         <div class="container col-7">
         <h3> {% trans %}Hello  {% endtrans %} {{   profile.nickname}}</h3>
                 <label> {% trans %} Interface language{% endtrans %}:   {{profile.interfaceLanguage}}</label><br>
-            <label>  {% trans %}Interface language{% endtrans %}:  {{profile.preferredLanguage}}</label><br>
-            <label>  {% trans %}Interface language{% endtrans %}:  {{profile.preferredAudio}}</label><br>
+            <label>  {% trans %}Subtitle language{% endtrans %}:  {{profile.preferredLanguage}}</label><br>
+            <label>  {% trans %}Audio language{% endtrans %}:  {{profile.preferredAudio}}</label><br>
 
         <button class="btn-data-edit "> <a href="{{ path('edit_profile_settings') }}">{% trans %}Edit your personal data{% endtrans %}</a></button>
             <br><br>

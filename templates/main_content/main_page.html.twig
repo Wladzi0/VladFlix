@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Select your profile{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Main page{% endtrans %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -12,7 +12,7 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
-                {{ message }}
+                {{ message|trans }}
             </div>
         {% endfor %}
     {% endfor %}
@@ -23,7 +23,7 @@
 
                 <a class="pl-4 mt-4 text-dark col-9" href="{{ path('all_in_category', {'category' : category.id}) }}">
 
-                    {{ category.name }}
+                    {{ category.name|trans}}
 
                 </a>
 

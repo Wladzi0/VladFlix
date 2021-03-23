@@ -15,7 +15,7 @@
 
         <ul class="col-5 alert-danger" >
             {% for error in formErrors %}
-                <li >{{ error.message }}</li>
+                <li >{{ error.message|trans }}</li>
             {% endfor %}
         </ul>
 

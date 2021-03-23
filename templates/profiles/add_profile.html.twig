@@ -12,19 +12,14 @@
 
             <ul class="col-5 alert-danger" >
                 {% for error in formErrors %}
-                    <li >{{ error.message }}</li>
+                    <li >{{ error.message|trans }}</li>
                 {% endfor %}
             </ul>
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
-                </div>
-            {% endfor %}
         {% endif %}
         {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
         <div class="alert-{{ type }}" role="alert">
-            {{ message}}
+            {{ message|trans}}
         </div>
         {% endfor %}
         {% endfor %}
@@ -45,7 +40,6 @@
                 <button  class="btn  btn-success" type="submit">
                     {% trans %}    Add profile {% endtrans %}
                 </button>
-                //hidden
                 {{ form_end(profileForm) }}
                 <hr>
                 <button  class="btn btn-info" onclick="window.location.href='/'">

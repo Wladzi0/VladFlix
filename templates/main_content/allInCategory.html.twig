@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}{{category.name}}{% endtrans %}{% endblock %}
+{% block title %}{{category.name}}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -14,7 +14,7 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
-                {{ message}}
+                {{ message|trans}}
             </div>
         {% endfor %}
     {% endfor %}

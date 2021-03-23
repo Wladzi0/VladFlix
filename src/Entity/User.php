@@ -301,10 +301,12 @@ class User implements UserInterface, EquatableInterface
     }
 
 
-    public function isEqualTo(UserInterface $user)
+    public function isEqualTo(UserInterface $user): bool
     {
         if($user instanceof self){
-
+            if($user->getDefaultLanguage()!=$this->defaultLanguage){
+                return false;
+            }
         }
         return true;
     }
