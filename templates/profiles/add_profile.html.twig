@@ -36,7 +36,8 @@
                 {{ form_widget(profileForm.age, {'attr': {'class': 'form-control','required': 'true'}}) }}<br>
                 {{ form_label(profileForm.profilePin) }}<br>
                 {{ form_widget(profileForm.profilePin, {'attr': {'class': 'form-control'}}) }}<br>
-
+                {{ form_label(profileForm.userPin) }}<br>
+                {{ form_widget(profileForm.userPin, {'attr': {'class': 'form-control'}}) }}<br>
                 <button  class="btn  btn-success" type="submit">
                     {% trans %}    Add profile {% endtrans %}
                 </button>

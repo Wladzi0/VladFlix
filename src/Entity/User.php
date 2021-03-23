@@ -310,4 +310,5 @@ class User implements UserInterface, EquatableInterface
         }
         return true;
     }
+
 }

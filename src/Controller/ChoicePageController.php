@@ -20,11 +20,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ChoicePageController extends AbstractController
 {
-    private $translator;
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator=$translator;
-    }
 
     /**
      * @Route ("/change-locale", name="change_locale")
@@ -51,8 +46,6 @@ class ChoicePageController extends AbstractController
      */
     public function addProfile(Request $request, UserInterface $user, ProfileRepository $profileRepository): Response
     {
-
-        $pin = $request->get('pin');
         $profile = new Profile();
         $formProfile = $this->createForm(ProfileType::class, $profile);
         $colorArray = ['51, 51, 51', '102, 102, 102', '153, 153, 153', '204, 204, 204',
@@ -93,7 +86,14 @@ class ChoicePageController extends AbstractController
 
         $formProfile->handleRequest($request);
         if ($formProfile->isSubmitted() && $formProfile->isValid()) {
-
+            $userPin = $formProfile->get('userPin')->getData();
+            if(!$this->isGranted("ADD_ACCESS",$userPin)){
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('danger', 'User`s PIN is incorrect. You cannot add profile!');
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
             $profile = $formProfile->getData();
             $nick = $formProfile->get('nickname')->getData();
             $profilePin = $formProfile->get('profilePin')->getData();
@@ -145,7 +145,12 @@ class ChoicePageController extends AbstractController
     public function enterPin(SessionInterface $session, Request $request, ProfileRepository $profileRepository): Response
     {
         $profileId = $request->get('profile');
-        if ($profileId) {
+        if (!$profileId) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('danger', ('You forgot select your profile'));
+            return $this->redirectToRoute('select_profile');
+        }
             $profile = $profileRepository->find($profileId);
             $profilePin = $profile->getProfilePin();
             if ($profilePin === null) {
@@ -160,16 +165,14 @@ class ChoicePageController extends AbstractController
                     'profile' => $profileId]);
             }
 
-        } else {
-            return $this->render('security/enterPinAdd.html.twig');
         }
 
-    }
+
 
     /**
      * @Route("/check-pin", name="check_sub_pin")
      */
-    public function checkSubPin(TranslatorInterface $translator,Request $request, ProfileRepository $profileRepository, SessionInterface $session)
+    public function checkSubPin(Request $request, ProfileRepository $profileRepository, SessionInterface $session)
     {
         if($session->get('profileId')){
             $session->remove('profileId');
@@ -177,10 +180,9 @@ class ChoicePageController extends AbstractController
         $profile = $request->get('profile');
         $pin = $request->get('pin');
         if(!$pin || !$profile){
-            $message=$translator->trans('You forgot select your profile',null,null,'message.pl.yaml', 'pl');
             $request->getSession()
                     ->getFlashBag()
-                    ->add('danger', $message);
+                    ->add('danger', ('You forgot select your profile'));
                 return $this->redirectToRoute('select_profile');
         }
         else{

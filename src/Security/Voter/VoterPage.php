@@ -52,7 +52,6 @@ class VoterPage extends Voter
     public function canAdd($pin, $user): bool
     {
         if ($pin === $user->getPin()) {
-//            $user->setRoles(array("ROLE_USER"));
             return true;
         }
         return false;

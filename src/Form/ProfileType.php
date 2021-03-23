@@ -3,8 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Profile;
+use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -49,14 +53,33 @@ class ProfileType extends AbstractType
                 'maxMessage' => 'Your pin must contain no more than {{limit }} digits',
                 'exactMessage'=> 'The pin value should have exactly 4 digits.'
             ]),],
-    ]);
+    ])
+    ->add('userPin',PasswordType::class,[
+        'label'=>'User`s PIN',
+        'required'=>true,
+        'mapped' => false,
+        'constraints' => [
+            new NotBlank(),
+            new Regex(array(
+                    'pattern' => '/^[0-9]\d*$/',
+                    'message' => 'Please use only positive numbers.'
+                )
+            ),
+            new Length([
+                'min' => 4,
+                'minMessage' => 'Your pin must contain at least {{ limit }} digits',
+                'max' => 4,
+                'maxMessage' => 'Your pin must contain no more than {{limit }} digits',
+                'exactMessage'=> 'The pin value should have exactly 4 digits.'
+            ]),],
+        ]);
     }
 
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Profile::class,
+            'data_class' => Profile::class
         ]);
     }
 }
