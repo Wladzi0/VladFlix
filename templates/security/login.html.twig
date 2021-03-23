@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Login{% endblock %}
+{% block title %}{% trans %}Login {% endtrans %}{% endblock %}
 {% block stylesheets %}
    {{ parent() }}
 
@@ -23,21 +23,21 @@
         {% endif %}
 
 
-        <h1 >Please sign in</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus"><br>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required"><br>
+        <h1 >{% trans %}Please sign in{% endtrans %}</h1>
+        <label for="inputEmail" class="sr-only">{% trans %}Email address{% endtrans %}</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder={% trans %}"Email address"{% endtrans %} required="required" autofocus="autofocus"><br>
+        <label for="inputPassword" class="sr-only">{% trans %}Password{% endtrans %}</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder={% trans %}"Password"{% endtrans %} required="required"><br>
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         <div class="checkbox ">
             <label>
                 <input type="checkbox"  id="remember_me" name="_remember_me">
-                Remember me
+                {% trans %} Remember me{% endtrans %}
             </label>
         </div><br>
         <button class="btn btn-success " type="submit">
-            Sign in
+            {% trans %} Sign in{% endtrans %}
         </button>
             <br>
             <br>
@@ -46,5 +46,5 @@
 
     </form>
     <button class="btn registration" onclick="window.location.href='/register'">
-        Create new account</button>   </div>
+        {% trans %}   Create new account{% endtrans %}</button>   </div>
 {% endblock %}

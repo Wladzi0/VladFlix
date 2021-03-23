@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit profile settings{% endblock %}
+{% block title %} {% trans %}Edit profile settings {% endtrans %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -23,7 +23,7 @@
     </div>
     <div class="container">
         <div class="col ">
-            <h1 >Edit settings</h1>
+            <h1 > {% trans %}Edit settings {% endtrans %}</h1>
         </div>
         <div class="col-5">
             {{ form_start(profileForm, {'attr': {'class': 'form-horizontal'}}) }}
@@ -34,12 +34,12 @@
             {{ form_label(profileForm.preferredAudio) }}<br>
             {{ form_widget(profileForm.preferredAudio, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
            <button  class="btn  btn-success" type="submit">
-            Edit
+               {% trans %} Edit {% endtrans %}
             </button>
             {{ form_end(profileForm) }}
             <hr>
             <button  class="btn btn-info" onclick="window.location.href='/profile-menu'">
-                Back to menu</button>
+                {% trans %}  Back to menu {% endtrans %}</button>
         </div>
     </div>
 {% endblock %}

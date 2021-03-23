@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Select your profile{% endblock %}
+{% block title %}{% trans %}Select your profile{% endtrans %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -21,8 +21,10 @@
         <div class="row bg-light mt-5">
             {% for category in categories %}
 
-                <a class="pl-4 mt-4 text-dark col-9" href="{{ path('allInCategory', {'category' : category.id}) }}">
+                <a class="pl-4 mt-4 text-dark col-9" href="{{ path('all_in_category', {'category' : category.id}) }}">
+
                     {{ category.name }}
+
                 </a>
 
             {% endfor %}

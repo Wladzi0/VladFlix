@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Enter PIN{% endblock %}
+{% block title %}{% trans %}Enter PIN{% endtrans %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 
@@ -11,12 +11,12 @@
 
 {% block body %}<br>
     {% if profile %}
-
+        <form>
             <div class="container col-3"><br>
-                <h1 >you shouldn't enter a pin</h1>
+                <h1 >{% trans %}You shouldn't enter a pin{% endtrans %}</h1>
                 <input type="hidden" name="pin" id="pin" class="form-control col-3" placeholder="PIN" autofocus="autofocus"><br>
                 <button class="btn btn-success " type="submit">
-                    Check access
+                    {% trans %}Check access{% endtrans %}
                 </button>
                 <br>
                 <br>
@@ -25,7 +25,7 @@
     {% endif %}
     <div class="container d-flex col-3">
         <button class="btn registration " onclick="window.location.href='/'">
-            Back to profile selection
+            {% trans %}Back to profile selection {% endtrans %}
         </button>
     </div>
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profile settings {% endblock %}
+{% block title %} {% trans %}Profile settings  {% endtrans %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -19,14 +19,14 @@
     {% include 'navigation.html.twig' %}
     <div class="container row  ">
         <div class="container col-7">
-        <h3>Hello  {{   profile.nickname}}</h3>
-                <label> Interface language:  {{profile.interfaceLanguage}}</label><br>
-            <label> Interface language:  {{profile.preferredLanguage}}</label><br>
-            <label> Interface language:  {{profile.preferredAudio}}</label><br>
+        <h3> {% trans %}Hello  {% endtrans %} {{   profile.nickname}}</h3>
+                <label> {% trans %} Interface language{% endtrans %}:   {{profile.interfaceLanguage}}</label><br>
+            <label>  {% trans %}Interface language{% endtrans %}:  {{profile.preferredLanguage}}</label><br>
+            <label>  {% trans %}Interface language{% endtrans %}:  {{profile.preferredAudio}}</label><br>
 
-        <button class="btn-data-edit "> <a href="{{ path('editProfileSettings') }}">Edit your personal data</a></button>
+        <button class="btn-data-edit "> <a href="{{ path('edit_profile_settings') }}">{% trans %}Edit your personal data{% endtrans %}</a></button>
             <br><br>
-            <a style=" padding: 5px;" href="{{ path('profileLogout') }}" class="btn-danger">Logout</a>
+            <a style=" padding: 5px;" href="{{ path('select_profile') }}" class="btn-danger">{% trans %}Change profile{% endtrans %}</a>
     </div>
     </div>
 {% endblock %}

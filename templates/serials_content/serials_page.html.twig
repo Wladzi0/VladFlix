@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All serials{% endblock %}
+{% block title %}{% trans %}All serials{% endtrans %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -25,9 +25,9 @@
                     <img src="" alt="">
                     <a href="">  <img  src="{{ asset('images/defaultImage.png') }}"/></a>
                     <div class="card pl-3 pt-3" style="width: 100%">
-                        <p style="color: #000000">{{ serial.name }}
+                        <p style="color: #000000">{% trans %}{{ serial.name }}{% endtrans %}
                         </p>
-                        <p style="color: #000000">{{ serial.country }}
+                        <p style="color: #000000">{% trans %}{{ serial.country }}{% endtrans %}
                         </p>
                         <p style="color: #000000">{{ serial.year| date("Y") }}
                         </p>
@@ -36,13 +36,7 @@
                 </div>
             {% endfor %}
         {% endif %}
-        {#            {% for category in categories %}#}
 
-        {#                <a class="pl-4 mt-4 text-dark col-9" href="{{ path('allInCategory', {'category' : category.id}) }}">#}
-        {#                    {{ category.name }}#}
-        {#                </a>#}
-
-        {#            {% endfor %}#}
     </div>
 
 {% endblock %}

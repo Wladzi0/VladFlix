@@ -24,10 +24,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/main", name="main_page")
+     * @Route("/", name="main_page")
      */
     public function index(SessionInterface $session, Request $request, UserInterface $user,ProfileRepository $profileRepository,CategoryRepository $categoryRepository)
-    {   $sessionProfile=$session->get('profileId');
+    {
+        $sessionProfile=$session->get('profileId');
+    dump($sessionProfile);
         if($sessionProfile){
             $categories= $categoryRepository->findAll();
             return $this->render('main_content/main_page.html.twig', [
@@ -35,44 +37,48 @@ class MainController extends AbstractController
             ]);
 
         }
-        else{
-
-        $pin=$request->get('pin');
-        $profileId=$request->get('profile');
-        if(!$pin || !$profileId){
+        else {
             $request->getSession()
                     ->getFlashBag()
-                    ->add('danger', 'You forgot to log in with your profile');
+                    ->add('danger', 'You forgot to select your profile');
                 return $this->redirectToRoute('select_profile');
         }
-
-        $profile=$profileRepository->find($profileId);
-        $profilePin=$profile->getProfilePin();
-        $requestedData=array(
-            'enteredPin'=>$pin,
-            'profilePin'=>$profilePin);
-        if(!$this->isGranted("MAIN_ACCESS",$requestedData)){
-            $request->getSession()
-                ->getFlashBag()
-                ->add('danger', 'Invalid PIN! Please try again');
-            $referer = $request->headers->get('referer');
-            return new RedirectResponse($referer);
-        }
-        else{
-
-            $session->set('profileId',$profileId);
-        }
-
-
-        $categories= $categoryRepository->findAll();
-        return $this->render('main_content/main_page.html.twig', [
-            'categories'=>$categories
-        ]);
-        }
+//        $pin=$request->get('pin');
+//        $profileId=$request->get('profile');
+//        if(!$pin || !$profileId){
+//            $request->getSession()
+//                    ->getFlashBag()
+//                    ->add('danger', 'You forgot to log in with your profile');
+//                return $this->redirectToRoute('select_profile');
+//        }
+//
+//        $profile=$profileRepository->find($profileId);
+//        $profilePin=$profile->getProfilePin();
+//        $requestedData=array(
+//            'enteredPin'=>$pin,
+//            'profilePin'=>$profilePin);
+//        if(!$this->isGranted("MAIN_ACCESS",$requestedData)){
+//            $request->getSession()
+//                ->getFlashBag()
+//                ->add('danger', 'Invalid PIN! Please try again');
+//            $referer = $request->headers->get('referer');
+//            return new RedirectResponse($referer);
+//        }
+//        else{
+//
+//            $session->set('profileId',$profileId);
+//        }
+//
+//
+//        $categories= $categoryRepository->findAll();
+//        return $this->render('main_content/main_page.html.twig', [
+//            'categories'=>$categories
+//        ]);
+//        }
     }
 
     /**
-     * @Route("/all-in-Category", name="allInCategory")
+     * @Route("/all-in-Category", name="all_in_category")
      */
     public function allInCategory(Request $request,CategoryRepository $categoryRepository)
     {
@@ -86,7 +92,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/all-Films-Serials", name="allFilmsSerials")
+     * @Route("/all-Films-Serials", name="all_films_serials")
      */
     public function allFilms(SessionInterface $session,Request $request,FilmRepository $filmRepository,SerialRepository $serialRepository): Response
     {

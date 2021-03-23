@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route ("/profile-menu", name="profileMenu")
+     * @Route ("/profile-menu", name="profile_menu")
      */
     public function profileMenu(SessionInterface $session, ProfileRepository $profileRepository)
     {
@@ -30,7 +30,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/edit-profile-settings", name="editProfileSettings")
+     * @Route("/edit-profile-settings", name="edit_profile_settings")
      */
     public function editSettings(SessionInterface $session,Request $request, ProfileRepository $profileRepository)
     {
@@ -55,11 +55,5 @@ class ProfileController extends AbstractController
 
     }
 
-    /**
-     * @Route("/profile-logout", name="profileLogout")
-     */
-    public function profileLogout(Request $request, SessionInterface $session){
-        $session->remove('profileId');
-        return $this->redirectToRoute('select_profile');
-    }
+
 }
