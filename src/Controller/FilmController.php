@@ -21,15 +21,28 @@ class FilmController extends AbstractController
     /**
      * @Route("/all-films-from-category", name="all_films_from_category")
      */
-     public function AllFilmsByCategory(Request $request, CategoryRepository $categoryRepository,FilmRepository $filmRepository){
-     $categoryRequest = $request->get('category');
-     $categoryData=$categoryRepository->find($categoryRequest);
-     $categories=$categoryRepository->findAll();
-     $AllFilmsByCategory=$filmRepository->findAllByCategory($categoryRequest);
-     return $this->render('films_content/allFilmsFromCategory.html.twig', [
-         'category'=>$categoryData,
-         'categories'=> $categories,
-         'allFilmsByCategory'=>$AllFilmsByCategory
-     ]);
- }
+    public function AllFilmsByCategory(Request $request, CategoryRepository $categoryRepository, FilmRepository $filmRepository)
+    {
+        $categoryRequest = $request->get('category');
+        $categoryData = $categoryRepository->find($categoryRequest);
+        $categories = $categoryRepository->findAll();
+        $AllFilmsByCategory = $filmRepository->findAllByCategory($categoryRequest);
+        return $this->render('films_content/allFilmsFromCategory.html.twig', [
+            'category' => $categoryData,
+            'categories' => $categories,
+            'allFilmsByCategory' => $AllFilmsByCategory
+        ]);
+    }
+
+    /**
+     * @Route("/film/{filmId}", name="film_page", methods={"GET","POST"}, requirements={"id"="\d+"})
+     */
+    public function film(Request $request, FilmRepository $filmRepository)
+    {
+        $filmRequest=$request->get('filmId');
+        $filmData=$filmRepository->find($filmRequest);
+        return $this->render('films_content/film_page.html.twig', [
+            'filmData' => $filmData
+        ]);
+    }
 }

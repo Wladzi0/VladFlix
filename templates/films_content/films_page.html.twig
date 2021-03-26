@@ -34,7 +34,7 @@
                 {% for film in films %}
             <div class="card d-flex flex-row mb-1 ">
                     <img src="" alt="">
-                    <a href="">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
+                    <a href="{{ path('film_page', {'filmId': film.id}) }}">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
                 <div class="card pl-3 pt-3" style="width: 100%">
                     <p style="color: #000000">{{ film.name|trans }}
                     </p>

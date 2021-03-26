@@ -1,1 +1,42 @@
-{% include 'navigation.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ filmData.name|trans }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert-{{ type }}" role="alert">
+                {{ message|trans}}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% include 'navigation.html.twig' %}
+
+    <div class="container flex-column d-flex pt-5">
+
+        {% if filmData %}
+
+                <div class="card d-flex flex-row mb-1 ">
+
+                     <img  alt="" src="{{ asset('images/defaultImage.png') }}"/>
+
+                        <p style="color: #000000">{{ filmData.name|trans }}
+                        </p>
+                        <p style="color: #000000">{{ filmData.country|trans }}
+                        </p>
+                        <p style="color: #000000">{{ filmData.year| date("Y") }}
+                        </p>
+
+                </div>
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}
