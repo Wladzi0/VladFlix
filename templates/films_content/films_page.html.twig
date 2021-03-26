@@ -17,6 +17,17 @@
         {% endfor %}
     {% endfor %}
     {% include 'navigation.html.twig' %}
+    <div class="row col-2 bg-light mt-5" style="float:left">
+        {% for category in categories %}
+
+            <a class="pl-4 mt-4 text-dark col-9" href="{{ path('all_films_from_category', {'category' : category.id}) }}">
+
+                {{ category.name|trans}}
+
+            </a>
+
+        {% endfor %}
+    </div>
     <div class="container flex-column d-flex pt-5">
 
             {% if films %}
@@ -25,9 +36,9 @@
                     <img src="" alt="">
                     <a href="">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
                 <div class="card pl-3 pt-3" style="width: 100%">
-                    <p style="color: #000000">`{{ film.name|trans }}
+                    <p style="color: #000000">{{ film.name|trans }}
                     </p>
-                    <p style="color: #000000">{{ film.country }}
+                    <p style="color: #000000">{{ film.country|trans }}
                     </p>
                     <p style="color: #000000">{{ film.year| date("Y") }}
                     </p>
@@ -36,13 +47,7 @@
             </div>
                 {% endfor %}
             {% endif %}
-{#            {% for category in categories %}#}
 
-{#                <a class="pl-4 mt-4 text-dark col-9" href="{{ path('allInCategory', {'category' : category.id}) }}">#}
-{#                    {{ category.name }}#}
-{#                </a>#}
-
-{#            {% endfor %}#}
     </div>
 
 {% endblock %}

@@ -19,32 +19,13 @@ class SerialRepository extends ServiceEntityRepository
         parent::__construct($registry, Serial::class);
     }
 
-    // /**
-    //  * @return Serial[] Returns an array of Serial objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllByCategory($category)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+            ->leftJoin('s.categories', 'c')
+            ->where('c.id = :category' )
+            ->setParameter('category', $category)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Serial
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

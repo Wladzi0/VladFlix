@@ -20,14 +20,12 @@ class CategoryRepository extends ServiceEntityRepository
     }
     public function findAllByCategory($category)
     {
-        return $this->createQueryBuilder('category')
-            ->andWhere(
-                'serial.category :category
-                 AND fim.category :category'
-            )
-            ->leftJoin('category.film', 'film')
-            ->leftJoin('category.serial','serial')
-            ->setParameter('category', $category)
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->leftJoin('c.films', 'f')
+//            ->leftJoin('c.serials', 's')
+            ->where('f.categories = :categories' )
+            ->setParameter('categories', $category)
             ->getQuery()
             ->getResult();
     }

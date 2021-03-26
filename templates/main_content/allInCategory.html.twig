@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{category.name}}{% endblock %}
+{% block title %}{{category.name|trans}}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -20,7 +20,23 @@
     {% endfor %}
 
     <div class="container ">
+    {% if allResults %}
+        {% for filmResult in allResults %}
+            <div class="card d-flex flex-row mb-1 ">
+                <img src="" alt="">
+                <a href="">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
+                <div class="card pl-3 pt-3" style="width: 100%">
+                    <p style="color: #000000">{{ filmResult.name }}
+                    </p>
+                    <p style="color: #000000">{{ filmResult.country }}
+                    </p>
+                    <p style="color: #000000">{{ filmResult.year| date("Y") }}
+                    </p>
+                </div>
 
+            </div>
+        {% endfor %}
+        {% endif %}
     </div>
 
 {% endblock %}
