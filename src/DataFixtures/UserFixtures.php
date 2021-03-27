@@ -25,7 +25,7 @@ class UserFixtures extends Fixture
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setIsVerified(true);
         $admin->setPin('0500');
-        $admin->setDefaultLanguage('English');
+        $admin->setDefaultLanguage('en');
         $admin->setPassword($this->passwordEncoder->encodePassword(
             $admin,'admin1'
         ));

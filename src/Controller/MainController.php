@@ -33,49 +33,30 @@ class MainController extends AbstractController
                 return $this->redirectToRoute('select_profile');
         }
         $categories= $categoryRepository->findAll();
-//        foreach($categories as $category){
-//            $filmsSerialsByCat= $filmRepository->findAllByCategory($category);
-//            if ($filmsSerialsByCat) {
-//                {
-//                    $results['content'] = $this->getRealEntity($filmsSerialsByCat);
-//                }
-//
-//            }
-//        }
 
         return $this->render('main_content/main_page.html.twig', [
-//            'results'=>$results,
             'categories'=>$categories
         ]);
     }
 
-//    public function getRealEntity($filmsSerials)
-//    {
-//        foreach ($filmsSerials as $filmSerial ) {
-//            $realEntities[$filmSerial->getId()] = [$filmSerial->getName(),$filmSerial->getCountry(), $filmSerial->getYear()];
-//        }
-//        return $realEntities;
-//    }
+
 
     /**
-     * @Route("/all-in-Category", name="all_in_category")
+     * @Route("/all-films-serials-from-category", name="all_films_serials_from_category")
      */
-    public function allInCategory(Request $request,CategoryRepository $categoryRepository,FilmRepository $filmRepository,SerialRepository $serialRepository)
+    public function allFilmsSerialsFromCategory(Request $request,CategoryRepository $categoryRepository,FilmRepository $filmRepository,SerialRepository $serialRepository)
     {
 
         $categoryRequest=$request->get('category');
         $categoryData=$categoryRepository->find($categoryRequest);
+        $categories=$categoryRepository->findAll();
         if($categoryRequest){
-            $AllResults=$filmRepository->findAllByCategory($categoryRequest);
-//            if ($AllResults) {
-//                {
-//                    $results['films'] = $this->getRealEntity($AllResults);
-//                }
-//                $AllResults=serial->findAllByCategory($categoryRequest);
+            $AllResults=$filmRepository->findAllByBYCategory($categoryRequest);
+
         }
-//        }
-        dump($AllResults);
-        return $this->render('main_content/allInCategory.html.twig', [
+
+        return $this->render('main_content/allFromCategory.html.twig', [
+            'categories'=>$categories,
             'category'=> $categoryData,
             'allResults'=>$AllResults
         ]);

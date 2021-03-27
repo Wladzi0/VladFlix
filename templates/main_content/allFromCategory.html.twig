@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}All serials{% endtrans %}{% endblock %}
+{% block title %}{% trans %}All films{% endtrans %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -12,7 +12,7 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
-                {{ message}}
+                {{ message|trans}}
             </div>
         {% endfor %}
     {% endfor %}
@@ -20,7 +20,7 @@
     <div class="row col-2 bg-light mt-5" style="float:left">
         {% for category in categories %}
 
-            <a class="pl-4 mt-4 text-dark col-9" href="{{ path('all_serials_from_category', {'category' : category.id}) }}">
+            <a class="pl-4 mt-4 text-dark col-9" href="{{ path('all_films_serials_from_category', {'category' : category.id}) }}">
 
                 {{ category.name|trans}}
 
@@ -30,21 +30,18 @@
     </div>
     <div class="container flex-column d-flex pt-5">
 
-        {% if serials %}
-            {% for serial in serials %}
+        {% if allResults %}
+            {% for filmResult in allResults %}
                 <div class="card d-flex flex-row mb-1 ">
-                    <a href="{{ path('all_seasons_from_serial',{serial: serial.id}) }}">  <img  src="{{ asset('images/defaultImage.png') }}"/></a>
+                    <img src="" alt="">
+                    <a href="">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
                     <div class="card pl-3 pt-3" style="width: 100%">
-                        <p style="color: #000000">{{ serial.name }}
+                        <p style="color: #000000">{{ filmResult.name }}
                         </p>
-                        <p style="color: #000000">{{ serial.country|trans }}
+                        <p style="color: #000000">{{ filmResult.country }}
                         </p>
-                        {% if serial.yearFinish %}
-                        <p style="color: #000000">{{ serial.yearStart| date("Y") }} - {{ serial.yearFinish| date("Y") }}  </p>
-                        {% else %}
-                        <p style="color: #000000">{{ serial.yearStart| date("Y") }}
+                        <p style="color: #000000">{{ filmResult.year| date("Y") }}
                         </p>
-                            {% endif %}
                     </div>
 
                 </div>

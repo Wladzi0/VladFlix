@@ -21,7 +21,7 @@
         <div class="row bg-light mt-5">
             {% for category in categories %}
 
-                <a class="pl-4 mt-4 text-dark col-9" href="{{ path('all_in_category', {'category' : category.id}) }}">
+                <a class="pl-4 mt-4 text-dark col-9" href="{{ path('all_films_serials_from_category', {'category' : category.id}) }}">
 
                     {{ category.name|trans}}
 

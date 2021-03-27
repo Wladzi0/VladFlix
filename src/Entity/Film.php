@@ -34,15 +34,17 @@ class Film
      */
     private $year;
 
-    /**
-     * @ORM\OneToOne(targetEntity=File::class, mappedBy="film", cascade={"persist", "remove"})
-     */
-    private $file;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="films",cascade={"persist", "remove"})
      */
     private $categories;
+
+    /**
+     * @ORM\OneToOne(targetEntity=File::class, inversedBy="film", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $file;
 
     public function __construct()
     {
@@ -91,22 +93,6 @@ class Film
         return $this;
     }
 
-    public function getFile(): ?File
-    {
-        return $this->file;
-    }
-
-    public function setFile(File $file): self
-    {
-        // set the owning side of the relation if necessary
-        if ($file->getFilm() !== $this) {
-            $file->setFilm($this);
-        }
-
-        $this->file = $file;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Category[]
@@ -134,6 +120,18 @@ class Film
 
         return $this;
     }
+
+public function getFile(): ?File
+{
+    return $this->file;
+}
+
+public function setFile(File $file): self
+{
+    $this->file = $file;
+
+    return $this;
+}
 
 
 

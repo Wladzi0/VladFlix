@@ -19,7 +19,7 @@ class FilmRepository extends ServiceEntityRepository
         parent::__construct($registry, Film::class);
     }
 
-    public function findAllByCategory($category)
+    public function findAllFromCategory($category)
     {
         return $this->createQueryBuilder('f')
             ->leftJoin('f.categories', 'c')

@@ -30,9 +30,9 @@ class Serial
     private $country;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=false)
      */
-    private $year;
+    private $yearStart;
 
     /**
      * @ORM\OneToMany(targetEntity=Season::class, mappedBy="serial",cascade={"persist", "remove"})
@@ -43,6 +43,11 @@ class Serial
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="serials",cascade={"persist", "remove"})
      */
     private $categories;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $yearFinish;
 
     public function __construct()
     {
@@ -80,14 +85,14 @@ class Serial
         return $this;
     }
 
-    public function getYear(): ?\DateTimeInterface
+    public function getYearStart(): ?\DateTimeInterface
     {
-        return $this->year;
+        return $this->yearStart;
     }
 
-    public function setYear(\DateTimeInterface $year): self
+    public function setYearStart(\DateTimeInterface $yearStart): self
     {
-        $this->year = $year;
+        $this->yearStart = $yearStart;
 
         return $this;
     }
@@ -145,6 +150,18 @@ class Serial
         if ($this->categories->removeElement($category)) {
             $category->removeSerial($this);
         }
+
+        return $this;
+    }
+
+    public function getYearFinish(): ?\DateTimeInterface
+    {
+        return $this->yearFinish;
+    }
+
+    public function setYearFinish(?\DateTimeInterface $yearFinish): self
+    {
+        $this->yearFinish = $yearFinish;
 
         return $this;
     }

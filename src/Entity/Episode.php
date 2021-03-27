@@ -34,7 +34,8 @@ class Episode
     private $season;
 
     /**
-     * @ORM\OneToOne(targetEntity=File::class, mappedBy="episode", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=File::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $file;
 
@@ -86,13 +87,9 @@ class Episode
 
     public function setFile(File $file): self
     {
-        // set the owning side of the relation if necessary
-        if ($file->getEpisode() !== $this) {
-            $file->setEpisode($this);
-        }
-
         $this->file = $file;
 
         return $this;
     }
+
 }

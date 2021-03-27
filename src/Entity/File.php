@@ -33,18 +33,9 @@ class File
     private $audio;
 
     /**
-     * @ORM\OneToOne(targetEntity=Film::class, inversedBy="file", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity=Film::class, mappedBy="file", cascade={"persist", "remove"})
      */
     private $film;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Episode::class, inversedBy="file", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $episode;
-
-
 
     public function getId(): ?int
     {
@@ -94,19 +85,12 @@ class File
 
     public function setFilm(Film $film): self
     {
+        // set the owning side of the relation if necessary
+        if ($film->getFile() !== $this) {
+            $film->setFile($this);
+        }
+
         $this->film = $film;
-
-        return $this;
-    }
-
-    public function getEpisode(): ?Episode
-    {
-        return $this->episode;
-    }
-
-    public function setEpisode(Episode $episode): self
-    {
-        $this->episode = $episode;
 
         return $this;
     }
