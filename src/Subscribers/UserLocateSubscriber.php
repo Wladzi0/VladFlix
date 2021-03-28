@@ -14,7 +14,7 @@ class UserLocateSubscriber implements EventSubscriberInterface{
         $this->session = $session;
     }
 
-    public function onLogin(InteractiveLoginEvent $loginEvent)
+    public function onInteractiveLogin(InteractiveLoginEvent $loginEvent)
     {
         $user=$loginEvent->getAuthenticationToken()->getUser();
         if(!is_null($user->getDefaultLanguage())){
@@ -25,7 +25,7 @@ class UserLocateSubscriber implements EventSubscriberInterface{
    {
        return[
            SecurityEvents::INTERACTIVE_LOGIN=>[
-               ['onLogin',15]
+               ['onInteractiveLogin',15]
            ]
        ];
    }

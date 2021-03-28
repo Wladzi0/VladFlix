@@ -2,6 +2,7 @@
 
 namespace App\Subscribers;
 
+use App\Repository\ProfileRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -9,9 +10,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class LocalSubscriber implements EventSubscriberInterface
 {
     private $defaultLocale;
-    public function __construct(string $defaultLocale="en")
+
+    private $profileRepository;
+    public function __construct(ProfileRepository $profileRepository,string $defaultLocale="en")
     {
         $this->defaultLocale=$defaultLocale;
+        $this->profileRepository=$profileRepository;
     }
 
     public function onKernelRequest(RequestEvent $event)
@@ -20,11 +24,20 @@ class LocalSubscriber implements EventSubscriberInterface
         if(!$request->hasPreviousSession()){
             return;
     }
+        if($profileId=$request->getSession()->get('profileId')){
+
+            $profile=$this->profileRepository->find($profileId);
+            dump($profile->getInterfaceLanguage());
+            $request->getSession()->set('_locale',$profile->getInterfaceLanguage());
+            dump($request->getSession()->get('_locale'));
+        }
+        else{
         if($locale= $request->attributes->get('interfaceLanguage')){
             $request->getSession()->set('_locale',$locale);
         }
         else{
             $request->setLocale($request->getSession()->get('_locale',$this->defaultLocale));
+        }
         }
     }
     public static function getSubscribedEvents(): array
