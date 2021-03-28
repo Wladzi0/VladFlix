@@ -177,7 +177,7 @@ class ChoicePageController extends AbstractController
     /**
      * @Route("/check-pin", name="check_sub_pin")
      */
-    public function checkSubPin(Request $request, ProfileRepository $profileRepository, SessionInterface $session)
+    public function checkSubPin(Request $request, ProfileRepository $profileRepository, SessionInterface $session): RedirectResponse
     {
 
         if ($session->get('profileId')) {
@@ -218,5 +218,17 @@ class ChoicePageController extends AbstractController
             return $this->redirectToRoute('main_page');
         }
 
+    }
+
+    /**
+     * @Route("/forgot-profile", name="forgot_profile")
+     */
+    public function changeProfile(SessionInterface $session, Request $request): RedirectResponse
+    {
+
+        if ($session->get('profileId')) {
+            $session->remove('profileId');
+        }
+        return $this->redirectToRoute('select_profile');
     }
 }
