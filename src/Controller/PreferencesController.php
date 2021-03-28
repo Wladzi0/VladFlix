@@ -23,18 +23,17 @@ class PreferencesController extends AbstractController
     /**
      * @Route("/profile-preferences", name="profilePreferences")
      */
-    public function index(SessionInterface $session,Request $request,ProfileRepository $profileRepository)
+    public function index(SessionInterface $session, Request $request, ProfileRepository $profileRepository)
     {
-        $profileId=$session->get('profileId');
-        $profile=$profileRepository->find($profileId);
-        if($selectedSubtitles=$request->get('subtitles')){
+        $profileId = $session->get('profileId');
+        $profile = $profileRepository->find($profileId);
+        if ($selectedSubtitles = $request->get('subtitles')) {
             $profile->setPreferredLanguage($selectedSubtitles);
 
         }
-        if($selectedAudio=$request->get('audio')){
+        if ($selectedAudio = $request->get('audio')) {
             $profile->setPreferredAudio($selectedAudio);
         }
-        dump( $profile->getPreferredLanguage());
         $em = $this->getDoctrine()->getManager();
         $em->persist($profile);
         $em->flush();

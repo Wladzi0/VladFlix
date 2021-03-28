@@ -28,12 +28,12 @@ class ChoicePageController extends AbstractController
     {
 
     }
-    /**
-     * @Route("/select-pin", name="select_profile")
-     */
-    public function index(SessionInterface $session,Request $request, UserInterface $user, ProfileRepository $profileRepository): Response
-    {
 
+    /**
+     * @Route("/select-profile", name="select_profile")
+     */
+    public function index(SessionInterface $session, Request $request, UserInterface $user, ProfileRepository $profileRepository): Response
+    {
         dump($session->get('profileId'));
         $profiles = $profileRepository->findAllByUser($user);
         return $this->render('profiles/change_profile.html.twig', [
@@ -87,7 +87,7 @@ class ChoicePageController extends AbstractController
         $formProfile->handleRequest($request);
         if ($formProfile->isSubmitted() && $formProfile->isValid()) {
             $userPin = $formProfile->get('userPin')->getData();
-            if(!$this->isGranted("ADD_ACCESS",$userPin)){
+            if (!$this->isGranted("ADD_ACCESS", $userPin)) {
                 $request->getSession()
                     ->getFlashBag()
                     ->add('danger', 'User`s PIN is incorrect. You cannot add profile!');
@@ -95,6 +95,17 @@ class ChoicePageController extends AbstractController
                 return new RedirectResponse($referer);
             }
             $profile = $formProfile->getData();
+
+            if ($profileAge = $formProfile->get('age')->getData() !== null) {
+
+                if ($profilePin = $formProfile->get('profilePin')->getData() === null) {
+                    $request->getSession()
+                        ->getFlashBag()
+                        ->add('danger', ('Profile PIN must be entered!'));
+                    $referer = $request->headers->get('referer');
+                    return new RedirectResponse($referer);
+                }
+            }
             $nick = $formProfile->get('nickname')->getData();
             $profilePin = $formProfile->get('profilePin')->getData();
             $profile->setUser($user);
@@ -105,7 +116,7 @@ class ChoicePageController extends AbstractController
 
                     $request->getSession()
                         ->getFlashBag()
-                        ->add('danger',('This nickname is already exists'));
+                        ->add('danger', ('This nickname is already exists'));
                     $referer = $request->headers->get('referer');
                     return new RedirectResponse($referer);
                 }
@@ -127,7 +138,7 @@ class ChoicePageController extends AbstractController
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success',('Profile has been added successfully'));
+                ->add('success', ('Profile has been added successfully'));
             return $this->redirectToRoute('select_profile');
         }
 
@@ -144,29 +155,23 @@ class ChoicePageController extends AbstractController
      */
     public function enterPin(SessionInterface $session, Request $request, ProfileRepository $profileRepository): Response
     {
-        $profileId = $request->get('profile');
-        if (!$profileId) {
+        if (!$profileId = $request->get('profile')) {
             $request->getSession()
                 ->getFlashBag()
                 ->add('danger', ('You forgot select your profile'));
             return $this->redirectToRoute('select_profile');
         }
-            $profile = $profileRepository->find($profileId);
-            $profilePin = $profile->getProfilePin();
-            if ($profilePin === null) {
-                $request->getSession()
-                    ->getFlashBag()
-                    ->add('danger', 'BOOM');
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
+        $profile = $profileRepository->find($profileId);
+        if ($profile->getAge() === null) {
 
-            } else {
-                return $this->render('security/enterPinSub.html.twig', [
-                    'profile' => $profileId]);
-            }
+            return $this->redirectToRoute('check_sub_pin', array('profile' => $profileId));
 
+        } else {
+            return $this->render('security/enterPinSub.html.twig', [
+                'profile' => $profileId]);
         }
 
+    }
 
 
     /**
@@ -174,37 +179,44 @@ class ChoicePageController extends AbstractController
      */
     public function checkSubPin(Request $request, ProfileRepository $profileRepository, SessionInterface $session)
     {
-        if($session->get('profileId')){
+
+        if ($session->get('profileId')) {
             $session->remove('profileId');
         }
-        $profile = $request->get('profile');
         $pin = $request->get('pin');
-        if(!$pin || !$profile){
-            $request->getSession()
+        $profile = $request->get('profile');
+        $profileDB = $profileRepository->find($profile);
+        $profilePin = $profileDB->getProfilePin();
+        if ($profilePin === null) {
+            $requestedData = array(
+                'enteredPin' => null,
+                'profilePin' => $profilePin);
+
+        } else {
+            if (!$pin || !$profile) {
+                $request->getSession()
                     ->getFlashBag()
                     ->add('danger', ('You forgot select your profile'));
                 return $this->redirectToRoute('select_profile');
+            } else {
+
+                $requestedData = array(
+                    'enteredPin' => $pin,
+                    'profilePin' => $profilePin);
+            }
+
         }
-        else{
-        $profileDB=$profileRepository->find($profile);
-        $profilePin=$profileDB->getProfilePin();
-        $requestedData=array(
-            'enteredPin'=>$pin,
-            'profilePin'=>$profilePin);
-        }
-        if(!$this->isGranted("MAIN_ACCESS",$requestedData)){
+        if (!$this->isGranted("MAIN_ACCESS", $requestedData)) {
             $request->getSession()
                 ->getFlashBag()
                 ->add('danger', 'Invalid PIN! Please try again');
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
-        }
-        else{
+        } else {
 
-            $session->set('profileId',$profile);
+            $session->set('profileId', $profile);
             return $this->redirectToRoute('main_page');
         }
 
     }
-
 }

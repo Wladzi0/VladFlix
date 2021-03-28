@@ -40,7 +40,6 @@ class ProfileType extends AbstractType
         'mapped' => false,
         'required' =>false,
         'constraints' => [
-                new NotBlank(),
                 new Regex(array(
                         'pattern' => '/^[0-9]\d*$/',
                         'message' => 'Please use only positive numbers.'

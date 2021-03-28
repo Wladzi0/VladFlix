@@ -22,23 +22,23 @@ class ProfileController extends AbstractController
      */
     public function profileMenu(SessionInterface $session, ProfileRepository $profileRepository)
     {
-        $currentProfile=$session->get('profileId');
-        $profileData=$profileRepository->find($currentProfile);
+        $currentProfile = $session->get('profileId');
+        $profileData = $profileRepository->find($currentProfile);
 
-        return $this->render('profileMenu/settings.html.twig',[
-            'profile'=>$profileData ]);
+        return $this->render('profileMenu/settings.html.twig', [
+            'profile' => $profileData]);
     }
 
     /**
      * @Route("/edit-profile-settings", name="edit_profile_settings")
      */
-    public function editSettings(SessionInterface $session,Request $request, ProfileRepository $profileRepository)
+    public function editSettings(SessionInterface $session, Request $request, ProfileRepository $profileRepository)
     {
-        $currentProfile=$session->get('profileId');
-        $profileData=$profileRepository->find($currentProfile);
-        $profileForm=$this->createForm(EditProfileType::class,$profileData);
+        $currentProfile = $session->get('profileId');
+        $profileData = $profileRepository->find($currentProfile);
+        $profileForm = $this->createForm(EditProfileType::class, $profileData);
         $profileForm->handleRequest($request);
-        if($profileForm->isSubmitted() && $profileForm->isValid()){
+        if ($profileForm->isSubmitted() && $profileForm->isValid()) {
 
             $this->getDoctrine()->getManager()->flush();
             $request->getSession()
@@ -49,9 +49,9 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('profile_menu');
 
         }
-        return $this->render('profileMenu/editSettings.html.twig',[
+        return $this->render('profileMenu/editSettings.html.twig', [
 
-            'profileForm'=>$profileForm->createView() ]);
+            'profileForm' => $profileForm->createView()]);
 
     }
 

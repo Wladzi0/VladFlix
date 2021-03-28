@@ -24,14 +24,12 @@ class LocalSubscriber implements EventSubscriberInterface
         if(!$request->hasPreviousSession()){
             return;
     }
-        if($profileId=$request->getSession()->get('profileId')){
-
-            $profile=$this->profileRepository->find($profileId);
-            dump($profile->getInterfaceLanguage());
-            $request->getSession()->set('_locale',$profile->getInterfaceLanguage());
-            dump($request->getSession()->get('_locale'));
-        }
-        else{
+//        if($profileId=$request->getSession()->get('profileId')){
+//
+//            $profile=$this->profileRepository->find($profileId);
+//            $request->getSession()->set('_locale',$profile->getInterfaceLanguage());
+//        }
+//        else{
         if($locale= $request->attributes->get('interfaceLanguage')){
             $request->getSession()->set('_locale',$locale);
         }
@@ -39,7 +37,7 @@ class LocalSubscriber implements EventSubscriberInterface
             $request->setLocale($request->getSession()->get('_locale',$this->defaultLocale));
         }
         }
-    }
+//    }
     public static function getSubscribedEvents(): array
     {
         return [

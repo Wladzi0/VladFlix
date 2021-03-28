@@ -40,17 +40,17 @@ class FilmController extends AbstractController
     /**
      * @Route("/film/{filmId}", name="film_page", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function film(SessionInterface $session,Request $request, FilmRepository $filmRepository,FileRepository $fileRepository,ProfileRepository $profileRepository)
+    public function film(SessionInterface $session, Request $request, FilmRepository $filmRepository, FileRepository $fileRepository, ProfileRepository $profileRepository)
     {
-        $filmRequest=$request->get('filmId');
-        $profile=$profileRepository->find($session->get('profileId'));
+        $filmRequest = $request->get('filmId');
+        $profile = $profileRepository->find($session->get('profileId'));
         dump($profile);
-        $file=$fileRepository->findFile($filmRequest);
-        $filmData=$filmRepository->find($filmRequest);
+        $file = $fileRepository->findFile($filmRequest);
+        $filmData = $filmRepository->find($filmRequest);
 
         return $this->render('films_content/film_page.html.twig', [
-            'profile'=>$profile,
-            'file'=>$file,
+            'profile' => $profile,
+            'file' => $file,
             'filmData' => $filmData
         ]);
     }
