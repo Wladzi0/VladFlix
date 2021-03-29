@@ -19,12 +19,21 @@ class FileRepository extends ServiceEntityRepository
         parent::__construct($registry, File::class);
     }
 
-    public function findFile($film)
+    public function findFileOfFilm($film)
     {
         return $this->createQueryBuilder('f')
             ->leftJoin('f.film', 'film' )
             ->where('film.id = :film')
             ->setParameter('film',$film)
+            ->getQuery()
+            ->getSingleResult();
+    }
+    public function findFileOfEpisode($episodeId)
+    {
+        return $this->createQueryBuilder('f')
+            ->leftJoin('f.episode', 'episode' )
+            ->where('episode.id = :episode')
+            ->setParameter('episode',$episodeId)
             ->getQuery()
             ->getSingleResult();
     }

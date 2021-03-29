@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}All episodes from{% endtrans %} {{ season.name|trans }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class=" alert-{{ type }}" role="alert">
+                {{ message|trans}}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% include 'navigation.html.twig' %}
+
+    <div class="container mt-2 flex-column d-flex pt-5 bg-light">
+        <h2 class="bg-dark"><a href="{{ path('all_seasons_from_serial',{serial: serial.id}) }}">{{ serial.name|trans }}</a>->{{ season.name|trans }}</h2>
+        {% set episodesCount=episodes|length %}
+        <p class="bg-dark">All episodes ({{ episodesCount }})</p>
+        {% for episode in episodes %}
+
+            <a class="pl-4 mt-4 text-dark col-9" href="{{ path('show_episode', {'episodeId' : episode.id}) }}">
+
+                {{ episode.name|trans}}
+
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

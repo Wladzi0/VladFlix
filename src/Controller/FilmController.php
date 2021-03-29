@@ -45,7 +45,7 @@ class FilmController extends AbstractController
         $filmRequest = $request->get('filmId');
         $profile = $profileRepository->find($session->get('profileId'));
         dump($profile);
-        $file = $fileRepository->findFile($filmRequest);
+        $file = $fileRepository->findFileOfFilm($filmRequest);
         $filmData = $filmRepository->find($filmRequest);
 
         return $this->render('films_content/film_page.html.twig', [

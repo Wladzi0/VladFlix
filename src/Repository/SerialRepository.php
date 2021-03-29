@@ -28,4 +28,14 @@ class SerialRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findSerialBySeason($seasonId)
+    {
+        return $this->createQueryBuilder('serial')
+            ->leftJoin('serial.season','season')
+            ->where('season.id =:season')
+            ->setParameter('season', $seasonId)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

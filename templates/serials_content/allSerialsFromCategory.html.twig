@@ -32,15 +32,18 @@
         {% if allSerialsByCategory %}
             {% for serial in allSerialsByCategory %}
                 <div class="card d-flex flex-row mb-1 ">
-                    <img src="" alt="">
-                    <a href="">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
+                    <a href="{{ path('all_seasons_from_serial',{serial: serial.id}) }}">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
                     <div class="card pl-3 pt-3" style="width: 100%">
                         <p style="color: #000000">{{ serial.name|trans }}
                         </p>
                         <p style="color: #000000">{{ serial.country|trans }}
                         </p>
-                        <p style="color: #000000">{{ serial.year| date("Y") }}
-                        </p>
+                        {% if serial.yearFinish %}
+                            <p style="color: #000000">{{ serial.yearStart| date("Y") }} - {{ serial.yearFinish| date("Y") }}  </p>
+                        {% else %}
+                            <p style="color: #000000">{{ serial.yearStart| date("Y") }}
+                            </p>
+                        {% endif %}
                     </div>
 
                 </div>
