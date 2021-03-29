@@ -37,6 +37,11 @@ class File
      */
     private $film;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Episode::class, mappedBy="file", cascade={"persist", "remove"})
+     */
+    private $episode;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,5 +100,21 @@ class File
         return $this;
     }
 
+    public function getEpisode(): ?Episode
+    {
+        return $this->episode;
+    }
+
+    public function setEpisode(Episode $episode): self
+    {
+        // set the owning side of the relation if necessary
+        if ($episode->getFile() !== $this) {
+            $episode->setFile($this);
+        }
+
+        $this->episode = $episode;
+
+        return $this;
+    }
 
 }

@@ -9,6 +9,7 @@ $(document).ready(function () {
             },
             dataType: "text",
             async: true,
+
         });
     });
 });

@@ -34,7 +34,6 @@ class ChoicePageController extends AbstractController
      */
     public function index(SessionInterface $session, Request $request, UserInterface $user, ProfileRepository $profileRepository): Response
     {
-        dump($session->get('profileId'));
         $profiles = $profileRepository->findAllByUser($user);
         return $this->render('profiles/change_profile.html.twig', [
             'profiles' => $profiles

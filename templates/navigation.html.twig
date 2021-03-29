@@ -1,3 +1,7 @@
+{% block javascripts %}
+    <script src="{{ asset('js /changeProfileLanguage.js') }}"></script>
+{% endblock %}
+{% block navigation %}
 <div class="d-flex justify-content-center bg-light position-relative">
 
             <a  style="position: absolute; left: 10px;" class="text-dark display-4 " href="{{ path('main_page') }}">
@@ -10,11 +14,29 @@
                 href="{{ path('all_films_serials',{'typeSearch' : 'serials' }) }}">
                 {% trans%}   Serials {% endtrans%}
             </a>
+
+    <form action="{{ path('change_profile_language') }}">
+    <select   class="ml-3" name="interfaceLanguage" id="interfaceLanguage">
+        <option selected value="{{ app.request.getLocale() }}">{{app.request.getLocale() }}</option>
+        {% if app.request.getLocale() !="en" %}
+            {% if app.request.getLocale()!="pl" %}
+            <option value="en">en</option>
+            <option value="pl">pl</option>
+                {% else %}
+                    <option value="en">en</option>
+                    <option value="fr">fr</option>
+            {% endif %}
+
+        {% else %}
+            <option value="pl">pl</option>
+            <option value="fr">fr</option>
+        {% endif %}
+    </select>
+    </form>
     <a style=" text-decoration: none; width: 60px; height: 60px;text-align: center;align-self: center; align-items: center" href="{{ path('profile_menu') }}" class="ml-5 position-relative rounded-circle text-light bg-dark ">
       Menu
     </a>
 
 
         </div>
-
-
+{% endblock %}

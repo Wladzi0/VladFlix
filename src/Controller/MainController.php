@@ -28,7 +28,7 @@ class MainController extends AbstractController
      */
     public function index(SessionInterface $session, Request $request, UserInterface $user, ProfileRepository $profileRepository, FilmRepository $filmRepository, CategoryRepository $categoryRepository)
     {
-        dump($session->get('profileId'));
+
         if (!$sessionProfile = $session->get('profileId')) {
             return $this->redirectToRoute('select_profile');
         }

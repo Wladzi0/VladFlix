@@ -17,10 +17,6 @@ class EditProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('interfaceLanguage',LanguageType::class,[
-        'placeholder' => false,
-        'required' => false,
-    ])
             ->add('preferredLanguage',LanguageType::class,[
                 'placeholder' => false,
                 'required' => false,

@@ -27,8 +27,6 @@
         </div>
         <div class="col-5">
             {{ form_start(profileForm, {'attr': {'class': 'form-horizontal'}}) }}
-            {{ form_label(profileForm.interfaceLanguage) }}<br>
-            {{ form_widget(profileForm.interfaceLanguage, {'attr': {'class': 'form-control','required': 'true'}}) }}<br>
             {{ form_label(profileForm.preferredLanguage) }}
             {{ form_widget(profileForm.preferredLanguage, {'attr': {'class': 'form-control','required': 'true', 'autocomplete':'off'}}) }}<br>
             {{ form_label(profileForm.preferredAudio) }}<br>
