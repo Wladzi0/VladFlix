@@ -49,6 +49,11 @@ class Serial
      */
     private $yearFinish;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $ageCategory;
+
     public function __construct()
     {
 
@@ -162,6 +167,18 @@ class Serial
     public function setYearFinish(?\DateTimeInterface $yearFinish): self
     {
         $this->yearFinish = $yearFinish;
+
+        return $this;
+    }
+
+    public function getAgeCategory(): ?bool
+    {
+        return $this->ageCategory;
+    }
+
+    public function setAgeCategory(?bool $ageCategory): self
+    {
+        $this->ageCategory = $ageCategory;
 
         return $this;
     }

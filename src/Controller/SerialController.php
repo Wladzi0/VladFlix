@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SerialController extends AbstractController
 {
     /**
-     * @Route("/all-serials-from-category", name="all_serials_from_category")
+     * @Route("/all-serials-from-category/{category}", name="all_serials_from_category")
      */
     public function AllSerialsFromCategory(Request $request, CategoryRepository $categoryRepository, SerialRepository $serialRepository)
     {
@@ -41,12 +41,24 @@ class SerialController extends AbstractController
     }
 
     /**
-     * @Route("/all-seasons-from-serial/{serial}", name="all_seasons_from_serial")
+     * @Route("/serial/{serialId}", name="all_seasons_from_serial")
      */
-    public function allSeasonsFromSerial(Request $request, SeasonRepository $seasonRepository, SerialRepository $serialRepository)
+    public function allSeasonsFromSerial(SessionInterface $session, Request $request, SeasonRepository $seasonRepository, SerialRepository $serialRepository)
     {
-        $serialId = $request->get('serial');
+
+        $serialId = $request->get('serialId');
         $serial = $serialRepository->find($serialId);
+        $dataToCheck=array(
+            'profileAgeCategory'=>$session->get('age'),
+            'contentAgeCategory'=>  $serial->getAgeCategory()
+        );
+        if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('danger', 'You do not have access to this content :(');
+            return $this->redirectToRoute('main_page');
+        }
+
         $allSeasonsFromSerial = $seasonRepository->findBySerial($serialId);
         return $this->render('serials_content/seasons_page.html.twig', [
             'serial' => $serial,
@@ -55,15 +67,23 @@ class SerialController extends AbstractController
     }
 
     /**
-     * @Route ("/show-all-episodes-of-season/{seasonId}", name="all_episodes_of_season")
-     * @param Request $request
-     * @param SeasonRepository $seasonRepository
-     * @param EpisodeRepository $episodeRepository
-     * @param FileRepository $fileRepository
+     * @Route ("/serial/{serialId}/all-episodes-of-season/{seasonId}", name="all_episodes_of_season")
      */
-    public function showEpisodes(Request $request, SeasonRepository $seasonRepository,EpisodeRepository $episodeRepository,SerialRepository $serialRepository)
+    public function showEpisodes(SessionInterface $session, Request $request, SeasonRepository $seasonRepository,EpisodeRepository $episodeRepository,SerialRepository $serialRepository)
     {
         $seasonId=$request->get('seasonId');
+        $serial=$serialRepository->findSerialBySeason($seasonId);
+        $dataToCheck=array(
+            'profileAgeCategory'=>$session->get('age'),
+            'contentAgeCategory'=>  $serial->getAgeCategory()
+        );
+        if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('danger', 'You do not have access to this content :(');
+            return $this->redirectToRoute('main_page');
+        }
+
         $season=$seasonRepository->find($seasonId);
         $serial=$serialRepository->findSerialBySeason($seasonId);
         $episodes=$episodeRepository->findFromSeason($seasonId);
@@ -76,13 +96,23 @@ class SerialController extends AbstractController
     }
 
     /**
-     * @Route("/show-episode/{episodeId}", name="show_episode")
-     * @param Request $request
-     * @param FileRepository $fileRepository
+     * @Route("/serial/{serialId}/season/{seasonId}/episode/{episodeId}", name="show_episode")
      */
-    public function showEpisodeDetail(Request $request,EpisodeRepository $episodeRepository,FileRepository $fileRepository,SessionInterface $session,ProfileRepository $profileRepository)
+    public function showEpisodeDetail(SerialRepository $serialRepository,Request $request,EpisodeRepository $episodeRepository,FileRepository $fileRepository,SessionInterface $session,ProfileRepository $profileRepository)
     {
         $episodeId=$request->get('episodeId');
+        $serial= $serialRepository->find($request->get('serialId'));
+        $dataToCheck=array(
+            'profileAgeCategory'=>$session->get('age'),
+            'contentAgeCategory'=>  $serial->getAgeCategory()
+        );
+        if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('danger', 'You do not have access to this content :(');
+            return $this->redirectToRoute('main_page');
+        }
+
         $profile=$profileRepository->find($session->get('profileId'));
         $episodeData=$episodeRepository->find($episodeId);
         $file = $fileRepository->findFileOfEpisode($episodeId);

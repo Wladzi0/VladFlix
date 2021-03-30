@@ -29,11 +29,13 @@
         {% endfor %}
     </div>
     <div class="container flex-column d-flex pt-5">
-
+        {%  set sessionAge = app.session.get('age') %}
         {% if serials %}
             {% for serial in serials %}
+                {% if sessionAge is null %}
+                {% if serial.ageCategory is null %}
                 <div class="card d-flex flex-row mb-1 ">
-                    <a href="{{ path('all_seasons_from_serial',{serial: serial.id}) }}">  <img  src="{{ asset('images/defaultImage.png') }}"/></a>
+                    <a href="{{ path('all_seasons_from_serial',{serialId: serial.id, serialId: serial.id}) }}">  <img  src="{{ asset('images/defaultImage.png') }}"/></a>
                     <div class="card pl-3 pt-3" style="width: 100%">
                         <p style="color: #000000">{{ serial.name }}
                         </p>
@@ -48,6 +50,46 @@
                     </div>
 
                 </div>
+                {% endif %}
+                {% endif %}
+                {% if sessionAge is same as (false) %}
+                    {% if (serial.ageCategory is null)  or (serial.ageCategory is same as (false)) %}
+                        <div class="card d-flex flex-row mb-1 ">
+                            <a href="{{ path('all_seasons_from_serial',{serialId: serial.id, serialId: serial.id}) }}">  <img  src="{{ asset('images/defaultImage.png') }}" alt=""/></a>
+                            <div class="card pl-3 pt-3" style="width: 100%">
+                                <p style="color: #000000">{{ serial.name }}
+                                </p>
+                                <p style="color: #000000">{{ serial.country|trans }}
+                                </p>
+                                {% if serial.yearFinish %}
+                                    <p style="color: #000000">{{ serial.yearStart| date("Y") }} - {{ serial.yearFinish| date("Y") }}  </p>
+                                {% else %}
+                                    <p style="color: #000000">{{ serial.yearStart| date("Y") }}
+                                    </p>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    {% endif %}
+                {% endif %}
+                {% if sessionAge is same as (true) %}
+                        <div class="card d-flex flex-row mb-1 ">
+                            <a href="{{ path('all_seasons_from_serial',{serialId: serial.id, serialId: serial.id}) }}">  <img  src="{{ asset('images/defaultImage.png') }}"/></a>
+                            <div class="card pl-3 pt-3" style="width: 100%">
+                                <p style="color: #000000">{{ serial.name }}
+                                </p>
+                                <p style="color: #000000">{{ serial.country|trans }}
+                                </p>
+                                {% if serial.yearFinish %}
+                                    <p style="color: #000000">{{ serial.yearStart| date("Y") }} - {{ serial.yearFinish| date("Y") }}  </p>
+                                {% else %}
+                                    <p style="color: #000000">{{ serial.yearStart| date("Y") }}
+                                    </p>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                {% endif %}
             {% endfor %}
         {% endif %}
 

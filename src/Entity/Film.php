@@ -46,6 +46,11 @@ class Film
      */
     private $file;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $ageCategory;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -129,6 +134,18 @@ public function getFile(): ?File
 public function setFile(File $file): self
 {
     $this->file = $file;
+
+    return $this;
+}
+
+public function getAgeCategory(): ?bool
+{
+    return $this->ageCategory;
+}
+
+public function setAgeCategory(?bool $ageCategory): self
+{
+    $this->ageCategory = $ageCategory;
 
     return $this;
 }

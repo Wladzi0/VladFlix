@@ -85,18 +85,21 @@ class CategoryFixtures extends Fixture
         $first->setName("One Night in Miami");
         $first->setCountry('USA');
         $first->setYear(new \DateTime("01-09-2015"));
+        $first->setAgeCategory(0);
         $first->setFile($fileONM);
         $first->addCategory($comedy);
 
         $second = new Film();
         $second->setName("Toy Story 3");
         $second->setCountry('USA');
+        $first->setAgeCategory(null);
         $second->setFile($fileTS3);
         $second->setYear(new \DateTime("01-09-2017"));
         $second->addCategory($comedy);
 
         $third = new Film();
         $third->setName("1917");
+        $third->setAgeCategory(1);
         $third->setCountry('USA');
         $third->setYear(new \DateTime("01-09-2020"));
         $third->setFile($file1917);
@@ -104,6 +107,7 @@ class CategoryFixtures extends Fixture
 
         $firstSerial = new Serial();
         $firstSerial->setName("THE TERROR");
+        $firstSerial->setAgeCategory(1);
         $firstSerial->setCountry('USA');
         $firstSerial->setYearStart(new \DateTime("01-09-2015"));
         $firstSerial->addCategory($comedy);
@@ -144,12 +148,14 @@ class CategoryFixtures extends Fixture
 
         $secondSerial = new Serial();
         $secondSerial->setName("LUPIN");
+        $secondSerial->setAgeCategory(0);
         $secondSerial->setCountry('USA');
         $secondSerial->setYearStart(new \DateTime("01-09-2018"));
         $secondSerial->addCategory($comedy);
 
         $thirdSerial = new Serial();
         $thirdSerial->setName("BIG MOUTH");
+        $thirdSerial->setAgeCategory(0);
         $thirdSerial->setCountry('USA');
         $thirdSerial->setYearStart(new \DateTime("01-09-2029"));
         $thirdSerial->addCategory($horror);
@@ -167,6 +173,7 @@ class CategoryFixtures extends Fixture
 
         $fourthSerial = new Serial();
         $fourthSerial->setName("THE FARE SEASON 5");
+        $fourthSerial->setAgeCategory(null);
         $fourthSerial->setCountry('USA');
         $fourthSerial->setYearStart(new \DateTime("01-09-2013"));
         $fourthSerial->setYearFinish(new \DateTime("01-09-2016"));

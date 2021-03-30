@@ -181,6 +181,7 @@ class ChoicePageController extends AbstractController
 
         if ($session->get('profileId')) {
             $session->remove('profileId');
+            $session->remove('age');
         }
         $pin = $request->get('pin');
         $profile = $request->get('profile');
@@ -214,6 +215,7 @@ class ChoicePageController extends AbstractController
         } else {
 
             $session->set('profileId', $profile);
+            $session->set('age', $profileDB->getAge());
             return $this->redirectToRoute('main_page');
         }
 
@@ -227,6 +229,7 @@ class ChoicePageController extends AbstractController
 
         if ($session->get('profileId')) {
             $session->remove('profileId');
+            $session->remove('age');
         }
         return $this->redirectToRoute('select_profile');
     }

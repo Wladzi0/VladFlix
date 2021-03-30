@@ -19,12 +19,12 @@
     {% include 'navigation.html.twig' %}
 
     <div class="container mt-2 flex-column d-flex pt-5 bg-light">
-        <h2 class="bg-dark"><a href="{{ path('all_seasons_from_serial',{serial: serial.id}) }}">{{ serial.name|trans }}</a>->{{ season.name|trans }}</h2>
+        <h2 class="bg-dark"><a href="{{ path('all_seasons_from_serial',{serialId: serial.id, serialId: serial.id}) }}">{{ serial.name|trans }}</a>->{{ season.name|trans }}</h2>
         {% set episodesCount=episodes|length %}
         <p class="bg-dark">All episodes ({{ episodesCount }})</p>
         {% for episode in episodes %}
 
-            <a class="pl-4 mt-4 text-dark col-9" href="{{ path('show_episode', {'episodeId' : episode.id}) }}">
+            <a class="pl-4 mt-4 text-dark col-9" href="{{ path('show_episode', {'serialId': serial.id,'seasonId': season.id,'episodeId' : episode.id}) }}">
 
                 {{ episode.name|trans}}
 

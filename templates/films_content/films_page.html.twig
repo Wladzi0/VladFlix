@@ -29,9 +29,12 @@
         {% endfor %}
     </div>
     <div class="container flex-column d-flex pt-5">
-
+    {%  set sessionAge = app.session.get('age') %}
             {% if films %}
                 {% for film in films %}
+
+                    {% if sessionAge is null %}
+                        {% if film.ageCategory is null %}
             <div class="card d-flex flex-row mb-1 ">
                     <img src="" alt="">
                     <a href="{{ path('film_page', {'filmId': film.id}) }}">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
@@ -45,6 +48,43 @@
                 </div>
 
             </div>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if sessionAge is same as (false) %}
+                        {% if (film.ageCategory is null)  or (film.ageCategory is same as (false)) %}
+                            <div class="card d-flex flex-row mb-1 ">
+                                <img src="" alt="">
+                                <a href="{{ path('film_page', {'filmId': film.id}) }}">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
+                                <div class="card pl-3 pt-3" style="width: 100%">
+                                    <p style="color: #000000">{{ film.name|trans }}
+                                    </p>
+                                    <p style="color: #000000">{{ film.country|trans }}
+                                    </p>
+                                    <p style="color: #000000">{{ film.year| date("Y") }}
+                                    </p>
+                                </div>
+
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    {% if sessionAge is same as (true) %}
+
+                            <div class="card d-flex flex-row mb-1 ">
+                                <img src="" alt="">
+                                <a href="{{ path('film_page', {'filmId': film.id}) }}">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
+                                <div class="card pl-3 pt-3" style="width: 100%">
+                                    <p style="color: #000000">{{ film.name|trans }}
+                                    </p>
+                                    <p style="color: #000000">{{ film.country|trans }}
+                                    </p>
+                                    <p style="color: #000000">{{ film.year| date("Y") }}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                    {% endif %}
                 {% endfor %}
             {% endif %}
 

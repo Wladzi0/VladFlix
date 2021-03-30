@@ -9,6 +9,7 @@ use App\Repository\ProfileRepository;
 use App\Repository\SerialRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -22,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FilmController extends AbstractController
 {
     /**
-     * @Route("/all-films-from-category", name="all_films_from_category")
+     * @Route("/all-films-from-category/{category}", name="all_films_from_category")
      */
     public function AllFilmsFromCategory(Request $request, CategoryRepository $categoryRepository, FilmRepository $filmRepository)
     {
@@ -42,12 +43,23 @@ class FilmController extends AbstractController
      */
     public function film(SessionInterface $session, Request $request, FilmRepository $filmRepository, FileRepository $fileRepository, ProfileRepository $profileRepository)
     {
-        $filmRequest = $request->get('filmId');
         $profile = $profileRepository->find($session->get('profileId'));
-        dump($profile);
-        $file = $fileRepository->findFileOfFilm($filmRequest);
-        $filmData = $filmRepository->find($filmRequest);
+        $filmRequest = $request->get('filmId');
 
+        $filmData = $filmRepository->find($filmRequest);
+        $dataToCheck=array(
+          'profileAgeCategory'=>$profile->getAge(),
+          'contentAgeCategory'=>  $filmData->getAgeCategory()
+        );
+
+
+        if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('danger', 'You do not have access to this content :(');
+            return $this->redirectToRoute('main_page');
+        }
+        $file = $fileRepository->findFileOfFilm($filmRequest);
         return $this->render('films_content/film_page.html.twig', [
             'profile' => $profile,
             'file' => $file,
