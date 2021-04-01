@@ -6,12 +6,9 @@ use App\Repository\CategoryRepository;
 use App\Repository\FileRepository;
 use App\Repository\FilmRepository;
 use App\Repository\ProfileRepository;
-use App\Repository\SerialRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -43,9 +40,11 @@ class FilmController extends AbstractController
      */
     public function film(SessionInterface $session, Request $request, FilmRepository $filmRepository, FileRepository $fileRepository, ProfileRepository $profileRepository)
     {
+
         $profile = $profileRepository->find($session->get('profileId'));
         $filmRequest = $request->get('filmId');
-
+        dump($profile->getPreferredLanguage());
+        dump($profile->getPreferredAudio());
         $filmData = $filmRepository->find($filmRequest);
         $dataToCheck=array(
           'profileAgeCategory'=>$profile->getAge(),

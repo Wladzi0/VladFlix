@@ -2,12 +2,12 @@ $(document).ready(function () {
     $("#preferredSubtitles").on('change', function () {
         let preferredSubtitles = $(this).val();
         let subtitles = $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/profile-preferences",
             data: {
                 'subtitles': preferredSubtitles
             },
-            dataType: "text",
+            dataType: "JSON",
             async: true,
         });
     });

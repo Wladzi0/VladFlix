@@ -2,12 +2,12 @@ $(document).ready(function () {
     $("#preferredAudio").on('change', function () {
         let preferredAudio = $(this).val();
         let audio = $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/profile-preferences",
             data: {
                 'audio': preferredAudio
             },
-            dataType: "text",
+            dataType: "JSON",
             async: true,
 
         });

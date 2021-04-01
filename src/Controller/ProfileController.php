@@ -68,7 +68,9 @@ class ProfileController extends AbstractController
             $profile->setInterfaceLanguage($changedLanguage);
             $this->getDoctrine()->getManager()->flush();
         }
-        return new Response();
+
+        $referer = $request->headers->get('referer');
+        return new RedirectResponse($referer);
 
     }
 

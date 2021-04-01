@@ -8,6 +8,7 @@ use App\Repository\FilmRepository;
 use App\Repository\ProfileRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -33,11 +34,13 @@ class PreferencesController extends AbstractController
         }
         if ($selectedAudio = $request->get('audio')) {
             $profile->setPreferredAudio($selectedAudio);
+
         }
         $em = $this->getDoctrine()->getManager();
         $em->persist($profile);
         $em->flush();
-        return new Response();
+
+        return new JsonResponse(['success'=>1]);
     }
 
 }

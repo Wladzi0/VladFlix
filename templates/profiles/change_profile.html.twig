@@ -17,7 +17,11 @@
           {% endfor %}
       {% endfor %}
   </div>
+    <a style="position: absolute; top: 100px; right: 20px;"class=" bg-light" href="{{ path('app_logout') }}">Logout</a>
+    {% if is_granted('ROLE_ADMIN') %}
 
+        <a style="position: absolute; top:20px; right: 20px;" href="{{ path('admin') }}"><i class="fas fa-user-shield bg-light display-4"></i></a>
+    {% endif %}
     <div class="container d-flex justify-content-center">
 
         <div class="" style="margin-top: 300px; ">
