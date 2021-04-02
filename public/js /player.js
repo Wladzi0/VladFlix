@@ -1,4 +1,5 @@
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function() {
+    let curStarTime=document.querySelector('#js-cur-time').dataset.startTime;
     let isPlaying = false;
     let duration= new Date(0);
     let videoHistoryData;
@@ -7,14 +8,15 @@ $(document).ready(function () {
     const paramsString=window.location.search;
     const urlParams= new URLSearchParams(paramsString);
     const filmId=urlParams.get("filmId");
-    let  start= document.getElementById('start');
+
     duration.setUTCHours(data[0],data[1],data[2],data[3]);
+    let  start= document.getElementById('start');
     document.getElementById("max_time").innerHTML = duration.toUTCString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
 
     if (start){
             start.addEventListener('click', function () {
-
                if (isPlaying===true){
+
                pauseTime();
                 }
                else{
@@ -22,12 +24,24 @@ $(document).ready(function () {
                }
 
 
-
             } );
         }
 
         function startTime(){
-            time.setMilliseconds(0);
+
+        if (curStarTime === "0"){
+            time.setMilliseconds(1000);
+        }
+        else{
+            let r = confirm("Do you want to continue watching?");
+            if (r=== true) {
+                time.setMilliseconds(curStarTime);
+            }
+            else{
+                time.setMilliseconds(1000);
+            }
+        }
+
             setInterval(updateTime,1000);
             videoHistoryData=setInterval(videoSavingData, 4000);
             start.classList.replace('fa-play', 'fa-pause');

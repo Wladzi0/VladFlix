@@ -54,7 +54,7 @@ class FilmController extends AbstractController
         $file = $fileRepository->findFileOfFilm($filmRequest);
         $CurVideoData=$timeDataRepository->findByFileAndProfile($file->getId(),$profile->getId());
         if($CurVideoData){
-            dump($CurVideoData);
+            dump($CurVideoData->getCurTime());
         }
 
         $filmData = $filmRepository->find($filmRequest);
@@ -72,6 +72,7 @@ class FilmController extends AbstractController
         }
         $file = $fileRepository->findFileOfFilm($filmRequest);
         return $this->render('films_content/film_page.html.twig', [
+            'curVideoData'=>$CurVideoData->getCurTime(),
             'profile' => $profile,
             'file' => $file,
             'filmData' => $filmData
