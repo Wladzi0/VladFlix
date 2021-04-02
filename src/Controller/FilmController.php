@@ -52,18 +52,20 @@ class FilmController extends AbstractController
         $profile = $profileRepository->find($session->get('profileId'));
         $filmRequest = $request->get('filmId');
         $file = $fileRepository->findFileOfFilm($filmRequest);
-        $CurVideoData=$timeDataRepository->findByFileAndProfile($file->getId(),$profile->getId());
-        if($CurVideoData){
-            dump($CurVideoData->getCurTime());
-        }
+        $videoData=$timeDataRepository->findByFileAndProfile($file->getId(),$profile->getId());
+        if($videoData===null){
 
+            $curVideoData="0";
+        }
+        else{
+            $curVideoData=$videoData->getCurTime();
+    }
+        dump($curVideoData);
         $filmData = $filmRepository->find($filmRequest);
         $dataToCheck = array(
             'profileAgeCategory' => $profile->getAge(),
             'contentAgeCategory' => $filmData->getAgeCategory()
         );
-
-
         if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
             $request->getSession()
                 ->getFlashBag()
@@ -72,7 +74,7 @@ class FilmController extends AbstractController
         }
         $file = $fileRepository->findFileOfFilm($filmRequest);
         return $this->render('films_content/film_page.html.twig', [
-            'curVideoData'=>$CurVideoData->getCurTime(),
+            'curVideoData'=>$curVideoData,
             'profile' => $profile,
             'file' => $file,
             'filmData' => $filmData

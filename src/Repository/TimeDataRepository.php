@@ -29,6 +29,6 @@ class TimeDataRepository extends ServiceEntityRepository
             ->setParameter('file',$fileId)
             ->setParameter('profile',$profileId)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 }
