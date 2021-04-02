@@ -24,8 +24,12 @@ class ProfileController extends AbstractController
      */
     public function profileMenu(SessionInterface $session, ProfileRepository $profileRepository)
     {
-        $currentProfile = $session->get('profileId');
-        $profileData = $profileRepository->find($currentProfile);
+        if($currentProfile = $session->get('profileId')){
+            $profileData = $profileRepository->find($currentProfile);
+        }
+        else{
+            return $this->redirectToRoute('select_profile');
+        }
 
         return $this->render('profileMenu/settings.html.twig', [
             'profile' => $profileData]);
@@ -36,7 +40,7 @@ class ProfileController extends AbstractController
      */
     public function editSettings(SessionInterface $session, Request $request, ProfileRepository $profileRepository)
     {
-        $currentProfile = $session->get('profileId');
+        if($currentProfile = $session->get('profileId')){
         $profileData = $profileRepository->find($currentProfile);
         $profileForm = $this->createForm(EditProfileType::class, $profileData);
         $profileForm->handleRequest($request);
@@ -50,6 +54,10 @@ class ProfileController extends AbstractController
 
             return $this->redirectToRoute('profile_menu');
 
+        }
+        }
+        else{
+            return $this->redirectToRoute('select_profile');
         }
         return $this->render('profileMenu/editSettings.html.twig', [
 
