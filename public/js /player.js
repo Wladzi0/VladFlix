@@ -62,8 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function pauseTime(){
 
         start.classList.replace('fa-pause', 'fa-play');
-        document.getElementById("current_time").value = time.getSeconds() -1;
-
+        clearInterval(videoHistoryData);
         isPlaying = false;
 
     }
