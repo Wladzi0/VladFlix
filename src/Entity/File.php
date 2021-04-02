@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class File
      * @ORM\OneToOne(targetEntity=Episode::class, mappedBy="file", cascade={"persist", "remove"})
      */
     private $episode;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=TimeData::class, mappedBy="file")
+     */
+    private $timeData;
+
+    public function __construct()
+    {
+        $this->timeData = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -113,6 +125,33 @@ class File
         }
 
         $this->episode = $episode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TimeData[]
+     */
+    public function getTimeData(): Collection
+    {
+        return $this->timeData;
+    }
+
+    public function addTimeData(TimeData $timeData): self
+    {
+        if (!$this->timeData->contains($timeData)) {
+            $this->timeData[] = $timeData;
+            $timeData->addFile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTimeData(TimeData $timeData): self
+    {
+        if ($this->timeData->removeElement($timeData)) {
+            $timeData->removeFile($this);
+        }
 
         return $this;
     }

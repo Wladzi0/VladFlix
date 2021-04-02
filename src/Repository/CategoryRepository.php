@@ -23,7 +23,7 @@ class CategoryRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->select('c')
             ->leftJoin('c.films', 'f')
-//            ->leftJoin('c.serials', 's')
+            ->leftJoin('c.serials', 's')
             ->where('f.categories = :categories' )
             ->setParameter('categories', $category)
             ->getQuery()

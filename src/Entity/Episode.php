@@ -34,7 +34,7 @@ class Episode
     private $season;
 
     /**
-     * @ORM\OneToOne(targetEntity=File::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=File::class, inversedBy="episode", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $file;

@@ -1,40 +1,88 @@
-let playing_song=false;
-let previous= document.querySelector('#previous');
-let next= document.querySelector('#next');
-let duration= new Date(0);
-let timer;
-let autoplay =false;
-let track= document.createElement('audio');
+$(document).ready(function () {
+    let isPlaying = false;
+    let duration= new Date(0);
+    let videoHistoryData;
+    let time=new Date(0);
+    let data = [0o0,0o0,30,0];
+    const paramsString=window.location.search;
+    const urlParams= new URLSearchParams(paramsString);
+    const filmId=urlParams.get("filmId");
+    let  start= document.getElementById('start');
+    duration.setUTCHours(data[0],data[1],data[2],data[3]);
+    document.getElementById("max_time").innerHTML = duration.toUTCString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+
+    if (start){
+            start.addEventListener('click', function () {
+
+               if (isPlaying===true){
+               pauseTime();
+                }
+               else{
+                   startTime();
+               }
 
 
-function justPlay()
-{
-    track.src="http://media.w3.org/2010/05/sound/sound_90.mp3";
-    alert(track.src);
-    track.load();
-    if(playing_song===false){
-        playSong();
+
+            } );
+        }
+
+        function startTime(){
+            time.setMilliseconds(0);
+            setInterval(updateTime,1000);
+            videoHistoryData=setInterval(videoSavingData, 4000);
+            start.classList.replace('fa-play', 'fa-pause');
+            isPlaying = true;
+        }
+        function updateTime(){
+            if(time.toUTCString() === duration.toUTCString()) {
+                videoSavingData(true);
+                stopTime();
+            }
+            if(isPlaying === true) {
+                document.getElementById("current_time").innerHTML = time.toUTCString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+                document.getElementById("duration_slider").value = time.getSeconds()+1;
+                time.setSeconds(time.getSeconds() +1);
+                document.getElementById("max_time").value = time.getTime();
+            }
+        }
+    function pauseTime(){
+
+        start.classList.replace('fa-pause', 'fa-play');
+        document.getElementById("current_time").value = time.getSeconds() -1;
+
+        isPlaying = false;
+
     }
-    else{
-        pauseSong();
+    function stopTime()
+    {
+        time.setUTCHours(0,0,0,0);
+        start.classList.replace('fa-pause', 'fa-play');
+        document.getElementById("current_time").innerHTML = time.toUTCString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+        isPlaying = false;
+        clearInterval(videoHistoryData);
+        document.getElementById("duration_slider").value = 0;
     }
-    // document.getElementById("play").style.display = "none";
-    // document.getElementById("pause").style.display = "block";
-    // track.play();
-    // isPaused = false;
-}
-// function pause()
-// {
-//     track.play();
-//     document.getElementById("play").style.display = "block";
-//     document.getElementById("pause").style.display = "none";
-//     isPaused = true;
-// }
-function playSong(){
-    track.play();
-    playing_song=true;
-}
-function pauseSong(){
-    track.pause();
-    playing_song=true;
-}
+        function videoSavingData(isFinished= false){
+            let curTime = time.getTime();
+            if(isFinished) {
+                curTime = 0;
+            }
+        $.ajax({
+                type: "POST",
+                url: "/timeDataSaving",
+                data: {
+                    'filmId': filmId,
+                    'isFinished': isFinished,
+                    'curTime': curTime,
+                },
+                dataType: "JSON",
+                async: true,
+
+            });
+        }
+
+});
+
+
+
+

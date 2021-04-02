@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProfileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -71,6 +73,16 @@ class Profile
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $preferredAudio;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=TimeData::class, mappedBy="profile")
+     */
+    private $timeData;
+
+    public function __construct()
+    {
+        $this->timeData = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -178,6 +190,33 @@ class Profile
     public function setPreferredAudio(?string $preferredAudio): self
     {
         $this->preferredAudio = $preferredAudio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TimeData[]
+     */
+    public function getTimeData(): Collection
+    {
+        return $this->timeData;
+    }
+
+    public function addTimeData(TimeData $timeData): self
+    {
+        if (!$this->timeData->contains($timeData)) {
+            $this->timeData[] = $timeData;
+            $timeData->addProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTimeData(TimeData $timeData): self
+    {
+        if ($this->timeData->removeElement($timeData)) {
+            $timeData->removeProfile($this);
+        }
 
         return $this;
     }

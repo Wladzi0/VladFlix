@@ -7,9 +7,3 @@ body {
     background-color: #24252A;
     color: white;
 }
-#play{
-    display:block;
-}
-#pause{
-    display:none;
-}

@@ -63,23 +63,19 @@
                             </select>
                             <p style="color: #000000; margin-top: 40px;">{{ file.path }}</p>
                         </div>
-                         <div class=" bg-info player full-width ">
+                        <div class="stopwatch d-flex flex-row mb-4">
+                            <div class="controls mr-2">
+                                <button class="fas fa-play start " id="start" ></button>
 
-
-                             <div class="left float-left ">
-                                <button id="play"  onclick="justPlay()"><i class="fas fa-play"></i></button>
-                                <button id="pause"  onclick="pause()"><i class="fas fa-pause"></i></button></div>
-                            <div class="float-left">
-                                <input type="range" min="0" value="0" id=duration_slider  onchange="change_duration()" >
                             </div>
-                        <div class="right">
-                            <button id="previous" aria-hidden="true"><i class="fas fa-step-backward"></i></button>
-                            <button id="next" aria-hidden="true"><i class="fas fa-step-forward"></i></button>
-                            <button id="auto"  onclick="autoplay()">Auto switch</button>
-                        </div>
-                         </div>
-                    </div>
+                                <span class="bg-info mr-2" id="current_time">00:00:00</span>
+                            <input  class="mr-2" style="width: 300px; " type="range" min="0" value="0" id="duration_slider" >
+                            <span class="bg-dark" id="max_time">00:00:00</span>
 
+
+                            </div>
+
+                    </div>
 
         {% endif %}
 

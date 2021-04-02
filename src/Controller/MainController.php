@@ -24,19 +24,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class MainController extends AbstractController
 {
     /**
-    /**
      * @Route("/", name="main_page")
      */
-    public function index(SessionInterface $session, Request $request, UserInterface $user, ProfileRepository $profileRepository, FilmRepository $filmRepository, CategoryRepository $categoryRepository)
+    public function index(FilmRepository $filmRepository, SerialRepository $serialRepository, SessionInterface $session, Request $request, UserInterface $user, ProfileRepository $profileRepository, CategoryRepository $categoryRepository)
     {
         dump($session->get('age'));
         if (!$sessionProfile = $session->get('profileId')) {
             return $this->redirectToRoute('select_profile');
         }
         $categories = $categoryRepository->findAll();
-
+        $allFilms = $filmRepository->findAll();
+        $allSerials = $serialRepository->findAll();
         return $this->render('main_content/main_page.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'allFilms' => $allFilms,
+            'allSerials' => $allSerials
         ]);
     }
 
@@ -64,12 +66,15 @@ class MainController extends AbstractController
     /**
      * @Route("/all-Films-Serials", name="all_films_serials")
      */
-    public function allFilms(CategoryRepository $categoryRepository, SessionInterface $session, Request $request, FilmRepository $filmRepository, SerialRepository $serialRepository): Response
+    public function allFilms(ProfileRepository $profileRepository, CategoryRepository $categoryRepository, SessionInterface $session, Request $request, FilmRepository $filmRepository, SerialRepository $serialRepository): Response
     {
         $typeSearch = $request->get('typeSearch');
         $categories = $categoryRepository->findAll();
+
         if ($typeSearch === "films") {
+
             $films = $filmRepository->findAll();
+
             return $this->render('films_content/films_page.html.twig', [
                 'films' => $films,
                 'categories' => $categories

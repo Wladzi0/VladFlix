@@ -23,7 +23,7 @@ class FilmRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('f')
             ->leftJoin('f.categories', 'c')
-            ->where('c.id = :category' )
+            ->where('c.id = :category')
             ->setParameter('category', $category)
             ->getQuery()
             ->getResult();

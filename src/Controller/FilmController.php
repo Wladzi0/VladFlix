@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\TimeData;
 use App\Repository\CategoryRepository;
 use App\Repository\FileRepository;
 use App\Repository\FilmRepository;
 use App\Repository\ProfileRepository;
+use App\Repository\TimeDataRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -36,19 +40,27 @@ class FilmController extends AbstractController
     }
 
     /**
-     * @Route("/film/{filmId}", name="film_page", methods={"GET","POST"}, requirements={"id"="\d+"})
+     * @Route("/film", name="film_page", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function film(SessionInterface $session, Request $request, FilmRepository $filmRepository, FileRepository $fileRepository, ProfileRepository $profileRepository)
+    public function film(TimeDataRepository $timeDataRepository, SessionInterface $session, Request $request, FilmRepository $filmRepository, FileRepository $fileRepository, ProfileRepository $profileRepository)
     {
+
+        if (!$session->get('profileId')) {
+            return $this->redirectToRoute('select_profile');
+        }
 
         $profile = $profileRepository->find($session->get('profileId'));
         $filmRequest = $request->get('filmId');
-        dump($profile->getPreferredLanguage());
-        dump($profile->getPreferredAudio());
+        $file = $fileRepository->findFileOfFilm($filmRequest);
+        $CurVideoData=$timeDataRepository->findByFileAndProfile($file->getId(),$profile->getId());
+        if($CurVideoData){
+            dump($CurVideoData);
+        }
+
         $filmData = $filmRepository->find($filmRequest);
-        $dataToCheck=array(
-          'profileAgeCategory'=>$profile->getAge(),
-          'contentAgeCategory'=>  $filmData->getAgeCategory()
+        $dataToCheck = array(
+            'profileAgeCategory' => $profile->getAge(),
+            'contentAgeCategory' => $filmData->getAgeCategory()
         );
 
 
@@ -64,5 +76,41 @@ class FilmController extends AbstractController
             'file' => $file,
             'filmData' => $filmData
         ]);
+
+    }
+
+    /**
+     * @Route("/timeDataSaving",name="timeDataSaving")
+     */
+    public function videoSaving(TimeDataRepository $timeDataRepository,Session $session,Request $request,FileRepository $fileRepository,ProfileRepository $profileRepository)
+    {
+        $filmId= $request->get('filmId');
+        $isFinished= $request->get('isFinished');
+        $curTime= $request->get('curTime');
+        $file = $fileRepository->findFileOfFilm($filmId);
+        $profile = $profileRepository->find($session->get('profileId'));
+        $CurVideoData=$timeDataRepository->findByFileAndProfile($file->getId(),$profile->getId());
+
+        if(!$CurVideoData){
+            $videoData= new TimeData();
+            $videoData->setIsFinished($isFinished);
+            $videoData->setCurTime($curTime);
+            $videoData->addFile($file);
+            $videoData->addProfile($profile);
+            $em= $this->getDoctrine()->getManager();
+            $em->persist($videoData);
+            $em->flush();
+        }
+        else{
+            $CurVideoData->setIsFinished($isFinished);
+            $CurVideoData->setCurTime($curTime);
+            $CurVideoData->addFile($file);
+            $CurVideoData->addProfile($profile);
+            $em= $this->getDoctrine()->getManager();
+            $em->persist($CurVideoData);
+            $em->flush();
+        }
+
+        return new Response();
     }
 }
