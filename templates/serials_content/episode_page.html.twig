@@ -8,6 +8,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js /profileSubtitles.js') }}"></script>
+    <script src="{{ asset('js /playerForSerial.js') }}"></script>
     <script src="{{ asset('js /profileAudio.js') }}"></script>
 {% endblock %}
 {% block body %}
@@ -15,55 +16,70 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
-                {{ message|trans}}
+                {{ message|trans }}
             </div>
         {% endfor %}
     {% endfor %}
     {% include 'navigation.html.twig' %}
 
-<div class="container flex-column d-flex pt-5">
+    <div class="container flex-column d-flex pt-5">
 
-    {% if episodeData %}
+        {% if episodeData %}
 
 
-    <div class="card d-flex flex-row mb-1 ">
-        <img  alt="" src="{{ asset('images/defaultImage.png') }}"/>
-        <div class="card pl-3 pt-3" style="width: 100%">
-            <p style="color: #000000">{{ episodeData.name|trans }}
-            </p>
-            <p style="color: #000000">{{ episodeData.year| date("Y") }}
-            </p>
-            </div>
             <div class="card d-flex flex-col mb-1 ">
-                <label style="color: black" for="preferredSubtitles">{% trans  %}Choose a language of subtitles{% endtrans  %}:</label>
+                <img alt="" width="300px;" height="300px;"  src="{{ asset('images/defaultImage.png') }}"/>
+                <div class="card pl-3 pt-3" style="width: 100%">
+                    <p style="color: #000000">{{ episodeData.name|trans }}
+                    </p>
+                    <p style="color: #000000">{{ episodeData.year| date("Y") }}
+                    </p>
+                </div>
+                <div class="card d-flex flex-col mb-1 ">
+                    <label style="color: black"
+                           for="preferredSubtitles">{% trans %}Choose a language of subtitles{% endtrans %}:</label>
 
-                <select name="preferredSubtitles" id="preferredSubtitles">
-                    {% if profile.preferredLanguage!="en" %}
-                        <option selected value="{{ profile.preferredLanguage }}">{{ profile.preferredLanguage }}</option>
-                        <option value="{{ file.subtitle }}">{{ file.subtitle }}</option>
-                    {% else %}
-                        <option selected value="{{ file.subtitle }}">{{ file.subtitle }}</option>
-                        <option value="ar">ar</option>
-                    {% endif %}
+                    <select name="preferredSubtitles" id="preferredSubtitles">
+                        {% if profile.preferredLanguage!="en" %}
+                            <option selected
+                                    value="{{ profile.preferredLanguage }}">{{ profile.preferredLanguage }}</option>
+                            <option value="{{ file.subtitle }}">{{ file.subtitle }}</option>
+                        {% else %}
+                            <option selected value="{{ file.subtitle }}">{{ file.subtitle }}</option>
+                            <option value="ar">ar</option>
+                        {% endif %}
 
-                </select>
-                <label  style="color: black" for="preferredAudio">{% trans  %}Choose a language of audio{% endtrans  %}:</label>
+                    </select>
+                    <label style="color: black" for="preferredAudio">{% trans %}Choose a language of audio{% endtrans %}
+                        :</label>
 
-                <select name="preferredAudio" id="preferredAudio">
-                    {% if profile.preferredAudio!="en" %}
-                        <option selected value="{{ profile.preferredAudio }}">{{ profile.preferredAudio }}</option>
-                        <option value="{{ file.audio }}">{{ file.audio }}</option>
-                    {% else %}
-                        <option selected value="{{ file.audio }}">{{ file.audio }}</option>
-                        <option value="ar">ar</option>
-                    {% endif %}
-                </select>
-                <p style="color: #000000; margin-top: 40px;">{{ file.path }}</p>
+                    <select name="preferredAudio" id="preferredAudio">
+                        {% if profile.preferredAudio!="en" %}
+                            <option selected value="{{ profile.preferredAudio }}">{{ profile.preferredAudio }}</option>
+                            <option value="{{ file.audio }}">{{ file.audio }}</option>
+                        {% else %}
+                            <option selected value="{{ file.audio }}">{{ file.audio }}</option>
+                            <option value="ar">ar</option>
+                        {% endif %}
+                    </select>
+                    <p style="color: #000000; margin-top: 40px;">{{ file.path }}</p>
+                </div>
+                <div class="stopwatch d-flex flex-row mb-4">
+                    <input type="hidden" id="js-cur-time" data-start-time="{{ curVideoData }}">
+                    <div class="controls mr-2">
+                        <button class="fas fa-play start " id="start"></button>
+
+                    </div>
+
+                    <span class="bg-info mr-2" id="current_time">00:00:00</span>
+                    <input class="mr-2" style="width: 300px; " type="range" min="0" value="0" id="duration_slider">
+                    <span class="bg-dark" id="max_time">00:00:00</span>
+
+                </div>
             </div>
-        </div>
 
         {% endif %}
 
     </div>
 
-    {% endblock %}
+{% endblock %}

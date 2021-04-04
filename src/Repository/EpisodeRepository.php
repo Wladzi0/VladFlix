@@ -22,9 +22,9 @@ class EpisodeRepository extends ServiceEntityRepository
     public function findFromSeason($season)
     {
         return $this->createQueryBuilder('e')
-            ->leftJoin('e.season','s')
+            ->leftJoin('e.season', 's')
             ->where('s.id = :s')
-            ->setParameter('s',$season)
+            ->setParameter('s', $season)
             ->getQuery()
             ->getResult();
     }

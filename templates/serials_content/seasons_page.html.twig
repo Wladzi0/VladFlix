@@ -12,24 +12,24 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
-                {{ message}}
+                {{ message }}
             </div>
         {% endfor %}
     {% endfor %}
     {% include 'navigation.html.twig' %}
 
     <div class="container flex-column d-flex pt-5">
-    <h2>{{ serial.name|trans }}</h2>
+        <h2>{{ serial.name|trans }}</h2>
         {% if seasons %}
             {% for season in seasons %}
                 <div class="card d-flex flex-row mb-1 ">
                     <a href="{{ path('all_episodes_of_season',{serialId: serial.id,'seasonId': season.id}) }}">
-                    <div class="card pl-3 pt-3" style="width: 100%">
-                        <p style="color: #000000">{{ season.name }}
-                        </p>
-                        <p style="color: #000000">{{ season.year| date("Y") }}
-                        </p>
-                    </div>
+                        <div class="card pl-3 pt-3" style="width: 100%">
+                            <p style="color: #000000">{{ season.name }}
+                            </p>
+                            <p style="color: #000000">{{ season.year| date("Y") }}
+                            </p>
+                        </div>
                     </a>
                 </div>
             {% endfor %}

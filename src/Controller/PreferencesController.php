@@ -40,7 +40,7 @@ class PreferencesController extends AbstractController
         $em->persist($profile);
         $em->flush();
 
-        return new JsonResponse(['success'=>1]);
+        return new JsonResponse(['success' => 1]);
     }
 
 }

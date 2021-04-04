@@ -75,16 +75,17 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("duration_slider").value = 0;
     }
 
-    function videoSavingData(isFinished = false) {
+    function videoSavingData(isFinished = false, isSerial= false) {
         let curTime = time.getTime();
         if (isFinished) {
             curTime = 0;
         }
         $.ajax({
             type: "POST",
-            url: "/timeDataSaving",
+            url: "/time-data-file-saving",
             data: {
-                'filmId': filmId,
+                'isSerial': isSerial,
+                'filmOrEpisodeId': filmId,
                 'isFinished': isFinished,
                 'curTime': curTime,
             },

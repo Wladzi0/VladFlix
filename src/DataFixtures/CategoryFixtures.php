@@ -51,31 +51,31 @@ class CategoryFixtures extends Fixture
         $western = new Category();
         $western->setName("Western");
 
-        $file1917= new File();
+        $file1917 = new File();
         $file1917->setAudio('en');
         $file1917->setSubtitle('en');
         $file1917->setPath('example.com///');
 
-        $fileONM= new File();
+        $fileONM = new File();
         $fileONM->setAudio('en');
         $fileONM->setSubtitle('en');
         $fileONM->setPath('ONMexample.com///');
 
-        $fileTS3= new File();
+        $fileTS3 = new File();
         $fileTS3->setAudio('en');
         $fileTS3->setSubtitle('en');
         $fileTS3->setPath('TS3example.com///');
 
 
-        $fileEp1= new File();
+        $fileEp1 = new File();
         $fileEp1->setAudio('en');
         $fileEp1->setSubtitle('en');
         $fileEp1->setPath('Ep1example.com///');
-        $fileEp2= new File();
+        $fileEp2 = new File();
         $fileEp2->setAudio('en');
         $fileEp2->setSubtitle('en');
         $fileEp2->setPath('Ep2example.com///');
-        $fileEp3= new File();
+        $fileEp3 = new File();
         $fileEp3->setAudio('en');
         $fileEp3->setSubtitle('en');
         $fileEp3->setPath('Ep3example.com///');
@@ -112,38 +112,37 @@ class CategoryFixtures extends Fixture
         $firstSerial->setYearStart(new \DateTime("01-09-2015"));
         $firstSerial->addCategory($comedy);
 
-        $seasonTT1=new Season();
+        $seasonTT1 = new Season();
         $seasonTT1->setSerial($firstSerial);
         $seasonTT1->setName("Season 1");
         $seasonTT1->setYear(new \DateTime("01-09-2015"));
 
-        $seasonTT1Ep1=new Episode();
+        $seasonTT1Ep1 = new Episode();
         $seasonTT1Ep1->setName("Sunrise");
         $seasonTT1Ep1->setYear(new \DateTime("01-09-2015"));
         $seasonTT1Ep1->setFile($fileEp1);
         $seasonTT1Ep1->setSeason($seasonTT1);
-        $seasonTT1Ep2=new Episode();
+        $seasonTT1Ep2 = new Episode();
         $seasonTT1Ep2->setName("Midday");
         $seasonTT1Ep2->setYear(new \DateTime("01-10-2015"));
         $seasonTT1Ep2->setSeason($seasonTT1);
         $seasonTT1Ep2->setFile($fileEp2);
-        $seasonTT1Ep3=new Episode();
+        $seasonTT1Ep3 = new Episode();
         $seasonTT1Ep3->setName("Sunset");
         $seasonTT1Ep3->setYear(new \DateTime("01-11-2015"));
         $seasonTT1Ep3->setSeason($seasonTT1);
         $seasonTT1Ep3->setFile($fileEp3);
 
 
-        $seasonTT2=new Season();
+        $seasonTT2 = new Season();
         $seasonTT2->setSerial($firstSerial);
         $seasonTT2->setName("Season 2");
         $seasonTT2->setYear(new \DateTime("01-12-2015"));
 
-        $seasonTT3=new Season();
+        $seasonTT3 = new Season();
         $seasonTT3->setSerial($firstSerial);
         $seasonTT3->setName("Season 3");
         $seasonTT3->setYear(new \DateTime("01-09-2016"));
-
 
 
         $secondSerial = new Serial();
@@ -160,12 +159,12 @@ class CategoryFixtures extends Fixture
         $thirdSerial->setYearStart(new \DateTime("01-09-2029"));
         $thirdSerial->addCategory($horror);
 
-        $seasonBM1=new Season();
+        $seasonBM1 = new Season();
         $seasonBM1->setSerial($thirdSerial);
         $seasonBM1->setName("Season 1");
         $seasonBM1->setYear(new \DateTime("01-09-2029"));
 
-        $seasonBM2=new Season();
+        $seasonBM2 = new Season();
         $seasonBM2->setSerial($thirdSerial);
         $seasonBM2->setName("Season 2");
         $seasonBM2->setYear(new \DateTime("01-09-2029"));

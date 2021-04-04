@@ -22,18 +22,19 @@ class FileRepository extends ServiceEntityRepository
     public function findFileOfFilm($film)
     {
         return $this->createQueryBuilder('f')
-            ->leftJoin('f.film', 'film' )
+            ->leftJoin('f.film', 'film')
             ->where('film.id = :film')
-            ->setParameter('film',$film)
+            ->setParameter('film', $film)
             ->getQuery()
             ->getSingleResult();
     }
+
     public function findFileOfEpisode($episodeId)
     {
         return $this->createQueryBuilder('f')
-            ->leftJoin('f.episode', 'episode' )
+            ->leftJoin('f.episode', 'episode')
             ->where('episode.id = :episode')
-            ->setParameter('episode',$episodeId)
+            ->setParameter('episode', $episodeId)
             ->getQuery()
             ->getSingleResult();
     }

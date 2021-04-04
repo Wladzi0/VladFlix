@@ -19,8 +19,8 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-      $routeBuilder= $this->get(CrudUrlGenerator::class)->build();
-      return $this->redirect($routeBuilder->setController(FilmCrudController::class)->generateUrl());
+        $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
+        return $this->redirect($routeBuilder->setController(FilmCrudController::class)->generateUrl());
     }
 
     public function configureDashboard(): Dashboard
@@ -32,9 +32,9 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::section('Control of entities');
-        yield MenuItem::linkToCrud('Films',null,Film::class);
+        yield MenuItem::linkToCrud('Films', null, Film::class);
 //        yield MenuItem::linkToCrud('Serials',null,Serial::class);
-        yield MenuItem::linkToCrud('Users',null,User::class);
+        yield MenuItem::linkToCrud('Users', null, User::class);
 
     }
 }

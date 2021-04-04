@@ -26,8 +26,7 @@ class SeasonRepository extends ServiceEntityRepository
             ->setParameter('serial', $value)
             ->orderBy('s.id', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
 }

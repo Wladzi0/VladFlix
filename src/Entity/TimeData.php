@@ -20,9 +20,9 @@ class TimeData
     private $id;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $isFinished;
+    private $isFinished = false;
 
     /**
      * @ORM\ManyToMany(targetEntity=Profile::class, inversedBy="timeData")

@@ -19,16 +19,17 @@ class TimeDataRepository extends ServiceEntityRepository
         parent::__construct($registry, TimeData::class);
     }
 
-    public function findByFileAndProfile($fileId,$profileId)
+    public function findByFileAndProfile($fileId, $profileId)
     {
         return $this->createQueryBuilder('t')
-            ->leftJoin('t.file', 'file' )
-            ->leftJoin('t.profile','profile')
+            ->leftJoin('t.file', 'file')
+            ->leftJoin('t.profile', 'profile')
             ->where('file.id = :file')
             ->andWhere('profile.id = :profile')
-            ->setParameter('file',$fileId)
-            ->setParameter('profile',$profileId)
+            ->setParameter('file', $fileId)
+            ->setParameter('profile', $profileId)
             ->getQuery()
             ->getOneOrNullResult();
     }
+
 }

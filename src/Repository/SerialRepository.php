@@ -23,7 +23,7 @@ class SerialRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->leftJoin('s.categories', 'c')
-            ->where('c.id = :category' )
+            ->where('c.id = :category')
             ->setParameter('category', $category)
             ->getQuery()
             ->getResult();
@@ -32,7 +32,7 @@ class SerialRepository extends ServiceEntityRepository
     public function findSerialBySeason($seasonId)
     {
         return $this->createQueryBuilder('serial')
-            ->leftJoin('serial.season','season')
+            ->leftJoin('serial.season', 'season')
             ->where('season.id =:season')
             ->setParameter('season', $seasonId)
             ->getQuery()

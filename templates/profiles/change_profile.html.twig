@@ -8,19 +8,20 @@
     {{ parent() }}
 {% endblock %}
 {% block body %}
-  <div class="container">
-      {% for type, messages in app.session.flashbag.all() %}
-          {% for message in messages %}
-              <div class=" alert-{{ type }}" role="alert">
-                  {{ message|trans }}
-              </div>
-          {% endfor %}
-      {% endfor %}
-  </div>
-    <a style="position: absolute; top: 100px; right: 20px;"class=" bg-light" href="{{ path('app_logout') }}">Logout</a>
+    <div class="container">
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class=" alert-{{ type }}" role="alert">
+                    {{ message|trans }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <a style="position: absolute; top: 100px; right: 20px;" class=" bg-light" href="{{ path('app_logout') }}">Logout</a>
     {% if is_granted('ROLE_ADMIN') %}
 
-        <a style="position: absolute; top:20px; right: 20px;" href="{{ path('admin') }}"><i class="fas fa-user-shield bg-light display-4"></i></a>
+        <a style="position: absolute; top:20px; right: 20px;" href="{{ path('admin') }}"><i
+                    class="fas fa-user-shield bg-light display-4"></i></a>
     {% endif %}
     <div class="container d-flex justify-content-center">
 
@@ -28,20 +29,21 @@
 
             <div class="row"><h2> {% trans %}Choose profile {% endtrans %}</h2><br></div>
             <div class="row">
-        <a class="row" href="{{ path('add_profile') }}">
-            <i class="fas fa-plus-circle display-4" ></i>
-        </a>
-
-            {% if profiles %}
-                {% for profile in profiles %}
-                <a href="{{ path('enter_pin',{ 'profile': profile.id }) }}" class="border rounded-circle" style="margin-left: 40px; width: 60px;text-decoration: none;
-                align-items:center; text-align:center;background-color: {{ profile.backgroundColor }}">
-                    <p>{{ profile.nickname }}
-                    </p>
-
+                <a class="row" href="{{ path('add_profile') }}">
+                    <i class="fas fa-plus-circle display-4"></i>
                 </a>
-                {% endfor %}
-            {% endif %}
+
+                {% if profiles %}
+                    {% for profile in profiles %}
+                        <a href="{{ path('enter_pin',{ 'profile': profile.id }) }}" class="border rounded-circle"
+                           style="margin-left: 40px; width: 60px;text-decoration: none;
+                align-items:center; text-align:center;background-color: {{ profile.backgroundColor }}">
+                            <p>{{ profile.nickname }}
+                            </p>
+
+                        </a>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

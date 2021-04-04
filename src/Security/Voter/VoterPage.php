@@ -15,7 +15,7 @@ class VoterPage extends Voter
 
     const MAIN_ACCESS = 'MAIN_ACCESS';
     const ADD_ACCESS = 'ADD_ACCESS';
-    const SHOW_ACCESS ='SHOW_ACCESS';
+    const SHOW_ACCESS = 'SHOW_ACCESS';
     private $security;
 
     public function __construct(Security $security)
@@ -25,7 +25,7 @@ class VoterPage extends Voter
 
     protected function supports(string $attribute, $subject)
     {
-        if (!in_array($attribute, array(self::MAIN_ACCESS,self::ADD_ACCESS, self::SHOW_ACCESS))) {
+        if (!in_array($attribute, array(self::MAIN_ACCESS, self::ADD_ACCESS, self::SHOW_ACCESS))) {
             return false;
         }
         if (!$subject) {
@@ -59,6 +59,7 @@ class VoterPage extends Voter
         }
         return false;
     }
+
     public function canShowMainContent($requestedData): bool
     {
         $pin = $requestedData['enteredPin'];
@@ -75,15 +76,15 @@ class VoterPage extends Voter
 
     public function giveAccessToShow($dataToCheck)
     {
-        $profileAgeCategory=$dataToCheck['profileAgeCategory'];
-        $contentAgeCategory=$dataToCheck['contentAgeCategory'];
-        if($profileAgeCategory===null && $contentAgeCategory===null){
+        $profileAgeCategory = $dataToCheck['profileAgeCategory'];
+        $contentAgeCategory = $dataToCheck['contentAgeCategory'];
+        if ($profileAgeCategory === null && $contentAgeCategory === null) {
             return true;
         }
-        if($profileAgeCategory===false && ($contentAgeCategory===null || $contentAgeCategory===false)){
+        if ($profileAgeCategory === false && ($contentAgeCategory === null || $contentAgeCategory === false)) {
             return true;
         }
-        if($profileAgeCategory===true){
+        if ($profileAgeCategory === true) {
             return true;
         }
         return false;

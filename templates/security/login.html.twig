@@ -1,50 +1,54 @@
 {% extends 'base.html.twig' %}
 {% block title %}{% trans %}Login {% endtrans %}{% endblock %}
 {% block stylesheets %}
-   {{ parent() }}
+    {{ parent() }}
 
 {% endblock %}
-{% block javascripts  %}
+{% block javascripts %}
     {{ parent() }}
 {% endblock %}
 
-{% block body %}<br>  <div class="container col-3"><br>
-    <form class="form " method="post"><br>
+{% block body %}<br>
+    <div class="container col-3"><br>
+        <form class="form " method="post"><br>
 
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="alert-{{ type }}" role="alert">
-                    {{ message|trans }}
-                </div>
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert-{{ type }}" role="alert">
+                        {{ message|trans }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-        {% if error %}
-            <div class="alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+            {% if error %}
+                <div class="alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
 
-        <h1 >{% trans %}Please sign in{% endtrans %}</h1>
-        <label for="inputEmail" class="sr-only">{% trans %}Email address{% endtrans %}</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder={% trans %}"Email address"{% endtrans %} required="required" autofocus="autofocus"><br>
-        <label for="inputPassword" class="sr-only">{% trans %}Password{% endtrans %}</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder={% trans %}"Password"{% endtrans %} required="required"><br>
+            <h1>{% trans %}Please sign in{% endtrans %}</h1>
+            <label for="inputEmail" class="sr-only">{% trans %}Email address{% endtrans %}</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
+                   placeholder={% trans %}"Email address"{% endtrans %} required="required" autofocus="autofocus"><br>
+            <label for="inputPassword" class="sr-only">{% trans %}Password{% endtrans %}</label>
+            <input type="password" name="password" id="inputPassword" class="form-control"
+                   placeholder={% trans %}"Password"{% endtrans %} required="required"><br>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        <div class="checkbox ">
-            <label>
-                <input type="checkbox"  id="remember_me" name="_remember_me">
-                {% trans %} Remember me{% endtrans %}
-            </label>
-        </div><br>
-        <button class="btn btn-success " type="submit">
-            {% trans %} Sign in{% endtrans %}
-        </button>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="checkbox ">
+                <label>
+                    <input type="checkbox" id="remember_me" name="_remember_me">
+                    {% trans %} Remember me{% endtrans %}
+                </label>
+            </div>
+            <br>
+            <button class="btn btn-success " type="submit">
+                {% trans %} Sign in{% endtrans %}
+            </button>
             <br>
             <br>
 
 
-
-    </form>
-    <button class="btn registration" onclick="window.location.href='/register'">
-        {% trans %}   Create new account{% endtrans %}</button>   </div>
+        </form>
+        <button class="btn registration" onclick="window.location.href='/register'">
+            {% trans %}   Create new account{% endtrans %}</button>
+    </div>
 {% endblock %}

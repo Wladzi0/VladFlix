@@ -18,13 +18,14 @@ class CategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Category::class);
     }
+
     public function findAllByCategory($category)
     {
         return $this->createQueryBuilder('c')
             ->select('c')
             ->leftJoin('c.films', 'f')
             ->leftJoin('c.serials', 's')
-            ->where('f.categories = :categories' )
+            ->where('f.categories = :categories')
             ->setParameter('categories', $category)
             ->getQuery()
             ->getResult();

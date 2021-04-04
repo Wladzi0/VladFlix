@@ -12,7 +12,7 @@
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
-                {{ message|trans}}
+                {{ message|trans }}
             </div>
         {% endfor %}
     {% endfor %}
@@ -20,9 +20,10 @@
     <div class="row col-2 bg-light mt-5" style="float:left">
         {% for category in categories %}
 
-            <a class="pl-4 mt-4 text-dark col-9" href="{{ path('all_films_serials_from_category', {'category' : category.id}) }}">
+            <a class="pl-4 mt-4 text-dark col-9"
+               href="{{ path('all_films_serials_from_category', {'category' : category.id}) }}">
 
-                {{ category.name|trans}}
+                {{ category.name|trans }}
 
             </a>
 
@@ -34,7 +35,7 @@
             {% for filmResult in allResults %}
                 <div class="card d-flex flex-row mb-1 ">
                     <img src="" alt="">
-                    <a href="">  <img  alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
+                    <a href=""> <img alt="" src="{{ asset('images/defaultImage.png') }}"/></a>
                     <div class="card pl-3 pt-3" style="width: 100%">
                         <p style="color: #000000">{{ filmResult.name }}
                         </p>

@@ -28,28 +28,28 @@ class RegistrationFormType extends AbstractType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('email', EmailType::class)
-            ->add('defaultLanguage',LanguageType::class,[
+            ->add('defaultLanguage', LanguageType::class, [
                 'placeholder' => false,
                 'required' => true,
-])
-            ->add('pin', PasswordType::class,[
-                'required' =>true,
-                'attr'=>['autocomplete' => 'off'],
+            ])
+            ->add('pin', PasswordType::class, [
+                'required' => true,
+                'attr' => ['autocomplete' => 'off'],
                 'constraints' => [
                     new Regex(array(
                             'pattern' => '/^[0-9]\d*$/',
                             'message' => 'Please use only positive numbers.'
                         )
                     ),
-                new Length([
-                    'min' => 4,
-                    'max' => 4,
-                    'exactMessage'=> 'The pin value should have exactly 4 digits.'
-                ]),],
+                    new Length([
+                        'min' => 4,
+                        'max' => 4,
+                        'exactMessage' => 'The pin value should have exactly 4 digits.'
+                    ]),],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
+                'first_options' => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
                 'mapped' => false,
                 'required' => false,

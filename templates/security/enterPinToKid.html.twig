@@ -5,7 +5,7 @@
     {{ parent() }}
 
 {% endblock %}
-{% block javascripts  %}
+{% block javascripts %}
     {{ parent() }}
 {% endblock %}
 
@@ -13,8 +13,9 @@
     {% if profile %}
         <form>
             <div class="container col-3"><br>
-                <h1 >{% trans %}You shouldn't enter a pin{% endtrans %}</h1>
-                <input type="hidden" name="pin" id="pin" class="form-control col-3" placeholder="PIN" autofocus="autofocus"><br>
+                <h1>{% trans %}You shouldn't enter a pin{% endtrans %}</h1>
+                <input type="hidden" name="pin" id="pin" class="form-control col-3" placeholder="PIN"
+                       autofocus="autofocus"><br>
                 <button class="btn btn-success " type="submit">
                     {% trans %}Check access{% endtrans %}
                 </button>

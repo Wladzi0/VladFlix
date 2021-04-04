@@ -52,15 +52,12 @@ class FilmController extends AbstractController
         $profile = $profileRepository->find($session->get('profileId'));
         $filmRequest = $request->get('filmId');
         $file = $fileRepository->findFileOfFilm($filmRequest);
-        $videoData=$timeDataRepository->findByFileAndProfile($file->getId(),$profile->getId());
-        if($videoData===null){
-
-            $curVideoData="0";
+        $videoData = $timeDataRepository->findByFileAndProfile($file->getId(), $profile->getId());
+        if ($videoData === null) {
+            $curVideoData = "0";
+        } else {
+            $curVideoData = $videoData->getCurTime();
         }
-        else{
-            $curVideoData=$videoData->getCurTime();
-    }
-        dump($curVideoData);
         $filmData = $filmRepository->find($filmRequest);
         $dataToCheck = array(
             'profileAgeCategory' => $profile->getAge(),
@@ -74,7 +71,7 @@ class FilmController extends AbstractController
         }
         $file = $fileRepository->findFileOfFilm($filmRequest);
         return $this->render('films_content/film_page.html.twig', [
-            'curVideoData'=>$curVideoData,
+            'curVideoData' => $curVideoData,
             'profile' => $profile,
             'file' => $file,
             'filmData' => $filmData
@@ -82,38 +79,4 @@ class FilmController extends AbstractController
 
     }
 
-    /**
-     * @Route("/timeDataSaving",name="timeDataSaving")
-     */
-    public function videoSaving(TimeDataRepository $timeDataRepository,Session $session,Request $request,FileRepository $fileRepository,ProfileRepository $profileRepository)
-    {
-        $filmId= $request->get('filmId');
-        $isFinished= $request->get('isFinished');
-        $curTime= $request->get('curTime');
-        $file = $fileRepository->findFileOfFilm($filmId);
-        $profile = $profileRepository->find($session->get('profileId'));
-        $CurVideoData=$timeDataRepository->findByFileAndProfile($file->getId(),$profile->getId());
-
-        if(!$CurVideoData){
-            $videoData= new TimeData();
-            $videoData->setIsFinished($isFinished);
-            $videoData->setCurTime($curTime);
-            $videoData->addFile($file);
-            $videoData->addProfile($profile);
-            $em= $this->getDoctrine()->getManager();
-            $em->persist($videoData);
-            $em->flush();
-        }
-        else{
-            $CurVideoData->setIsFinished($isFinished);
-            $CurVideoData->setCurTime($curTime);
-            $CurVideoData->addFile($file);
-            $CurVideoData->addProfile($profile);
-            $em= $this->getDoctrine()->getManager();
-            $em->persist($CurVideoData);
-            $em->flush();
-        }
-
-        return new Response();
-    }
 }

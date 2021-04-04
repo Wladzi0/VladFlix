@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\TimeData;
 use App\Repository\CategoryRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\FileRepository;
@@ -9,10 +10,12 @@ use App\Repository\FilmRepository;
 use App\Repository\ProfileRepository;
 use App\Repository\SeasonRepository;
 use App\Repository\SerialRepository;
+use App\Repository\TimeDataRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -48,9 +51,9 @@ class SerialController extends AbstractController
 
         $serialId = $request->get('serialId');
         $serial = $serialRepository->find($serialId);
-        $dataToCheck=array(
-            'profileAgeCategory'=>$session->get('age'),
-            'contentAgeCategory'=>  $serial->getAgeCategory()
+        $dataToCheck = array(
+            'profileAgeCategory' => $session->get('age'),
+            'contentAgeCategory' => $serial->getAgeCategory()
         );
         if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
             $request->getSession()
@@ -69,13 +72,13 @@ class SerialController extends AbstractController
     /**
      * @Route ("/serial/{serialId}/all-episodes-of-season/{seasonId}", name="all_episodes_of_season")
      */
-    public function showEpisodes(SessionInterface $session, Request $request, SeasonRepository $seasonRepository,EpisodeRepository $episodeRepository,SerialRepository $serialRepository)
+    public function showEpisodes(SessionInterface $session, Request $request, SeasonRepository $seasonRepository, EpisodeRepository $episodeRepository, SerialRepository $serialRepository)
     {
-        $seasonId=$request->get('seasonId');
-        $serial=$serialRepository->findSerialBySeason($seasonId);
-        $dataToCheck=array(
-            'profileAgeCategory'=>$session->get('age'),
-            'contentAgeCategory'=>  $serial->getAgeCategory()
+        $seasonId = $request->get('seasonId');
+        $serial = $serialRepository->findSerialBySeason($seasonId);
+        $dataToCheck = array(
+            'profileAgeCategory' => $session->get('age'),
+            'contentAgeCategory' => $serial->getAgeCategory()
         );
         if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
             $request->getSession()
@@ -84,27 +87,27 @@ class SerialController extends AbstractController
             return $this->redirectToRoute('main_page');
         }
 
-        $season=$seasonRepository->find($seasonId);
-        $serial=$serialRepository->findSerialBySeason($seasonId);
-        $episodes=$episodeRepository->findFromSeason($seasonId);
+        $season = $seasonRepository->find($seasonId);
+        $serial = $serialRepository->findSerialBySeason($seasonId);
+        $episodes = $episodeRepository->findFromSeason($seasonId);
 
         return $this->render('serials_content/seasonEpisodes.html.twig', [
-            'serial'=>$serial,
+            'serial' => $serial,
             'episodes' => $episodes,
             'season' => $season
         ]);
     }
 
     /**
-     * @Route("/serial/{serialId}/season/{seasonId}/episode/{episodeId}", name="show_episode")
+     * @Route("/serial/{serialId}/season/{seasonId}/episode", name="show_episode", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function showEpisodeDetail(SerialRepository $serialRepository,Request $request,EpisodeRepository $episodeRepository,FileRepository $fileRepository,SessionInterface $session,ProfileRepository $profileRepository)
+    public function showEpisodeDetail(TimeDataRepository $timeDataRepository, SerialRepository $serialRepository, Request $request, EpisodeRepository $episodeRepository, FileRepository $fileRepository, SessionInterface $session, ProfileRepository $profileRepository)
     {
-        $episodeId=$request->get('episodeId');
-        $serial= $serialRepository->find($request->get('serialId'));
-        $dataToCheck=array(
-            'profileAgeCategory'=>$session->get('age'),
-            'contentAgeCategory'=>  $serial->getAgeCategory()
+        $episodeId = $request->get('episodeId');
+        $serial = $serialRepository->find($request->get('serialId'));
+        $dataToCheck = array(
+            'profileAgeCategory' => $session->get('age'),
+            'contentAgeCategory' => $serial->getAgeCategory()
         );
         if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
             $request->getSession()
@@ -113,13 +116,21 @@ class SerialController extends AbstractController
             return $this->redirectToRoute('main_page');
         }
 
-        $profile=$profileRepository->find($session->get('profileId'));
-        $episodeData=$episodeRepository->find($episodeId);
+        $profile = $profileRepository->find($session->get('profileId'));
+        $episodeData = $episodeRepository->find($episodeId);
+        $episodeFile=$fileRepository->findFileOfEpisode($episodeId);
+        $videoData = $timeDataRepository->findByFileAndProfile($episodeFile->getId(), $profile->getId());
+        if ($videoData === null) {
+            $curVideoData = "0";
+        } else {
+            $curVideoData = $videoData->getCurTime();
+        }
         $file = $fileRepository->findFileOfEpisode($episodeId);
         return $this->render('serials_content/episode_page.html.twig', [
             'episodeData' => $episodeData,
-            'profile'=>$profile,
-            'file'=>$file
+            'curVideoData' => $curVideoData,
+            'profile' => $profile,
+            'file' => $file
         ]);
     }
 }

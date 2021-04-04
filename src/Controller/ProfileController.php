@@ -24,10 +24,9 @@ class ProfileController extends AbstractController
      */
     public function profileMenu(SessionInterface $session, ProfileRepository $profileRepository)
     {
-        if($currentProfile = $session->get('profileId')){
+        if ($currentProfile = $session->get('profileId')) {
             $profileData = $profileRepository->find($currentProfile);
-        }
-        else{
+        } else {
             return $this->redirectToRoute('select_profile');
         }
 
@@ -40,22 +39,21 @@ class ProfileController extends AbstractController
      */
     public function editSettings(SessionInterface $session, Request $request, ProfileRepository $profileRepository)
     {
-        if($currentProfile = $session->get('profileId')){
-        $profileData = $profileRepository->find($currentProfile);
-        $profileForm = $this->createForm(EditProfileType::class, $profileData);
-        $profileForm->handleRequest($request);
-        if ($profileForm->isSubmitted() && $profileForm->isValid()) {
+        if ($currentProfile = $session->get('profileId')) {
+            $profileData = $profileRepository->find($currentProfile);
+            $profileForm = $this->createForm(EditProfileType::class, $profileData);
+            $profileForm->handleRequest($request);
+            if ($profileForm->isSubmitted() && $profileForm->isValid()) {
 
-            $this->getDoctrine()->getManager()->flush();
-            $request->getSession()
-                ->getFlashBag()
-                ->add('success', 'Your settings has been edited successfully ');
+                $this->getDoctrine()->getManager()->flush();
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('success', 'Your settings has been edited successfully ');
 
 
-            return $this->redirectToRoute('profile_menu');
-        }
-        }
-        else{
+                return $this->redirectToRoute('profile_menu');
+            }
+        } else {
             return $this->redirectToRoute('select_profile');
         }
         return $this->render('profileMenu/editSettings.html.twig', [
@@ -67,11 +65,11 @@ class ProfileController extends AbstractController
     /**
      * @Route("/change-profile-language",name="change_profile_language")
      */
-    public function changeProfileLanguage(SessionInterface $session,Request $request,ProfileRepository $profileRepository)
+    public function changeProfileLanguage(SessionInterface $session, Request $request, ProfileRepository $profileRepository)
     {
-        $profileId=$session->get('profileId');
-        $profile=$profileRepository->find($profileId);
-        if($changedLanguage=$request->get('interfaceLanguage')){
+        $profileId = $session->get('profileId');
+        $profile = $profileRepository->find($profileId);
+        if ($changedLanguage = $request->get('interfaceLanguage')) {
             $profile->setInterfaceLanguage($changedLanguage);
             $this->getDoctrine()->getManager()->flush();
         }

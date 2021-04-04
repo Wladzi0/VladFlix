@@ -19,13 +19,16 @@
     {% include 'navigation.html.twig' %}
     <div class="container row  ">
         <div class="container col-7">
-        <h3> {% trans %}Hello  {% endtrans %} {{   profile.nickname}}</h3>
-            <label>  {% trans %}Subtitle language{% endtrans %}:  {{profile.preferredLanguage}}</label><br>
-            <label>  {% trans %}Audio language{% endtrans %}:  {{profile.preferredAudio}}</label><br>
+            <h3> {% trans %}Hello  {% endtrans %} {{ profile.nickname }}</h3>
+            <label>  {% trans %}Subtitle language{% endtrans %}: {{ profile.preferredLanguage }}</label><br>
+            <label>  {% trans %}Audio language{% endtrans %}: {{ profile.preferredAudio }}</label><br>
 
-        <button class="btn-data-edit "> <a href="{{ path('edit_profile_settings') }}">{% trans %}Edit your personal data{% endtrans %}</a></button>
+            <button class="btn-data-edit "><a
+                        href="{{ path('edit_profile_settings') }}">{% trans %}Edit your personal data{% endtrans %}</a>
+            </button>
             <br><br>
-            <a style=" padding: 5px;" href="{{ path('forgot_profile') }}" class="btn-danger">{% trans %}Change profile{% endtrans %}</a>
-    </div>
+            <a style=" padding: 5px;" href="{{ path('forgot_profile') }}"
+               class="btn-danger">{% trans %}Change profile{% endtrans %}</a>
+        </div>
     </div>
 {% endblock %}

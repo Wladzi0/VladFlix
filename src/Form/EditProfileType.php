@@ -17,15 +17,14 @@ class EditProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('preferredLanguage',LanguageType::class,[
+            ->add('preferredLanguage', LanguageType::class, [
                 'placeholder' => false,
                 'required' => false,
             ])
-            ->add('preferredAudio',LanguageType::class,[
+            ->add('preferredAudio', LanguageType::class, [
                 'placeholder' => false,
                 'required' => false,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
