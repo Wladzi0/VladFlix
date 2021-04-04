@@ -22,11 +22,11 @@ class CategoryRepository extends ServiceEntityRepository
     public function findAllByCategory($category)
     {
         return $this->createQueryBuilder('c')
-            ->select('c')
+            ->select('serial','film')
             ->leftJoin('c.films', 'f')
             ->leftJoin('c.serials', 's')
-            ->where('f.categories = :categories')
-            ->setParameter('categories', $category)
+            ->where('f.categories = :category')
+            ->setParameter('category', $category)
             ->getQuery()
             ->getResult();
     }

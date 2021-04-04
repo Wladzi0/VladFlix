@@ -37,51 +37,54 @@
         {% if allSerialsAndFilms %}
             {% for serialOrFilm in allSerialsAndFilms %}
 
-                {% if sessionAge is null %}
-                    {% if serialOrFilm.ageCategory is null %}
-                        <div class="card d-flex flex-row mb-1 ">
-                            {%  if serialOrFilm.yearStart is defined  %}
-                                <a href="{{ path('all_seasons_from_serial',{'serialId': serialOrFilm.id}) }}"><img src="{{ asset('images/defaultImage.png') }}"/></a>
-                            {% else %}
-                                <a href="{{ path('film_page', {'filmId': serialOrFilm.id}) }}"> <img src="{{ asset('images/defaultImage.png') }}"/></a>
-                            {% endif %}
-                            <div class="card pl-3 pt-3" style="width: 100%">
-                                <p style="color: #000000">{{ serialOrFilm.name|trans }}
-                                </p>
-                                <p style="color: #000000">{{ serialOrFilm.country|trans }}
-                                </p>
-                                {% if serialOrFilm.yearStart  is defined  %}
-                                    {% if serialOrFilm.yearFinish is defined %}
-                                        <p style="color: #000000">{{ serialOrFilm.yearStart| date("Y") }}
-                                            - {{ serialOrFilm.yearFinish| date("Y") }}  </p>
-                                    {% else %}
-                                        <p style="color: #000000">{{ serialOrFilm.yearStart| date("Y") }}
-                                        </p>
-                                    {% endif %}
+                {% if sessionAge is null and serialOrFilm.ageCategory is null %}
+                    <div class="card d-flex flex-row mb-1 ">
+                        {% if serialOrFilm.yearStart is defined %}
+                            <a href="{{ path('all_seasons_from_serial',{'serialId': serialOrFilm.id}) }}"><img
+                                        src="{{ asset('images/defaultImage.png') }}"/></a>
+                        {% else %}
+                            <a href="{{ path('film_page', {'filmId': serialOrFilm.id}) }}"> <img
+                                        src="{{ asset('images/defaultImage.png') }}"/></a>
+                        {% endif %}
+                        <div class="card pl-3 pt-3" style="width: 100%">
+                            <p style="color: #000000">{{ serialOrFilm.name|trans }}
+                            </p>
+                            <p style="color: #000000">{{ serialOrFilm.country|trans }}
+                            </p>
+                            {% if serialOrFilm.yearStart  is defined %}
+                                {% if serialOrFilm.yearFinish is defined %}
+                                    <p style="color: #000000">{{ serialOrFilm.yearStart| date("Y") }}
+                                        - {{ serialOrFilm.yearFinish| date("Y") }}  </p>
                                 {% else %}
-                                    <p style="color: #000000">{{ serialOrFilm.year| date("Y") }}
+                                    <p style="color: #000000">{{ serialOrFilm.yearStart| date("Y") }}
                                     </p>
                                 {% endif %}
-                            </div>
-
+                            {% else %}
+                                <p style="color: #000000">{{ serialOrFilm.year| date("Y") }}
+                                </p>
+                            {% endif %}
                         </div>
-                    {% endif %}
+
+                    </div>
+
                 {% endif %}
 
                 {% if sessionAge is same as (false) %}
                     {% if (serialOrFilm.ageCategory is null)  or (serialOrFilm.ageCategory is same as (false)) %}
                         <div class="card d-flex flex-row mb-1 ">
-                            {%  if serialOrFilm.yearStart  is defined  %}
-                                <a href="{{ path('all_seasons_from_serial',{'serialId': serialOrFilm.id}) }}"><img src="{{ asset('images/defaultImage.png') }}"/></a>
+                            {% if serialOrFilm.yearStart  is defined %}
+                                <a href="{{ path('all_seasons_from_serial',{'serialId': serialOrFilm.id}) }}"><img
+                                            src="{{ asset('images/defaultImage.png') }}"/></a>
                             {% else %}
-                                <a href="{{ path('film_page', {'filmId': serialOrFilm.id}) }}"> <img src="{{ asset('images/defaultImage.png') }}"/></a>
+                                <a href="{{ path('film_page', {'filmId': serialOrFilm.id}) }}"> <img
+                                            src="{{ asset('images/defaultImage.png') }}"/></a>
                             {% endif %}
                             <div class="card pl-3 pt-3" style="width: 100%">
                                 <p style="color: #000000">{{ serialOrFilm.name|trans }}
                                 </p>
                                 <p style="color: #000000">{{ serialOrFilm.country|trans }}
                                 </p>
-                                {% if serialOrFilm.yearStart  is defined  %}
+                                {% if serialOrFilm.yearStart  is defined %}
                                     {% if serialOrFilm.yearFinish is defined %}
                                         <p style="color: #000000">{{ serialOrFilm.yearStart| date("Y") }}
                                             - {{ serialOrFilm.yearFinish| date("Y") }}  </p>
@@ -101,28 +104,30 @@
                 {% if sessionAge is same as (true) %}
 
                     <div class="card d-flex flex-row mb-1 ">
-                       {%  if serialOrFilm.yearStart  is defined %}
-                        <a href="{{ path('all_seasons_from_serial',{'serialId': serialOrFilm.id}) }}"><img src="{{ asset('images/defaultImage.png') }}"/></a>
-                           {% else %}
-                               <a href="{{ path('film_page', {'filmId': serialOrFilm.id}) }}"> <img src="{{ asset('images/defaultImage.png') }}"/></a>
-                            {% endif %}
+                        {% if serialOrFilm.yearStart  is defined %}
+                            <a href="{{ path('all_seasons_from_serial',{'serialId': serialOrFilm.id}) }}"><img
+                                        src="{{ asset('images/defaultImage.png') }}"/></a>
+                        {% else %}
+                            <a href="{{ path('film_page', {'filmId': serialOrFilm.id}) }}"> <img
+                                        src="{{ asset('images/defaultImage.png') }}"/></a>
+                        {% endif %}
                         <div class="card pl-3 pt-3" style="width: 100%">
                             <p style="color: #000000">{{ serialOrFilm.name|trans }}
                             </p>
                             <p style="color: #000000">{{ serialOrFilm.country|trans }}
                             </p>
-                {% if serialOrFilm.yearStart  is defined  %}
-                    {% if serialOrFilm.yearFinish is defined %}
-                                                        <p style="color: #000000">{{ serialOrFilm.yearStart| date("Y") }}
-                                                            - {{ serialOrFilm.yearFinish| date("Y") }}  </p>
-                                                    {% else %}
-                                                        <p style="color: #000000">{{ serialOrFilm.yearStart| date("Y") }}
-                                                        </p>
-                                                    {% endif %}
-                    {% else %}
-                            <p style="color: #000000">{{ serialOrFilm.year| date("Y") }}
-                            </p>
-                {% endif %}
+                            {% if serialOrFilm.yearStart  is defined %}
+                                {% if serialOrFilm.yearFinish is defined %}
+                                    <p style="color: #000000">{{ serialOrFilm.yearStart| date("Y") }}
+                                        - {{ serialOrFilm.yearFinish| date("Y") }}  </p>
+                                {% else %}
+                                    <p style="color: #000000">{{ serialOrFilm.yearStart| date("Y") }}
+                                    </p>
+                                {% endif %}
+                            {% else %}
+                                <p style="color: #000000">{{ serialOrFilm.year| date("Y") }}
+                                </p>
+                            {% endif %}
                         </div>
 
                     </div>

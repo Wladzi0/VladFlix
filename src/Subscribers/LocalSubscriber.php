@@ -3,7 +3,10 @@
 namespace App\Subscribers;
 
 use App\Repository\ProfileRepository;
+use mysql_xdevapi\Session;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -13,8 +16,11 @@ class LocalSubscriber implements EventSubscriberInterface
 
     private $profileRepository;
 
-    public function __construct(ProfileRepository $profileRepository, string $defaultLocale = "en")
+    private $session;
+
+    public function __construct( SessionInterface $session,ProfileRepository $profileRepository, string $defaultLocale = "en")
     {
+        $this->session = $session;
         $this->defaultLocale = $defaultLocale;
         $this->profileRepository = $profileRepository;
     }
@@ -26,9 +32,14 @@ class LocalSubscriber implements EventSubscriberInterface
             return;
         }
         if ($profileId = $request->getSession()->get('profileId')) {
-
             $profile = $this->profileRepository->find($profileId);
-            $request->setLocale($profile->getInterfaceLanguage());
+            try {
+                $request->setLocale($profile->getInterfaceLanguage());
+            }
+            catch (\Throwable $t){
+               $this->session->clear();
+            }
+
         } else {
             if ($locale = $request->attributes->get('interfaceLanguage')) {
                 $request->getSession()->set('_locale', $locale);

@@ -88,6 +88,8 @@ class CategoryFixtures extends Fixture
         $first->setAgeCategory(0);
         $first->setFile($fileONM);
         $first->addCategory($comedy);
+        $first->addCategory($horror);
+        $first->addCategory($action);
 
         $second = new Film();
         $second->setName("Toy Story 3");
@@ -96,6 +98,7 @@ class CategoryFixtures extends Fixture
         $second->setFile($fileTS3);
         $second->setYear(new \DateTime("01-09-2017"));
         $second->addCategory($comedy);
+        $second->addCategory($action);
 
         $third = new Film();
         $third->setName("1917");
@@ -104,6 +107,7 @@ class CategoryFixtures extends Fixture
         $third->setYear(new \DateTime("01-09-2020"));
         $third->setFile($file1917);
         $third->addCategory($horror);
+        $third->addCategory($fantasy);
 
         $firstSerial = new Serial();
         $firstSerial->setName("THE TERROR");
@@ -151,6 +155,7 @@ class CategoryFixtures extends Fixture
         $secondSerial->setCountry('USA');
         $secondSerial->setYearStart(new \DateTime("01-09-2018"));
         $secondSerial->addCategory($comedy);
+        $secondSerial->addCategory($animation);
 
         $thirdSerial = new Serial();
         $thirdSerial->setName("BIG MOUTH");
@@ -177,6 +182,7 @@ class CategoryFixtures extends Fixture
         $fourthSerial->setYearStart(new \DateTime("01-09-2013"));
         $fourthSerial->setYearFinish(new \DateTime("01-09-2016"));
         $fourthSerial->addCategory($horror);
+        $fourthSerial->addCategory($science);
 
 
         $manager->persist($action);
