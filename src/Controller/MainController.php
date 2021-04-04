@@ -28,17 +28,15 @@ class MainController extends AbstractController
      */
     public function index(FilmRepository $filmRepository, SerialRepository $serialRepository, SessionInterface $session, Request $request, UserInterface $user, ProfileRepository $profileRepository, CategoryRepository $categoryRepository)
     {
-        dump($session->get('age'));
         if (!$sessionProfile = $session->get('profileId')) {
             return $this->redirectToRoute('select_profile');
         }
         $categories = $categoryRepository->findAll();
-        $allFilms = $filmRepository->findAll();
-        $allSerials = $serialRepository->findAll();
+        $allSerialsAndFilms= $categoryRepository->findallSerialsAndFilms();
+
         return $this->render('main_content/main_page.html.twig', [
             'categories' => $categories,
-            'allFilms' => $allFilms,
-            'allSerials' => $allSerials
+            'allSerialsAndFilms' => $allSerialsAndFilms,
         ]);
     }
 

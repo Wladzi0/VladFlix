@@ -30,4 +30,14 @@ class CategoryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllSerialsAndFilms()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('serial','film')
+            ->from('App:Serial','serial' )
+            ->from('App:Film','film' )
+            ->getQuery()
+            ->getResult();
+    }
 }
