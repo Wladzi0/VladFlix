@@ -99,11 +99,12 @@ class SerialController extends AbstractController
     }
 
     /**
-     * @Route("/serial/{serialId}/season/{seasonId}/episode", name="show_episode", methods={"GET","POST"}, requirements={"id"="\d+"})
+     * @Route("/serial/{serialId}/season/{seasonId}/", name="show_episode", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function showEpisodeDetail(TimeDataRepository $timeDataRepository, SerialRepository $serialRepository, Request $request, EpisodeRepository $episodeRepository, FileRepository $fileRepository, SessionInterface $session, ProfileRepository $profileRepository)
     {
         $episodeId = $request->get('episodeId');
+        $seasonId = $request->get('seasonId');
         $serial = $serialRepository->find($request->get('serialId'));
         $dataToCheck = array(
             'profileAgeCategory' => $session->get('age'),
@@ -118,7 +119,11 @@ class SerialController extends AbstractController
 
         $profile = $profileRepository->find($session->get('profileId'));
         $episodeData = $episodeRepository->find($episodeId);
-        $episodeFile=$fileRepository->findFileOfEpisode($episodeId);
+        $lastEpisode = $episodeRepository->lastEpisodeOfSeason($seasonId);
+        if ($episodeId > $lastEpisode->getId()) {
+            return $this->redirectToRoute('all_seasons_from_serial', ['serialId' => $serial->getId()]);
+        }
+        $episodeFile = $fileRepository->findFileOfEpisode($episodeId);
         $videoData = $timeDataRepository->findByFileAndProfile($episodeFile->getId(), $profile->getId());
         if ($videoData === null) {
             $curVideoData = "0";
@@ -128,9 +133,12 @@ class SerialController extends AbstractController
         $file = $fileRepository->findFileOfEpisode($episodeId);
         return $this->render('serials_content/episode_page.html.twig', [
             'episodeData' => $episodeData,
+            'serialId' => $serial->getId(),
+            'seasonId' => $seasonId,
             'curVideoData' => $curVideoData,
             'profile' => $profile,
             'file' => $file
+
         ]);
     }
 }

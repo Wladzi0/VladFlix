@@ -4,10 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
     let duration = new Date(0);
     let videoHistoryData;
     let time = new Date(0);
-    let data = [0o0, 0o0, 30, 0];
+    let data = [0o0, 0o0, 10, 0];
+    let serialId = document.querySelector('#js-serialId').dataset.serialId;
+    let seasonId = document.querySelector('#js-seasonId').dataset.seasonId;
     const paramsString = window.location.search;
     const urlParams = new URLSearchParams(paramsString);
-    const episodeId = urlParams.get("episodeId");
+    let episodeId = urlParams.get("episodeId");
+
 
     duration.setUTCHours(data[0], data[1], data[2], data[3]);
     let start = document.getElementById('start');
@@ -75,9 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("duration_slider").value = 0;
     }
 
-    function videoSavingData(isFinished = false,isSerial= true) {
+    function videoSavingData(isFinished = false, isSerial = true) {
         let curTime = time.getTime();
-        if (isFinished === true) {
+        if (isFinished) {
             curTime = 0;
         }
         $.ajax({
@@ -89,9 +92,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 'isFinished': isFinished,
                 'curTime': curTime,
             },
-            dataType: "JSON",
+            dataType: "text",
             async: true,
-
+            success: function () {
+                if (isFinished === true) {
+                    window.location='/serial/' + serialId + '/season/' + seasonId + '/?episodeId=' + (+episodeId +  +1);
+                }
+            }
         });
     }
 

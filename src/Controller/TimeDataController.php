@@ -34,11 +34,10 @@ class TimeDataController extends AbstractController
 
         $filmOrEpisodeId = $request->get('filmOrEpisodeId');
         $isFinished = $request->get('isFinished');
-        if($isFinished==="false"){
-            $isFinished=false;
-        }
-        else{
-            $isFinished=true;
+        if ($isFinished === "false") {
+            $isFinished = false;
+        } else {
+            $isFinished = true;
         }
         $curTime = $request->get('curTime');
         $isSerial = $request->get('isSerial');

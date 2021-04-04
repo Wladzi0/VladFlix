@@ -19,13 +19,25 @@ class EpisodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Episode::class);
     }
 
-    public function findFromSeason($season)
+    public function findFromSeason($seasonId)
     {
         return $this->createQueryBuilder('e')
             ->leftJoin('e.season', 's')
             ->where('s.id = :s')
-            ->setParameter('s', $season)
+            ->setParameter('s', $seasonId)
             ->getQuery()
             ->getResult();
+    }
+
+    public function lastEpisodeOfSeason($seasonId)
+    {
+        return $this
+            ->createQueryBuilder('e')
+            ->where('e.season = :s')
+            ->setParameter('s', $seasonId)
+            ->orderBy('e.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
