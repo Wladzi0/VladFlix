@@ -32,7 +32,7 @@ class ProfileType extends AbstractType
                 'choices' => [
                     'Kid (0-13 years)' => null,
                     'Teenager (13-18 years)' => false,
-                    'Adults (+18 years)' => true,
+                    'Adult(+18 years)' => true,
                 ],])
             ->add('profilePin', PasswordType::class, [
                 'label' => 'PIN',

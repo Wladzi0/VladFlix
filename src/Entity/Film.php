@@ -126,29 +126,29 @@ class Film
         return $this;
     }
 
-public function getFile(): ?File
-{
-    return $this->file;
-}
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
 
-public function setFile(File $file): self
-{
-    $this->file = $file;
+    public function setFile(File $file): self
+    {
+        $this->file = $file;
 
-    return $this;
-}
+        return $this;
+    }
 
-public function getAgeCategory(): ?bool
-{
-    return $this->ageCategory;
-}
+    public function getAgeCategory(): ?bool
+    {
+        return $this->ageCategory;
+    }
 
-public function setAgeCategory(?bool $ageCategory): self
-{
-    $this->ageCategory = $ageCategory;
+    public function setAgeCategory(?bool $ageCategory): self
+    {
+        $this->ageCategory = $ageCategory;
 
-    return $this;
-}
+        return $this;
+    }
 
 
 

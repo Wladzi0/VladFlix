@@ -40,26 +40,6 @@ class MainController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/all-films-serials-from-category", name="all_films_serials_from_category")
-     */
-    public function allFilmsSerialsFromCategory(Request $request, CategoryRepository $categoryRepository, FilmRepository $filmRepository, SerialRepository $serialRepository)
-    {
-
-        $categoryRequest = $request->get('category');
-        $categoryData = $categoryRepository->find($categoryRequest);
-        $categories = $categoryRepository->findAll();
-        if ($categoryRequest) {
-            $AllResults = $filmRepository->findAllByBYCategory($categoryRequest);
-
-        }
-
-        return $this->render('main_content/allFromCategory.html.twig', [
-            'categories' => $categories,
-            'category' => $categoryData,
-            'allResults' => $AllResults
-        ]);
-    }
 
     /**
      * @Route("/all-Films-Serials", name="all_films_serials")

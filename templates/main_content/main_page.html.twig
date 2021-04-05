@@ -17,21 +17,6 @@
         {% endfor %}
     {% endfor %}
     {% include 'navigation.html.twig' %}
-    <div class="container row col-2 float-left">
-        <div class="row bg-light mt-5 ">
-            {% for category in categories %}
-
-                <a class="pl-4 mt-4 text-dark col-9"
-                   href="{{ path('all_films_serials_from_category', {'category' : category.id}) }}">
-
-                    {{ category.name|trans }}
-
-                </a>
-
-            {% endfor %}
-        </div>
-
-    </div>
     <div class="container mt-5  ">
         {% set sessionAge = app.session.get('age') %}
         {% if allSerialsAndFilms %}

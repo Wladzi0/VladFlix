@@ -33,7 +33,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::section('Control of entities');
         yield MenuItem::linkToCrud('Films', null, Film::class);
-//        yield MenuItem::linkToCrud('Serials',null,Serial::class);
+        yield MenuItem::linkToCrud('Serials',null,Serial::class);
         yield MenuItem::linkToCrud('Users', null, User::class);
 
     }
