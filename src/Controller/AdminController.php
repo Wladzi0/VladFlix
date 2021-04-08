@@ -38,9 +38,7 @@ class AdminController extends AbstractController
         $formFile= $this->createForm(FileType::class, $fileOfFilm);
         $formFile->handleRequest($request);
         $formFilm->handleRequest($request);
-//        dump($formFilm);
-//        dump($formFile);
-//        die;
+
         if ($formFilm->isSubmitted() && $formFilm->isValid()) {
 
                 $file = $formFile->getData();
