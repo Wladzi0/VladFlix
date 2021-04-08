@@ -1,0 +1,61 @@
+{% extends '@EasyAdmin/default/new.html.twig' %}
+
+{% block main %}
+    {{ dump() }}
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{{ asset('css/smart_wizard_arrows.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/smart_wizard.css') }}">
+        {% endblock %}
+    {% block body_javascript %}
+        {{ parent() }}
+        <script src="https://unpkg.com/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                $('#smartwizard').smartWizard();
+
+            });
+        </script>
+    {% endblock %}
+    {% block entity_form %}
+        <div id="smartwizard">
+
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#step-1">
+                        Basic information about film
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#step-2">
+                       Adding file of film
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                {{ form_start(formFilm) }}
+                <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                    {{ form_row(formFilm.name) }}
+                    {{ form_row(formFilm.country) }}
+                    {{ form_row(formFilm.year) }}
+
+
+                </div>
+                <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                    Step 2
+                    {{ form_row(formFilm.ageCategory) }}
+                    {{ form_row(formFilm.categories) }}
+                    {{ form_row(formFilm.puck) }}
+                    {{ form_rest(formFilm) }}
+                    {{ form_end(formFilm,{ render_rest:false}) }}
+
+
+                </div>
+
+
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+

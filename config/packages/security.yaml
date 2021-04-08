@@ -48,7 +48,6 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/verify/email$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/main$, role: ROLE_USER }
         - { path: ^/profiles$, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/, role: IS_AUTHENTICATED_FULLY }
 

@@ -30,7 +30,7 @@ class Serial
     private $country;
 
     /**
-     * @ORM\Column(type="date", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $yearStart;
 
@@ -45,7 +45,7 @@ class Serial
     private $categories;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $yearFinish;
 
@@ -90,17 +90,6 @@ class Serial
         return $this;
     }
 
-    public function getYearStart(): ?\DateTimeInterface
-    {
-        return $this->yearStart;
-    }
-
-    public function setYearStart(\DateTimeInterface $yearStart): self
-    {
-        $this->yearStart = $yearStart;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Season[]
@@ -159,17 +148,38 @@ class Serial
         return $this;
     }
 
-    public function getYearFinish(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getYearStart()
+    {
+        return $this->yearStart;
+    }
+
+    /**
+     * @param mixed $yearStart
+     */
+    public function setYearStart($yearStart): void
+    {
+        $this->yearStart = $yearStart;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getYearFinish()
     {
         return $this->yearFinish;
     }
 
-    public function setYearFinish(?\DateTimeInterface $yearFinish): self
+    /**
+     * @param mixed $yearFinish
+     */
+    public function setYearFinish($yearFinish): void
     {
         $this->yearFinish = $yearFinish;
-
-        return $this;
     }
+
 
     public function getAgeCategory(): ?bool
     {

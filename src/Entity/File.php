@@ -25,17 +25,7 @@ class File
     private $path;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $subtitle;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $audio;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Film::class, mappedBy="file", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Film::class, mappedBy="file", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $film;
 
@@ -48,6 +38,17 @@ class File
      * @ORM\ManyToMany(targetEntity=TimeData::class, mappedBy="file")
      */
     private $timeData;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $subtitle = [];
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $audio = [];
+
 
     public function __construct()
     {
@@ -71,29 +72,39 @@ class File
         return $this;
     }
 
-    public function getSubtitle(): ?string
+    /**
+     * @return mixed
+     */
+    public function getSubtitle()
     {
         return $this->subtitle;
     }
 
-    public function setSubtitle(string $subtitle): self
+    /**
+     * @param mixed $subtitle
+     */
+    public function setSubtitle($subtitle): void
     {
         $this->subtitle = $subtitle;
-
-        return $this;
     }
 
-    public function getAudio(): ?string
+    /**
+     * @return mixed
+     */
+    public function getAudio()
     {
         return $this->audio;
     }
 
-    public function setAudio(string $audio): self
+    /**
+     * @param mixed $audio
+     */
+    public function setAudio($audio): void
     {
         $this->audio = $audio;
-
-        return $this;
     }
+
+
 
     public function getFilm(): ?Film
     {
@@ -158,6 +169,7 @@ class File
 
 public function __toString()
 {
+
  return $this->path;
 }
 }

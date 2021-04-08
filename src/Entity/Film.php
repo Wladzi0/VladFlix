@@ -30,7 +30,7 @@ class Film
     private $country;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="integer")
      */
     private $year;
 
@@ -86,17 +86,23 @@ class Film
         return $this;
     }
 
-    public function getYear(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getYear()
     {
         return $this->year;
     }
 
-    public function setYear(\DateTimeInterface $year): self
+    /**
+     * @param mixed $year
+     */
+    public function setYear($year): void
     {
         $this->year = $year;
-
-        return $this;
     }
+
+
 
 
     /**
@@ -149,6 +155,7 @@ class Film
 
         return $this;
     }
+
 
 
 

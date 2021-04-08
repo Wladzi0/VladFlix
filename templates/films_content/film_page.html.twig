@@ -40,30 +40,41 @@
                 <div class="card d-flex flex-col mb-1 ">
                     <label style="color: black"
                            for="preferredSubtitles">{% trans %}Choose a language of subtitles{% endtrans %}:</label>
-
+                    {{ dump(file.subtitle|keys) }}
                     <select name="preferredSubtitles" id="preferredSubtitles">
-                        {% if profile.preferredLanguage!="en" %}
-                            <option selected
-                                    value="{{ profile.preferredLanguage }}">{{ profile.preferredLanguage }}</option>
-                            <option value="{{ file.subtitle }}">{{ file.subtitle }}</option>
-                        {% else %}
-                            <option selected value="{{ file.subtitle }}">{{ file.subtitle }}</option>
-                            <option value="ar">ar</option>
-                        {% endif %}
+
+                    {%  for language in file.subtitle|keys %}
+                        {{ dump(language) }}
+                {% if file.subtitle[language] is same as (profile.preferredLanguage) %}
+                    <option selected value="{{ profile.preferredLanguage }}">{{ profile.preferredLanguage }}</option>
+                    {% else %}
+                        <option value="{{ file.subtitle[language] }}">{{ file.subtitle[language] }}</option>
+                {% endif %}
+                    {% endfor %}
+
+
+{#                        {% if profile.preferredLanguage!="en" %}#}
+{#                            <option selected#}
+{#                                    value="{{ profile.preferredLanguage }}">{{ profile.preferredLanguage }}</option>#}
+{#                            <option value="{{ file.subtitle }}">{{ file.subtitle }}</option>#}
+{#                        {% else %}#}
+{#                            <option selected value="{{ file.subtitle }}">{{ file.subtitle }}</option>#}
+{#                            <option value="ar">ar</option>#}
+{#                        {% endif %}#}
 
                     </select>
                     <label style="color: black" for="preferredAudio">{% trans %}Choose a language of audio{% endtrans %}
                         :</label>
 
-                    <select name="preferredAudio" id="preferredAudio">
-                        {% if profile.preferredAudio!="en" %}
-                            <option selected value="{{ profile.preferredAudio }}">{{ profile.preferredAudio }}</option>
-                            <option value="{{ file.audio }}">{{ file.audio }}</option>
-                        {% else %}
-                            <option selected value="{{ file.audio }}">{{ file.audio }}</option>
-                            <option value="ar">ar</option>
-                        {% endif %}
-                    </select>
+{#                    <select name="preferredAudio" id="preferredAudio">#}
+{#                        {% if profile.preferredAudio!="en" %}#}
+{#                            <option selected value="{{ profile.preferredAudio }}">{{ profile.preferredAudio }}</option>#}
+{#                            <option value="{{ file.audio }}">{{ file.audio }}</option>#}
+{#                        {% else %}#}
+{#                            <option selected value="{{ file.audio }}">{{ file.audio }}</option>#}
+{#                            <option value="ar">ar</option>#}
+{#                        {% endif %}#}
+{#                    </select>#}
                     <p style="color: #000000; margin-top: 40px;">{{ file.path }}</p>
                 </div>
                 <div class="stopwatch d-flex flex-row mb-4">

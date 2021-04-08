@@ -23,7 +23,7 @@ class Episode
     private $name;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="integer")
      */
     private $year;
 
@@ -56,16 +56,20 @@ class Episode
         return $this;
     }
 
-    public function getYear(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getYear()
     {
         return $this->year;
     }
 
-    public function setYear(\DateTimeInterface $year): self
+    /**
+     * @param mixed $year
+     */
+    public function setYear($year): void
     {
         $this->year = $year;
-
-        return $this;
     }
 
     public function getSeason(): ?Season
