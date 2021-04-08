@@ -40,27 +40,28 @@
                            for="preferredSubtitles">{% trans %}Choose a language of subtitles{% endtrans %}:</label>
 
                     <select name="preferredSubtitles" id="preferredSubtitles">
-                        {% if profile.preferredLanguage!="en" %}
-                            <option selected
-                                    value="{{ profile.preferredLanguage }}">{{ profile.preferredLanguage }}</option>
-                            <option value="{{ file.subtitle }}">{{ file.subtitle }}</option>
-                        {% else %}
-                            <option selected value="{{ file.subtitle }}">{{ file.subtitle }}</option>
-                            <option value="ar">ar</option>
-                        {% endif %}
+
+                        {%  for key in file.subtitle|keys %}
+                            {% if file.subtitle[key] is same as (profile.preferredLanguage) %}
+                                <option selected value="{{ profile.preferredLanguage }}">{{ profile.preferredLanguage }}</option>
+                            {% else %}
+                                <option value="{{ file.subtitle[key] }}">{{ file.subtitle[key] }}</option>
+                            {% endif %}
+                        {% endfor %}
 
                     </select>
                     <label style="color: black" for="preferredAudio">{% trans %}Choose a language of audio{% endtrans %}
                         :</label>
 
                     <select name="preferredAudio" id="preferredAudio">
-                        {% if profile.preferredAudio!="en" %}
-                            <option selected value="{{ profile.preferredAudio }}">{{ profile.preferredAudio }}</option>
-                            <option value="{{ file.audio }}">{{ file.audio }}</option>
-                        {% else %}
-                            <option selected value="{{ file.audio }}">{{ file.audio }}</option>
-                            <option value="ar">ar</option>
-                        {% endif %}
+                        {%  for key in file.audio|keys %}
+                            {% if file.audio[key] is same as (profile.preferredAudio) %}
+                                <option selected value="{{ profile.preferredAudio }}">{{ profile.preferredAudio }}</option>
+                            {% else %}
+                                <option value="{{ file.audio[key] }}">{{ file.audio[key] }}</option>
+                            {% endif %}
+                        {% endfor %}
+
                     </select>
                     <p style="color: #000000; margin-top: 40px;">{{ file.path }}</p>
                 </div>
