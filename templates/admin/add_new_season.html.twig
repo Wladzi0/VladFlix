@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block title %}{% trans %}Adding of season {% endtrans %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+{% block body %}
+    {% set formErrors = formSeason.vars.errors.form.getErrors(true) %}
+    {% if formErrors | length %}
+
+        <ul class="col-5 alert-danger">
+            {% for error in formErrors %}
+                <li>{{ error.message|trans }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert-{{ type }}" role="alert">
+                {{ message|trans }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+        <div class="container col-5">
+   <h2>Add new season</h2>
+    {%  if formSeason %}
+        {{ form_start(formSeason, {'attr': {'class': 'form-horizontal', 'id':'addFormSeason'}}) }}
+        {{ form_label(formSeason.name) }}<br>
+        {{ form_widget(formSeason.name, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formSeason.year) }}<br>
+        {{ form_widget(formSeason.year, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+
+        <button class="btn  btn-success float-left mr-5 "  id="add_season" type="submit">
+            {% trans %}Add season{% endtrans %}
+        </button>
+        {{ form_end(formSeason) }}
+    {% endif %}
+        </div>
+    <a href="{{ path('admin') }}" class="btn  btn-info  float-left mr-5" >
+        {% trans %}Back to Admin panel{% endtrans %}
+    </a>
+    {% if episodeButton is same as ("1") %}
+    <div class="container col-5 mt-5">
+        <a href="{{ path('add_new_episode_file',{ 'serial': serial}) }}" class="btn btn-info" id="add_profile">
+            {% trans %}Go to adding episode{% endtrans %}
+        </a>
+    </div>
+    {% endif %}
+{% endblock %}

@@ -3,15 +3,25 @@
 namespace App\Controller;
 
 
+use App\Entity\Episode;
 use App\Entity\File;
 use App\Entity\Film;
+use App\Entity\Season;
+use App\Entity\Serial;
+use App\Form\EpisodeType;
 use App\Form\FileType;
 use App\Form\FilmType;
+use App\Form\SeasonType;
+use App\Form\SerialType;
+use App\Repository\EpisodeRepository;
+use App\Repository\SeasonRepository;
+use App\Repository\SerialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -54,17 +64,111 @@ class AdminController extends AbstractController
                     ->add('success', 'Film is added!');
             return $this->redirectToRoute('admin');
         }
-//            if (!$this->isGranted("ADD_ACCESS", $userPin)) {
-//                $request->getSession()
-//                    ->getFlashBag()
-//                    ->add('danger', 'User`s PIN is incorrect. You cannot add profile!');
-//                $referer = $request->headers->get('referer');
-//                return new RedirectResponse($referer);
-//            }
 
         return $this->render('admin/add_new_film.html.twig',[
                 'formFilm' => $formFilm->createView(),
                 'formFile' => $formFile->createView()
+            ]
+        );
+    }
+    /**
+     * @Route("/add-new-serial", name="add_new_serial")
+     */
+    public function addSerial(Request $request)
+    {
+        $serial= new Serial();
+        $formSerial= $this->createForm(SerialType::class, $serial);
+
+        $formSerial->handleRequest($request);
+
+        if ($formSerial->isSubmitted() && $formSerial->isValid()) {
+
+            $serialData = $formSerial->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($serialData);
+            $em->flush();
+
+            return $this->redirectToRoute("add_new_season",array(
+                'serial'=>$serialData->getId()
+            ));
+        }
+
+        return $this->render('admin/add_new_serial.html.twig',[
+                'formSerial' => $formSerial->createView()
+            ]
+        );
+    }
+
+    /**
+     * @Route("/add-new-season", name="add_new_season")
+     */
+    public function addNewSeason(Request $request, SerialRepository $serialRepository)
+    {
+
+        $episodeButton=false;
+        if($reqButton= $request->get('episodeButton')){
+            $episodeButton=$reqButton;
+        }
+        $serialId= $request->get('serial');
+        dump($serialId);
+        $serial=$serialRepository->find($serialId);
+        $season= new Season();
+        $formSeason= $this->createForm(SeasonType::class, $season);
+        $formSeason->handleRequest($request);
+        if ($formSeason->isSubmitted() && $formSeason->isValid()) {
+            $seasonData = $formSeason->getData();
+            $seasonData->setSerial($serial);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($seasonData);
+            $em->flush();
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'Season is added to '.$seasonData->getName().'!');
+            return $this->redirectToRoute('add_new_season', array(
+                'serial'=>$serialId,
+                'episodeButton'=>true,
+            ));
+            }
+        return $this->render('admin/add_new_season.html.twig',[
+            'formSeason' => $formSeason->createView(),
+            'episodeButton'=>$episodeButton,
+            'serial'=>$serialId
+        ]);
+    }
+
+    /**
+     * @Route("/add-new-episode-file", name="add_new_episode_file")
+     */
+    public function addNewEpisode(Request $request,SeasonRepository $seasonRepository, EpisodeRepository $episodeRepository)
+    {
+        $serialId=$request->get('serial');
+        $episode=new Episode();
+        $file= new File();
+        $formEpisode= $this->createForm(EpisodeType::class, $episode,array('bySerial'=>$serialId));
+        $formFile= $this->createForm(FileType::class, $file);
+        $formFile->handleRequest($request);
+        $formEpisode->handleRequest($request);
+        if ($formEpisode->isSubmitted() && $formEpisode->isValid()) {
+            $file = $formFile->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($file);
+            $episodeData=$formEpisode->getData();
+            $episodeData->setFile($file);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($episodeData);
+            $em->flush();
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'Episode "'.$episodeData->getName().'" is added to !');
+            return $this->redirectToRoute('add_new_episode_file', array(
+                'serial'=>$serialId
+            ));
+        }
+        return $this->render('admin/add_new_episode_file.html.twig',[
+                'formEpisodeFile' => $formEpisode->createView(),
+                'formFile' => $formFile->createView(),
+                'serial'=>$serialId
             ]
         );
     }

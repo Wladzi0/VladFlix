@@ -16,10 +16,14 @@
         {% endfor %}
     {% endfor %}
         <div class="container mt-4">
-            <a style="text-decoration: none" class="pl-4 mt-4 bg-light col-2 mr-3"  href="{{ path('select_profile') }}">Back to select profile</a>
-            <a  style="text-decoration: none" class="pl-4 mt-4 bg-light col-9"
+            <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-3 mr-3"  href="{{ path('select_profile') }}">Back to selection of profile</a>
+            <a  style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2 mr-3"
                href="{{ path('add_new_film') }}">
              Add new film
+            </a>
+            <a  style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2"
+                href="{{ path('add_new_serial') }}">
+                Add new serial
             </a>
 
         </div>

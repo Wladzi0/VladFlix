@@ -2,24 +2,18 @@
 
 namespace App\Form;
 
-
 use App\Entity\Category;
-use App\Entity\Film;
-use Doctrine\ORM\Mapping\Entity;
+use App\Entity\Serial;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class FilmType extends AbstractType
+class SerialType extends AbstractType
 {
     private $translator;
 
@@ -33,18 +27,22 @@ class FilmType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'required' => true,
-                'label' => $this->translator->trans('Name of film'),
+                'label' => $this->translator->trans('Name of serial'),
             ))
             ->add('country', CountryType::class, array(
                 'required' => true,
                 'label' => $this->translator->trans('Country'),
             ))
-            ->add('year', ChoiceType::class, [
+            ->add('yearStart', ChoiceType::class, [
                 'required' => true,
                 'empty_data' => null,
                 'preferred_choices' => array(null),
                 'label' => $this->translator->trans('Year of production'),
                 'choices' => $this->getYears(1950)])
+            ->add('yearFinish', ChoiceType::class, [
+                'required' => true,
+                'label' => $this->translator->trans('Year of finish'),
+                'choices' => $this->getYears(1951)])
             ->add('ageCategory', ChoiceType::class, [
                 'placeholder' => false,
                 'required' => true,
@@ -59,15 +57,16 @@ class FilmType extends AbstractType
                 'class' => Category::class,
                 'multiple' => true,
                 'expanded' => true,
-            ]);
-//            ->add('save', SubmitType::class, ['label' => 'Add new film'])
-//            ->getForm();
+            ]);;
+//        $builder->addEventSubscriber(new Subscriber);
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Film::class
+            'data_class' => Serial::class,
         ]);
     }
 

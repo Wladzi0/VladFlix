@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block title %}{% trans %} Adding of serial {% endtrans %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    {% set formErrors = formSerial.vars.errors.form.getErrors(true) %}
+    {% if formErrors | length %}
+
+        <ul class="col-5 alert-danger">
+            {% for error in formErrors %}
+                <li>{{ error.message|trans }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert-{{ type }}" role="alert">
+                {{ message|trans }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div class="container col-5">
+        <h1>Add new serial</h1>
+        {{ form_start(formSerial, {'attr': {'class': 'form-horizontal', 'id':'addFormFilm'}}) }}
+        {{ form_label(formSerial.name) }}<br>
+        {{ form_widget(formSerial.name, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formSerial.country) }}<br>
+        {{ form_widget(formSerial.country, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formSerial.yearStart) }}<br>
+        {{ form_widget(formSerial.yearStart, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formSerial.yearFinish) }}<br>
+        {{ form_widget(formSerial.yearFinish, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formSerial.ageCategory) }}<br>
+        {{ form_widget(formSerial.ageCategory, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formSerial.categories) }}<br>
+        {{ form_widget(formSerial.categories, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+
+        <button class="btn  btn-success" type="submit">
+            {% trans %}Next{% endtrans %}
+        </button>
+        {{ form_end(formSerial) }}
+
+
+
+    </div>
+{% endblock %}
