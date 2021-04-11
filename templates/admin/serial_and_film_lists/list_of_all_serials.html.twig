@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+{% block title %}{% trans %}Serials{% endtrans %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert-{{ type }}" role="alert">
+                {{ message|trans }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div class="container mt-4">
+        <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-3 mr-3" href="{{ path('select_profile') }}">Back
+            to selection of profile</a>
+        <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2 mr-3"
+           href="{{ path('admin') }}">
+            Back to Admin panel
+        </a>
+        <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2"
+           href="{{ path('add_new_serial') }}">
+            Add new serial
+        </a>
+    </div>
+    <div class="bg-light mt-5">
+        <div style="width: 90% " class=" d-flex flex-row ">
+
+            <div style="width: 80px; " class="d-flex flex-col float-left ml-5 mr-4">
+                <p style="color: #4d90fe">  {{ knp_pagination_sortable(serials,'id','s.id') }}
+                </p>
+            </div>
+            <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
+                <p style="color: #4d90fe">{% trans %}Name of serial{% endtrans %}
+                </p>
+            </div>
+            <div style="width:80px; " class="d-flex flex-col float-left mr-4">
+                <p style="color: #4d90fe">{% trans %}Country{% endtrans %}
+                </p>
+            </div>
+            <div style="width: 80px; " class="d-flex flex-col float-left mr-3">
+                <p style="color: #4d90fe">{% trans %}Year of start{% endtrans %}
+                </p>
+            </div>
+            <div style="width: 80px; " class="d-flex flex-col float-left mr-3">
+                <p style="color: #4d90fe">{% trans %}Year of finish{% endtrans %}
+                </p>
+            </div>
+            <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
+                <p style="color: #4d90fe">{% trans %}Seasons{% endtrans %}
+                </p>
+            </div>
+
+        </div>
+        <div class="bg-light mt-2 m">
+
+            {% if serials %}
+            {% for serial in serials %}
+            <div style="width: 90% " class=" d-flex flex-row mb-3">
+
+                <div style="width: 80px; " class="d-flex flex-col float-left ml-5 mr-3">
+                    <p style="color: #000000">{{ serial.id }}
+                    </p>
+                </div>
+                <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
+                    <p style="color: #000000">{{ serial.name|trans }}
+                    </p>
+                </div>
+                <div style="width:80px; " class="d-flex flex-col float-left mr-4">
+                    <p style="color: #000000">{{ serial.country|trans }}
+                    </p>
+                </div>
+                <div style="width: 80px; " class="d-flex flex-col float-left mr-4">
+                    <p style="color: #000000">{{ serial.yearStart }}
+                    </p>
+                </div>
+                <div style="width: 80px; " class="d-flex flex-col float-left mr-4">
+                    <p style="color: #000000">{{ serial.yearFinish }}
+                    </p>
+                </div>
+                <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
+                    <p style="color: #000000">{{ serial.season|length }}
+                    </p>
+                </div>
+                <a class="btn-info btn mr-2" href="{{ path('show_serial_details',{'id':serial.id} ) }}">Show</a>
+                <a class="btn-warning btn mr-2" href="{{ path('edit_serial_details',{'id':serial.id} ) }}">Edit</a>
+{#                <form method="post" action="{{ path('serial_delete', {'id': serial.id}) }}"#}
+{#                      onsubmit="return confirm('Are you sure you want to delete this item?');">#}
+{#                    <input type="hidden" name="_method" value="DELETE">#}
+{#                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ serial.id) }}">#}
+{#                    <button class="btn btn-danger">Delete</button>#}
+{#                </form>#}
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(serials) }}
+        </div>
+    </div>
+
+{% endblock %}

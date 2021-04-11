@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}{% trans %}Welcome Admin {% endtrans %}{% endblock %}
+{% block title %}{% trans %}Films{% endtrans %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -23,8 +23,8 @@
             Back to Admin panel
         </a>
         <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2"
-           href="{{ path('add_new_serial') }}">
-            Add new serial
+           href="{{ path('add_new_film') }}">
+            Add new film
         </a>
     </div>
     <div class="bg-light mt-5">

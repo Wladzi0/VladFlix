@@ -66,11 +66,12 @@ class AdminController extends AbstractController
             $request->getSession()
                 ->getFlashBag()
                 ->add('success', 'Film is added!');
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('list_of_all_films');
         }
 
-        return $this->render('admin/add_new_film.html.twig', [
+        return $this->render('admin/add_or_edit_film.html.twig', [
                 'formFilm' => $formFilm->createView(),
+                'filmAction'=>'Add film',
                 'formFile' => $formFile->createView()
             ]
         );
@@ -184,7 +185,6 @@ class AdminController extends AbstractController
     {
         $dql = 'SELECT f FROM App\Entity\Film f';
         $query = $em->createQuery($dql);
-        $files = $fileRepository->findAll();
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
@@ -199,17 +199,23 @@ class AdminController extends AbstractController
     /**
      * @Route("/list-of-all-serials", name="list_of_all_serials")
      */
-    public function showAllSerials(FilmRepository $filmRepository)
+    public function showAllSerials(EntityManagerInterface $em, FileRepository $fileRepository, Request $request, PaginatorInterface $paginator)
     {
-        $films = $filmRepository->findAll();
 
+        $dql = 'SELECT s FROM App\Entity\Serial s';
+        $query = $em->createQuery($dql);
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 2)
+        );
         return $this->render('admin/serial_and_film_lists/list_of_all_serials.html.twig', [
-            'films' => $films
+            'serials' => $pagination
         ]);
     }
 
     /**
-     * @Route("/{serialId}/show-film-details", name="show_serial_details")
+     * @Route("/{id}/show-serial-details", name="show_serial_details")
      */
     public function showSerialDetails(Request $request, Serial $serial): Response
     {
@@ -219,9 +225,33 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/edit-serial-details", name="edit_serial_details", methods={"GET","POST"}, requirements={"id"="\d+"})
+     */
+    public function editSerialDetails(FileRepository $fileRepository, Request $request, Serial $serial)
+    {
+        $formSerial = $this->createForm(SerialType::class, $serial);
+        $formSerial->handleRequest($request);
+
+        if ($formSerial->isSubmitted() && $formSerial->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $serial = $formSerial->getData();
+            $em->persist($serial);
+            $em->flush();
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'Serial "' . $serial->getName() . '" is edited !');
+            return $this->redirectToRoute('list_of_all_serials');
+        }
+
+        return $this->render('admin/edit_film_details.html.twig', [
+            'serial' => $serial,
+            'formSerial' => $formSerial->createView()
+        ]);
+    }
+    /**
      * @Route("/{id}/edit-film-details", name="edit_film_details", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function editFilmDetails(FileRepository $fileRepository, Request $request, Film $film, FilmRepository $filmRepository)
+    public function editFilmDetails(FileRepository $fileRepository, Request $request, Film $film)
     {
         $formFilm = $this->createForm(FilmType::class, $film);
         $fileOfFilm = $fileRepository->findFileOfFilm($request->get('id'));
@@ -243,8 +273,9 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('list_of_all_films');
         }
 
-        return $this->render('admin/edit_film_details.html.twig', [
+        return $this->render('admin/add_or_edit_film.html.twig', [
             'film' => $film,
+            'filmAction'=>'Edit film',
             'formFilm' => $formFilm->createView(),
             'formFile' => $formFile->createView()
         ]);
