@@ -1,21 +1,18 @@
 {% extends 'base.html.twig' %}
-{% block title %}{% trans %}Adding of film {% endtrans %}{% endblock %}
+
+{% block title %}{{ film.name|trans }}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js /profileSubtitles.js') }}"></script>
+    <script src="{{ asset('js /playerForFilm.js') }}"></script>
+    <script src="{{ asset('js /profileAudio.js') }}"></script>
 {% endblock %}
 {% block body %}
-    {% set formErrors = formFilm.vars.errors.form.getErrors(true) %}
-    {% if formErrors | length %}
 
-        <ul class="col-5 alert-danger">
-            {% for error in formErrors %}
-                <li>{{ error.message|trans }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert-{{ type }}" role="alert">
@@ -23,9 +20,12 @@
             </div>
         {% endfor %}
     {% endfor %}
-    <div class="container col-5">
+    {% include 'navigation.html.twig' %}
+
+    <div class="container flex-column d-flex pt-5">
+
         <h1>Add new film</h1>
-        {{ form_start(formFilm, {'attr': {'class': 'form-horizontal', 'id':'addFormFilm'}}) }}
+        {{ form_start(formFilm, {'attr': {'class': 'form-horizontal'}}) }}
         {{ form_label(formFilm.name) }}<br>
         {{ form_widget(formFilm.name, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
         {{ form_label(formFilm.country) }}<br>
@@ -53,6 +53,6 @@
         {{ form_end(formFilm) }}
         {{ form_end(formFile) }}
 
-
     </div>
+
 {% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+{% block title %}{% trans %}Welcome Admin {% endtrans %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert-{{ type }}" role="alert">
+                {{ message|trans }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div class="container mt-4">
+        <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-3 mr-3" href="{{ path('select_profile') }}">Back
+            to selection of profile</a>
+        <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2 mr-3"
+           href="{{ path('admin') }}">
+            Back to Admin panel
+        </a>
+        <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2"
+           href="{{ path('add_new_serial') }}">
+            Add new serial
+        </a>
+    </div>
+    <div class="bg-light mt-5">
+        <div style="width: 90% " class=" d-flex flex-row ">
+
+            <div style="width: 80px; " class="d-flex flex-col float-left ml-5 mr-4">
+                <p style="color: #4d90fe">  {{ knp_pagination_sortable(films,'id','f.id') }}
+                </p>
+            </div>
+            <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
+                <p style="color: #4d90fe">{% trans %}Name of film{% endtrans %}
+                </p>
+            </div>
+            <div style="width:80px; " class="d-flex flex-col float-left mr-4">
+                <p style="color: #4d90fe">{% trans %}Country{% endtrans %}
+                </p>
+            </div>
+            <div style="width: 80px; " class="d-flex flex-col float-left mr-3">
+                <p style="color: #4d90fe">{% trans %}Year{% endtrans %}
+                </p>
+            </div>
+
+            <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
+                <p style="color: #4d90fe">{% trans %}Path{% endtrans %}
+                </p>
+            </div>
+            <div style="width: 200px; " class="d-flex flex-col float-left mr-3">
+                <p style="color: #4d90fe">{% trans %}Subtitles{% endtrans %}
+                </p>
+            </div>
+            <div style="width: 200px; " class="d-flex flex-col float-left mr-3">
+                <p style="color: #4d90fe">{% trans %}Audio{% endtrans %}
+                </p>
+            </div>
+        </div>
+        <div class="bg-light mt-2 m">
+
+            {% if films %}
+            {% for film in films %}
+            <div style="width: 90% " class=" d-flex flex-row mb-3">
+
+                <div style="width: 80px; " class="d-flex flex-col float-left ml-5 mr-3">
+                    <p style="color: #000000">{{ film.id }}
+                    </p>
+                </div>
+                <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
+                    <p style="color: #000000">{{ film.name|trans }}
+                    </p>
+                </div>
+                <div style="width:80px; " class="d-flex flex-col float-left mr-4">
+                    <p style="color: #000000">{{ film.country|trans }}
+                    </p>
+                </div>
+                <div style="width: 80px; " class="d-flex flex-col float-left mr-4">
+                    <p style="color: #000000">{{ film.year }}
+                    </p>
+                </div>
+                <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
+                    <p style="color: #000000">{{ film.file }}
+                    </p>
+                </div>
+                <div style="width: 200px; " class="d-flex flex-col float-left mr-3">
+                    <p style="color: #000000">{% for subtitle in film.file.subtitle %}
+
+                    <p class="mr-2" style="color: #000000">{{ subtitle }},
+                    </p>
+                    {% endfor %}
+                    </p>
+                </div>
+                <div style="width: 200px; " class="d-flex flex-col float-left mr-3">
+                    <p style="color: #000000">{% for audio in film.file.audio %}
+
+                    <p class="mr-2" style="color: #000000">{{ audio }},
+                    </p>
+                    {% endfor %}
+                    </p>
+                </div>
+                <a class="btn-warning btn mr-2" href="{{ path('edit_film_details',{'id':film.id} ) }}">Edit</a>
+                <form method="post" action="{{ path('film_delete', {'id': film.id}) }}"
+                      onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ film.id) }}">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(films) }}
+        </div>
+    </div>
+
+{% endblock %}
