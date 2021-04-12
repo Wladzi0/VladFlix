@@ -12,10 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class RegistrationFormType extends AbstractType
+class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -43,19 +42,22 @@ class RegistrationFormType extends AbstractType
                     ]),],
             ])
             ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
+                'type' => TextType::class,
                 'first_options' => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
                 'mapped' => false,
                 'required' => false,
 
             ]);
+
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => array('edit'),
         ]);
     }
 }

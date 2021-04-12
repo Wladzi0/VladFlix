@@ -25,7 +25,7 @@ class MainController extends AbstractController
      */
     public function index(SessionInterface $session, CategoryRepository $categoryRepository)
     {
-        if ($session->get('profileId')) {
+        if (!$session->get('profileId')) {
             return $this->redirectToRoute('select_profile');
         }
         $categories = $categoryRepository->findAll();

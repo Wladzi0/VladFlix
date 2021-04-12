@@ -21,7 +21,7 @@
         {% trans %}Back to Admin panel{% endtrans %}
     </a>
     <a href="{{ path('list_of_all_serials') }}" class="btn  btn-info  mr-5" >
-        {% trans %}list of serials{% endtrans %}
+        {% trans %}List of serials{% endtrans %}
     </a>
     <div class="container flex-column d-flex pt-5">
 
@@ -31,9 +31,9 @@
             <div class="card d-flex flex-col mb-1 ">
                 <div class="card pl-3 pt-3" style="width: 100%">
                     <h3 style="color: #000000">{{ serial.name|trans }}
-                    </h3><a style="right: 330px;" class=" btn btn-warning position-absolute " href="{{ path('edit_serial_details',{'id':serial.id}) }}">Edit basic info
-                        <a style="right: 170px;" class=" btn btn-success position-absolute " href="{{ path('add_new_season',{'serial':serial.id}) }}">Add new season</a>
-                        <a style="right: 10px;" class=" btn btn-success position-absolute " href="{{ path('add_new_episode_file',{'serial':serial.id}) }}">Add new episode</a>
+                    </h3><a style="right: 330px;" class=" btn btn-warning position-absolute " href="{{ path('edit_serial_details',{'id':serial.id}) }}">{% trans %}Edit basic info {% endtrans %}
+                        <a style="right: 170px;" class=" btn btn-success position-absolute " href="{{ path('add_new_season',{'serial':serial.id}) }}">{% trans %}Add new season{% endtrans %}</a>
+                        <a style="right: 10px;" class=" btn btn-success position-absolute " href="{{ path('add_new_episode_file',{'serial':serial.id}) }}">{% trans %}Add new episode{% endtrans %}</a>
                     <p style="color: #000000">Country: {{ serial.country|trans }}
                     </p>
                     {% if serial.yearFinish %}
@@ -47,12 +47,12 @@
                         {% for season in serial.season  %}
                             <div class="border mb-2">
                             <h4 style="color: #000000">{{ season.name|trans }} ({{ season.episode|length }})
-                            </h4><a style="right: 180px;margin-top: -28px " class="btn btn-warning position-absolute" href="{{ path('edit_season',{'serialId': serial.id,'id':season.id}) }}">Edit season</a>
+                            </h4><a style="right: 180px;margin-top: -28px " class="btn btn-warning position-absolute" href="{{ path('edit_season',{'serialId': serial.id,'id':season.id}) }}">{% trans %}Edit season{% endtrans %}</a>
                                 <form style="right: 30px;margin-top: -28px " class="position-absolute" method="post" action="{{ path('season_delete', {'id': season.id}) }}"
                                       onsubmit="return confirm('Are you sure you want to delete this season?');">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ season.id) }}">
-                                    <button class="btn btn-danger">Delete season</button>
+                                    <button class="btn btn-danger">{% trans %}Delete season{% endtrans %}</button>
                                 </form>
                                 <br>
                                 {% for episode in season.episode  %}
@@ -71,12 +71,12 @@
                                         </p>
                                     {% endfor %}
 
-                                    <a style="right: 180px;margin-top: -48px " class="  float-left btn btn-warning position-absolute" href="{{ path('edit_episode_file',{'id':episode.id,'serial': serial.id}) }}">Edit episode</a>
+                                    <a style="right: 180px;margin-top: -48px " class="  float-left btn btn-warning position-absolute" href="{{ path('edit_episode_file',{'id':episode.id,'serial': serial.id}) }}">{% trans %}Edit episode{% endtrans %}</a>
                                     <form style="right: 30px;margin-top: -48px " class="position-absolute" method="post" action="{{ path('episode_delete', {'id': episode.id}) }}"
                                           onsubmit="return confirm('Are you sure you want to delete this episode?');">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ episode.id) }}">
-                                        <button class="btn btn-danger">Delete episode</button>
+                                        <button class="btn btn-danger">{% trans %}Delete episode{% endtrans %}</button>
                                     </form>
 
                                     {% endfor %}

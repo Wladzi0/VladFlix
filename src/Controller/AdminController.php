@@ -12,8 +12,10 @@ use App\Entity\User;
 use App\Form\EpisodeType;
 use App\Form\FileType;
 use App\Form\FilmType;
+use App\Form\RegistrationFormType;
 use App\Form\SeasonType;
 use App\Form\SerialType;
+use App\Form\UserEditType;
 use App\Repository\FileRepository;
 use App\Repository\SerialRepository;
 use App\Repository\UserRepository;
@@ -23,7 +25,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 /**
@@ -31,6 +36,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminController extends AbstractController
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     /**
      * @Route("/admin", name="admin")
      */
@@ -69,7 +81,7 @@ class AdminController extends AbstractController
 
         return $this->render('admin/add_or_edit_film.html.twig', [
                 'formFilm' => $formFilm->createView(),
-                'filmAction' => 'Add film',
+                'filmAction' => 'Add new film',
                 'formFile' => $formFile->createView()
             ]
         );
@@ -128,7 +140,7 @@ class AdminController extends AbstractController
             $em->flush();
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'Season is added to ' . $seasonData->getName() . '!');
+                ->add('success', 'Season is added to' . $seasonData->getName() );
             return $this->redirectToRoute('add_new_season', array(
                 'serial' => $serialId,
                 'episodeButton' => true,
@@ -164,7 +176,7 @@ class AdminController extends AbstractController
             $em->flush();
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'Episode "' . $episodeData->getName() . '" is added !');
+                ->add('success', 'Episode "' . $episodeData->getName() . '" is added!');
             return $this->redirectToRoute('add_new_episode_file', array(
                 'serial' => $serialId,
                 'edit' => false,
@@ -263,7 +275,7 @@ class AdminController extends AbstractController
             $em->flush();
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'Season is edit to ' . $seasonData->getName() . '!');
+                ->add('success', 'Season is edit to ' . $seasonData->getName() );
             return $this->redirectToRoute('show_serial_details', ['id' => $request->get('serialId')]);
         }
         return $this->render('admin/adding_of_serial/add_or_edit_season.html.twig', [
@@ -302,7 +314,7 @@ class AdminController extends AbstractController
         }
         $request->getSession()
             ->getFlashBag()
-            ->add('success', 'serial is deleted!');
+            ->add('success', 'Serial is deleted!');
         return $this->redirectToRoute('list_of_all_serials');
     }
 
@@ -327,7 +339,7 @@ class AdminController extends AbstractController
             $em->flush();
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'Episode "' . $episodeData->getName() . '" is edit!');
+                ->add('success', 'Episode "' . $episodeData->getName() . '" is edited!');
             return $this->redirectToRoute('show_serial_details', ['id' => $serialId]);
         }
         return $this->render('admin/adding_of_serial/add_or_edit_episode_file.html.twig', [
@@ -376,7 +388,7 @@ class AdminController extends AbstractController
             $em->flush();
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'Film "' . $film->getName() . '" is edited !');
+                ->add('success', 'Film "' . $film->getName() . '" is edited!');
             return $this->redirectToRoute('list_of_all_films');
         }
 
@@ -385,6 +397,37 @@ class AdminController extends AbstractController
             'filmAction' => 'Edit film',
             'formFilm' => $formFilm->createView(),
             'formFile' => $formFile->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/edit-user/{id}", name="edit_user", methods={"GET","POST"}, requirements={"id"="\d+"})
+     */
+    public function editUser(Request $request, User $user)
+    {
+        $oldPassword = $user->getPassword();
+        $formUser = $this->createForm(UserEditType::class, $user);
+        $formUser->handleRequest($request);
+
+        if ($formUser->isSubmitted() && $formUser->isValid()) {
+
+
+
+            $user = $formUser->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'User is edited!');
+            return $this->render('admin/list_of_users.html.twig');
+        }
+
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $formUser->createView(),
+            'edit' => true,
         ]);
     }
 
@@ -401,7 +444,7 @@ class AdminController extends AbstractController
         }
         $request->getSession()
             ->getFlashBag()
-            ->add('success', 'film is deleted!');
+            ->add('success', 'Film is deleted!');
         return $this->redirectToRoute('list_of_all_films');
     }
 

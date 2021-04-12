@@ -18,27 +18,27 @@
     <div class=" ">
         <a style="text-decoration: none" class=" ml-4 btn pl-4 mt-4 bg-light col-2 mr-3"
            href="{{ path('select_profile') }}">
-            Back to selection of profile
+            {% trans %}Back to selection of profile{% endtrans %}
         </a>
         <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2 mr-3"
            href="{{ path('add_new_film') }}">
-            Add new film
+            {% trans %}Add new film{% endtrans %}
         </a>
         <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2 mr-3"
            href="{{ path('add_new_serial') }}">
-            Add new serial
+            {% trans %}Add new serial{% endtrans %}
         </a>
         <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2 mr-3"
            href="{{ path('list_of_all_films') }}">
-            Films
+            {% trans %}Films{% endtrans %}
         </a>
         <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2"
            href="{{ path('list_of_all_serials') }}">
-            Serials
+            {% trans %}Serials{% endtrans %}
         </a>
         <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-2"
            href="{{ path('users') }}">
-            Users
+            {% trans %}Users{% endtrans %}
         </a>
     </div>
 {% endblock %}

@@ -17,7 +17,7 @@
             {% endfor %}
         {% endfor %}
     </div>
-    <a style="position: absolute; top: 100px; right: 20px;" class=" bg-light" href="{{ path('app_logout') }}">Logout</a>
+    <a style="position: absolute; top: 100px; right: 20px;" class=" bg-light" href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a>
     {% if is_granted('ROLE_ADMIN') %}
 
         <a style="position: absolute; top:20px; right: 20px;" href="{{ path('admin') }}"><i

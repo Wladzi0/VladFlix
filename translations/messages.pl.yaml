@@ -1,3 +1,47 @@
+Edit user: Zmień dane użytkownika
+First name: Imię
+Last name: Nazwisko
+Default language: Dowolny język
+Password: Hasło
+Repeat Password: Powtórz hasło
+Back to sign in: Powrót do logowania
+Nickname: Przezwisko
+Age: Wiek
+Users: Użytkownicy
+Next: Dalej
+Add season: Dodaj sezon
+Back to Admin panel: Powrót do panelu admina
+Add new season: Dodaj nowy sezon
+Go to add an episode: Dodaj odcinek
+Add new episode: Dodaj nowy odcinek
+Season: Sezon
+Add episode: Dodaj odcinek
+Delete: Usuń
+Adding of serial: Dodawanie serialu
+Editing of serial: Edytowanie serialu
+Logout: Wyloguj się
+Year of start: Rok produkcji
+Show or edit: Zobacz lub edytuj
+Seasons: Sezony
+List of serials: Lista z serialów
+Edit basic info: Edytuj info
+Edit episode: Edytuj odcinek
+Delete season: Usuń sezon
+Delete episode: Usuń odcinek
+Season is added to:
+Episode is added!: Odcinek został dodany!
+Episode is edited!: Odcinek został edytowany!
+Serial is edited!: Serial został edytowany!
+Episode is deleted!: Odcinek został usunięty!
+Film is edited!: Film został dodany!
+User is edited!: Użytkownik został edytowany!
+Film is deleted!: Film został usunięty
+User is deleted!: Użytkownik został usunięty
+Season is edit to : Season został dodany do
+Season is deleted!: Seson został usunięty!
+Serial is deleted!: Serial został usunięty!
+Back to selection of profile: Powrót do wyboru profilu
+User`s PIN: PIN użytkownika
 Add the serial: Dodaj serial
 Serial is added: Serial został dodany
 Film is added: Serial zosta dodany
@@ -9,6 +53,10 @@ Add new serial: Dodaj nowy serial
 Year of finish: Rok zakonczenia
 Welcome Admin: Witaj Admin
 Name of film: Nazwa filmu
+
+
+
+
 Country: Kraj
 Year of production: Rok produkcji
 Age category: Kategoria wiekowa

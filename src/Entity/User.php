@@ -37,11 +37,13 @@ class User implements UserInterface, EquatableInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Password may not be empty")
      * @Assert\Length(
      *      min = 6,
      *      max = 4096,
      *      minMessage = "Your password must be at least {{ limit }} characters long",
-     *      maxMessage = "Your password cannot be longer than {{ limit }} characters"
+     *      maxMessage = "Your password cannot be longer than {{ limit }} characters",
+     *      groups = {"Default"}
      * )
      */
     private $password;
@@ -194,13 +196,9 @@ class User implements UserInterface, EquatableInterface
         return null;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     public function getFirstName(): ?string
