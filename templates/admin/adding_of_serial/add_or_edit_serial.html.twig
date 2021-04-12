@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %}{% trans %} Adding of serial {% endtrans %}{% endblock %}
+{% block title %}
+    {% if edit is same as (true) %}
+    {% trans %}Editing  of serial{% endtrans %}
+{% else %}
+    {% trans %}Adding of serial{% endtrans %}
+{% endif %}
+{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -24,7 +30,11 @@
         {% endfor %}
     {% endfor %}
     <div class="container col-5">
-        <h1>Add new serial</h1>
+        {% if edit is same as (true) %}
+           <h1> {% trans %}Edit serial{% endtrans %}</h1>
+        {% else %}
+            <h1>  {% trans %}Add new serial{% endtrans %}</h1>
+        {% endif %}
         {{ form_start(formSerial, {'attr': {'class': 'form-horizontal', 'id':'addFormFilm'}}) }}
         {{ form_label(formSerial.name) }}<br>
         {{ form_widget(formSerial.name, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
@@ -39,9 +49,16 @@
         {{ form_label(formSerial.categories) }}<br>
         {{ form_widget(formSerial.categories, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
 
-        <button class="btn  btn-success" type="submit">
-            {% trans %}Next{% endtrans %}
-        </button>
+
+        {% if edit is same as (true) %}
+            <button class="btn  btn-success" type="submit">
+                {% trans %}Edit{% endtrans %}
+            </button>
+        {% else %}
+            <button class="btn  btn-success" type="submit">
+                {% trans %}Next{% endtrans %}
+            </button>
+        {% endif %}
         {{ form_end(formSerial) }}
 
 

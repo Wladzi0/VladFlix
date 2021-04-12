@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\TimeData;
 use App\Repository\CategoryRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\FileRepository;
-use App\Repository\FilmRepository;
 use App\Repository\ProfileRepository;
 use App\Repository\SeasonRepository;
 use App\Repository\SerialRepository;
@@ -14,8 +12,6 @@ use App\Repository\TimeDataRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 

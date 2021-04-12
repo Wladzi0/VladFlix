@@ -5,17 +5,14 @@ namespace App\Controller;
 
 use App\Repository\CategoryRepository;
 use App\Repository\FilmRepository;
-use App\Repository\ProfileRepository;
 use App\Repository\SerialRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  *
@@ -26,13 +23,13 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="main_page")
      */
-    public function index(FilmRepository $filmRepository, SerialRepository $serialRepository, SessionInterface $session, Request $request, UserInterface $user, ProfileRepository $profileRepository, CategoryRepository $categoryRepository)
+    public function index(SessionInterface $session, CategoryRepository $categoryRepository)
     {
-        if (!$sessionProfile = $session->get('profileId')) {
+        if ($session->get('profileId')) {
             return $this->redirectToRoute('select_profile');
         }
         $categories = $categoryRepository->findAll();
-        $allSerialsAndFilms= $categoryRepository->findallSerialsAndFilms();
+        $allSerialsAndFilms = $categoryRepository->findallSerialsAndFilms();
 
         return $this->render('main_content/main_page.html.twig', [
             'categories' => $categories,
@@ -44,8 +41,11 @@ class MainController extends AbstractController
     /**
      * @Route("/all-Films-Serials", name="all_films_serials")
      */
-    public function allFilms(ProfileRepository $profileRepository, CategoryRepository $categoryRepository, SessionInterface $session, Request $request, FilmRepository $filmRepository, SerialRepository $serialRepository): Response
+    public function allFilms(CategoryRepository $categoryRepository, SessionInterface $session, Request $request, FilmRepository $filmRepository, SerialRepository $serialRepository): Response
     {
+        if (!$session->get('profileId')) {
+            return $this->redirectToRoute('select_profile');
+        }
         $typeSearch = $request->get('typeSearch');
         $categories = $categoryRepository->findAll();
 

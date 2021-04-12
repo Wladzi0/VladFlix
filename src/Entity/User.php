@@ -79,7 +79,7 @@ class User implements UserInterface, EquatableInterface
     private $isVerified = false;
 
     /**
-     * @ORM\OneToMany(targetEntity=Profile::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Profile::class, mappedBy="user", cascade={"persist","remove"})
      */
     private $profiles;
 

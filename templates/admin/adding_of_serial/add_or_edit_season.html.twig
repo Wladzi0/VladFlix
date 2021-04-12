@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %}{% trans %}Adding of season {% endtrans %}{% endblock %}
+{% block title %}
+      {% if edit is same as (true) %}
+          {% trans %}Edit season{% endtrans %}
+      {% else %}
+          {% trans %}Add new season{% endtrans %}
+      {% endif %}
+{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -25,7 +31,12 @@
         {% endfor %}
     {% endfor %}
         <div class="container col-5">
-   <h2>Add new season</h2>
+
+            {% if edit is same as (true) %}
+                <h2>  {% trans %}Edit season {% endtrans %}</h2>
+            {% else %}
+                <h2>  {% trans %}Add new season{% endtrans %}</h2>
+            {% endif %}
     {%  if formSeason %}
         {{ form_start(formSeason, {'attr': {'class': 'form-horizontal', 'id':'addFormSeason'}}) }}
         {{ form_label(formSeason.name) }}<br>
@@ -33,20 +44,30 @@
         {{ form_label(formSeason.year) }}<br>
         {{ form_widget(formSeason.year, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
 
-        <button class="btn  btn-success float-left mr-5 "  id="add_season" type="submit">
-            {% trans %}Add season{% endtrans %}
-        </button>
+
+        {% if edit is same as (true) %}
+            <button class="btn  btn-success float-left mr-5 "  id="add_season" type="submit">
+                {% trans %}Edit season{% endtrans %}
+            </button>
+        {% else %}
+            <button class="btn  btn-success float-left mr-5 "  id="add_season" type="submit">
+                {% trans %}Add season{% endtrans %}
+            </button>
+        {% endif %}
+
         {{ form_end(formSeason) }}
     {% endif %}
         </div>
     <a href="{{ path('admin') }}" class="btn  btn-info  float-left mr-5" >
         {% trans %}Back to Admin panel{% endtrans %}
     </a>
+    {%  if episodeButton is defined%}
     {% if episodeButton is same as ("1") %}
-    <div class="container col-5 mt-5">
-        <a href="{{ path('add_new_episode_file',{ 'serial': serial}) }}" class="btn btn-info" id="add_profile">
-            {% trans %}Go to adding episode{% endtrans %}
-        </a>
-    </div>
+        <div class="container col-5 mt-5">
+            <a href="{{ path('add_new_episode_file',{ 'serial': serial}) }}" class="btn btn-info" id="add_profile">
+                {% trans %}Go to adding episode{% endtrans %}
+            </a>
+        </div>
+    {% endif %}
     {% endif %}
 {% endblock %}

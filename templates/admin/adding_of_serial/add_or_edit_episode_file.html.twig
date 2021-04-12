@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %}{% trans %}Adding of episode {% endtrans %}{% endblock %}
+{% block title %}
+    {% if edit is same as (true) %}
+        {% trans %}Edit episode{% endtrans %}
+    {% else %}
+        {% trans %}Add new episode{% endtrans %}
+    {% endif %}
+{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -24,7 +30,11 @@
         {% endfor %}
     {% endfor %}
     <div class="container col-5">
-        <h1>Add new episode</h1>
+        {% if edit is same as (true) %}
+            <h2>  {% trans %}Edit episode{% endtrans %}</h2>
+        {% else %}
+            <h2>  {% trans %}Add new episode{% endtrans %}</h2>
+        {% endif %}
         {{ form_start(formEpisodeFile, {'attr': {'class': 'form-horizontal', 'id':'addFormFilm'}}) }}
         {{ form_label(formEpisodeFile.name) }}<br>
         {{ form_widget(formEpisodeFile.name, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
@@ -42,16 +52,19 @@
         {{ form_widget(formFile.audio, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
 
 
-        <button class="btn  btn-success float-left mr-5" type="submit">
-            {% trans %}Add episode{% endtrans %}
-        </button>
+        {% if edit is same as (true) %}
+            <button class="btn  btn-success float-left mr-5 "  id="add_season" type="submit">
+                {% trans %}Edit episode{% endtrans %}
+            </button>
+        {% else %}
+            <button class="btn  btn-success float-left mr-5 "  id="add_season" type="submit">
+                {% trans %}Add episode{% endtrans %}
+            </button>
+        {% endif %}
         {{ form_end(formEpisodeFile) }}
         {{ form_end(formFile) }}
         <a href="{{ path('admin') }}" class="btn  btn-info  float-left mr-5" >
             {% trans %}Back to Admin panel{% endtrans %}
-        </a>
-        <a href="{{ path('add_new_season',{ 'serial': serial}) }}" class="btn  btn-success float-left mr-5" >
-            {% trans %}Go to adding season{% endtrans %}
         </a>
 
 

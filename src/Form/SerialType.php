@@ -35,14 +35,17 @@ class SerialType extends AbstractType
             ))
             ->add('yearStart', ChoiceType::class, [
                 'required' => true,
-                'empty_data' => null,
-                'preferred_choices' => array(null),
                 'label' => $this->translator->trans('Year of production'),
                 'choices' => $this->getYears(1950)])
             ->add('yearFinish', ChoiceType::class, [
-                'required' => true,
+                'required' => false,
+                'empty_data'=>null,
+                'expanded' => true,
+                'preferred_choices' => array(null),
+
                 'label' => $this->translator->trans('Year of finish'),
                 'choices' => $this->getYears(1951)])
+
             ->add('ageCategory', ChoiceType::class, [
                 'placeholder' => false,
                 'required' => true,
@@ -57,8 +60,7 @@ class SerialType extends AbstractType
                 'class' => Category::class,
                 'multiple' => true,
                 'expanded' => true,
-            ]);;
-//        $builder->addEventSubscriber(new Subscriber);
+            ]);
 
 
     }

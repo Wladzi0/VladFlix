@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @IsGranted("ROLE_FRIENDLY_USER")
@@ -32,7 +31,7 @@ class ChoicePageController extends AbstractController
     /**
      * @Route("/select-profile", name="select_profile")
      */
-    public function index(SessionInterface $session, Request $request, UserInterface $user, ProfileRepository $profileRepository): Response
+    public function index(UserInterface $user, ProfileRepository $profileRepository): Response
     {
         $profiles = $profileRepository->findAllByUser($user);
         return $this->render('profiles/change_profile.html.twig', [
@@ -152,7 +151,7 @@ class ChoicePageController extends AbstractController
     /**
      * @Route("/enterPin", name="enter_pin", methods={"GET", "POST"})
      */
-    public function enterPin(SessionInterface $session, Request $request, ProfileRepository $profileRepository): Response
+    public function enterPin( Request $request, ProfileRepository $profileRepository): Response
     {
         if (!$profileId = $request->get('profile')) {
             $request->getSession()
@@ -224,7 +223,7 @@ class ChoicePageController extends AbstractController
     /**
      * @Route("/forgot-profile", name="forgot_profile")
      */
-    public function changeProfile(SessionInterface $session, Request $request): RedirectResponse
+    public function changeProfile(SessionInterface $session): RedirectResponse
     {
 
         if ($session->get('profileId')) {

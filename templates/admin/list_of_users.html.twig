@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}{% trans %}Serials{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Users{% endtrans %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
@@ -31,74 +31,91 @@
         <div style="width: 90% " class=" d-flex flex-row ">
 
             <div style="width: 80px; " class="d-flex flex-col float-left ml-5 mr-4">
-                <p style="color: #4d90fe">  {{ knp_pagination_sortable(serials,'id','s.id') }}
+                <p style="color: #4d90fe">  {{ knp_pagination_sortable(users,'id','u.id') }}
                 </p>
             </div>
             <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
-                <p style="color: #4d90fe">{% trans %}Name of serial{% endtrans %}
+                <p style="color: #4d90fe">{% trans %}First name{% endtrans %}
                 </p>
             </div>
             <div style="width:80px; " class="d-flex flex-col float-left mr-4">
-                <p style="color: #4d90fe">{% trans %}Country{% endtrans %}
+                <p style="color: #4d90fe">{% trans %}Last name{% endtrans %}
+                </p>
+            </div>
+            <div style="width: 170px; " class="d-flex flex-col float-left mr-5">
+                <p style="color: #4d90fe">{% trans %}Email{% endtrans %}
                 </p>
             </div>
             <div style="width: 80px; " class="d-flex flex-col float-left mr-3">
-                <p style="color: #4d90fe">{% trans %}Year of start{% endtrans %}
+                <p style="color: #4d90fe">{% trans %}Default language{% endtrans %}
                 </p>
             </div>
-            <div style="width: 80px; " class="d-flex flex-col float-left mr-3">
-                <p style="color: #4d90fe">{% trans %}Year of finish{% endtrans %}
+            <div style="width: 80px; " class="d-flex flex-col float-left mr-4">
+                <p style="color: #4d90fe">{% trans %}PIN{% endtrans %}
                 </p>
             </div>
             <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
-                <p style="color: #4d90fe">{% trans %}Seasons{% endtrans %}
+                <p style="color: #4d90fe">{% trans %}Password{% endtrans %}
                 </p>
             </div>
 
         </div>
         <div class="bg-light mt-2 m">
 
-            {% if serials %}
-            {% for serial in serials %}
+            {% if users %}
+            {% for user in users %}
             <div style="width: 90% " class=" d-flex flex-row mb-3">
 
                 <div style="width: 80px; " class="d-flex flex-col float-left ml-5 mr-3">
-                    <p style="color: #000000">{{ serial.id }}
+                    <p style="color: #000000">{{ user.id }}
                     </p>
                 </div>
                 <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
-                    <p style="color: #000000">{{ serial.name|trans }}
+                    <p style="color: #000000">{{ user.firstName }}
                     </p>
                 </div>
                 <div style="width:80px; " class="d-flex flex-col float-left mr-4">
-                    <p style="color: #000000">{{ serial.country|trans }}
+                    <p style="color: #000000">{{ user.lastName }}
+                    </p>
+                </div>
+                <div style="width: 180px; " class="d-flex flex-col float-left mr-5">
+                    <p style="color: #000000">{{ user.email }}
                     </p>
                 </div>
                 <div style="width: 80px; " class="d-flex flex-col float-left mr-4">
-                    <p style="color: #000000">{{ serial.yearStart }}
+                    <p style="color: #000000">{{ user.defaultLanguage }}
                     </p>
                 </div>
-                <div style="width: 80px; " class="d-flex flex-col float-left mr-4">
-                    <p style="color: #000000">{{ serial.yearFinish }}
+                <div style="width: 80px; " class="d-flex flex-col float-left mr-1">
+                    <p style="color: #000000">{{ user.pin }}
                     </p>
                 </div>
-                <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
-                    <p style="color: #000000">{{ serial.season|length }}
+                <div style="width: 200px; " class="d-flex flex-col float-left mr-5">
+                    {% if user.password|length > 20 %}
+                        <p style="color: #000000">{{ user.password|slice(0,20) }}...
+                        </p>
+                    {% else %}
+                    <p style="color: #000000">{{ user.password }}
                     </p>
+                    {% endif %}
                 </div>
-                <a class="btn-info btn mr-2" href="{{ path('show_serial_details',{'id':serial.id} ) }}">Show or edit</a>
-                <form method="post" action="{{ path('serial_delete', {'id': serial.id}) }}"
-                      onsubmit="return confirm('Are you sure you want to delete this serial?');">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ serial.id) }}">
-                    <button class="btn btn-danger">Delete</button>
-                </form>
+
+
+                <a class="btn-info btn mr-2" href="{{ path('show_serial_details',{'id':user.id} ) }}">Edit</a>
+
+                    <form method="post" action="{{ path('user_delete', {'id': user.id}) }}"
+                          onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                     
             </div>
         </div>
         {% endfor %}
         {% endif %}
         <div class="navigation text-center">
-            {{ knp_pagination_render(serials) }}
+            {{ knp_pagination_render(users) }}
         </div>
     </div>
 
