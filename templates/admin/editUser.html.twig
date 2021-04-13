@@ -16,7 +16,7 @@
 {% block body %}
 
     <div class="container"><br>
-        {% set formErrors = registrationForm.vars.errors.form.getErrors(true) %}
+        {% set formErrors = userForm.vars.errors.form.getErrors(true) %}
         {% if formErrors | length %}
 
             <ul class="col-5 alert-danger">
@@ -37,27 +37,20 @@
 
         </div>
         <div class="col-5">
-            {{ form_start(registrationForm, {'attr': {'class': 'form-horizontal'}}) }}
-            {{ form_label(registrationForm.firstName) }}<br>
-            {{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
-            {{ form_label(registrationForm.lastName) }}<br>
-            {{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
-            {{ form_label(registrationForm.email) }}<br>
-            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control','required': 'true'}}) }}<br>
-            {{ form_label(registrationForm.defaultLanguage) }}<br>
-            {{ form_widget(registrationForm.defaultLanguage, {'attr': {'class': 'form-control','required': 'true'}}) }}
+            {{ form_start(userForm, {'attr': {'class': 'form-horizontal'}}) }}
+            {{ form_row(userForm._token) }}
+            {{ form_label(userForm.firstName) }}<br>
+            {{ form_widget(userForm.firstName, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+            {{ form_label(userForm.lastName) }}<br>
+            {{ form_widget(userForm.lastName, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+            {{ form_label(userForm.email) }}<br>
+            {{ form_widget(userForm.email, {'attr': {'class': 'form-control','required': 'true'}}) }}<br>
+            {{ form_label(userForm.defaultLanguage) }}<br>
+            {{ form_widget(userForm.defaultLanguage, {'attr': {'class': 'form-control','required': 'true'}}) }}
             <br>
-            {{ form_label(registrationForm.pin) }}
-            {{ form_widget(registrationForm.pin, {'attr': {'class': 'form-control','required': 'true', 'autocomplete':'off'}}) }}
+            {{ form_label(userForm.pin) }}
+            {{ form_widget(userForm.pin, {'attr': {'class': 'form-control','required': 'true', 'autocomplete':'off'}}) }}
             <br>
-
-                {{ form_label(registrationForm.plainPassword.first) }}<br>
-                {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control', 'required': 'true'}}) }}
-                <br>
-                {{ form_label(registrationForm.plainPassword.second) }}<br>
-                {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control', 'required': 'true'}}) }}
-                <br>
-
             {% if edit is same as (true) %}
                 <button class="btn  btn-success" type="submit">
                     {% trans %}Edit{% endtrans %}
@@ -66,8 +59,7 @@
                 <button class="btn  btn-success" type="submit">
                     {% trans %}Sign up {% endtrans %}
                 </button>
-
-                {{ form_end(registrationForm) }}
+                {{ form_end(userForm) }}
                 <hr>
                 <button class="btn btn-info" onclick="window.location.href='/login'">
                     {% trans %}Back to sign in{% endtrans %}</button>

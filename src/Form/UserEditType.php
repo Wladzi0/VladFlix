@@ -19,15 +19,15 @@ class UserEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
-            ->add('email', EmailType::class)
+            ->add('firstName', TextType::class, ['required' => false])
+            ->add('lastName', TextType::class, ['required' => false])
+            ->add('email', EmailType::class, ['required' => false])
             ->add('defaultLanguage', LanguageType::class, [
                 'placeholder' => false,
-                'required' => true,
+                'required' => false,
             ])
             ->add('pin', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'attr' => ['autocomplete' => 'off'],
                 'constraints' => [
                     new Regex(array(
@@ -40,15 +40,8 @@ class UserEditType extends AbstractType
                         'max' => 4,
                         'exactMessage' => 'The pin value should have exactly 4 digits.'
                     ]),],
-            ])
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => TextType::class,
-                'first_options' => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-                'mapped' => false,
-                'required' => false,
-
             ]);
+
 
     }
 

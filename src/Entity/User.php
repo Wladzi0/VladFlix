@@ -43,7 +43,6 @@ class User implements UserInterface, EquatableInterface
      *      max = 4096,
      *      minMessage = "Your password must be at least {{ limit }} characters long",
      *      maxMessage = "Your password cannot be longer than {{ limit }} characters",
-     *      groups = {"Default"}
      * )
      */
     private $password;

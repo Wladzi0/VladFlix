@@ -406,15 +406,30 @@ class AdminController extends AbstractController
      */
     public function editUser(Request $request, User $user)
     {
-        $oldPassword = $user->getPassword();
+
         $formUser = $this->createForm(UserEditType::class, $user);
         $formUser->handleRequest($request);
 
         if ($formUser->isSubmitted() && $formUser->isValid()) {
 
+           if($userFName=$formUser['firstName']->getData()){
+               $user->setFirstName($userFName);
+           }
+           if(  $userLName=$formUser['lastName']->getData()){
+               $user->setLastName($userLName);
+           }
+            if(  $userEmail=$formUser['email']->getData()){
+                $user->setEmail($userEmail);
+            }
+            if($userLanguage=$formUser['defaultLanguage']->getData()){
+                $user->setDefaultLanguage($userLanguage);
+            }
+            if(
+            $userPin=$formUser['pin']->getData()){
+                $user->setPin($userPin);
+            }
 
 
-            $user = $formUser->getData();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -422,11 +437,11 @@ class AdminController extends AbstractController
             $request->getSession()
                 ->getFlashBag()
                 ->add('success', 'User is edited!');
-            return $this->render('admin/list_of_users.html.twig');
+            return $this->redirectToRoute('users');
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $formUser->createView(),
+        return $this->render('admin/editUser.html.twig', [
+            'userForm' => $formUser->createView(),
             'edit' => true,
         ]);
     }
