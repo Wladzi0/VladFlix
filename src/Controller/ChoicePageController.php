@@ -20,13 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ChoicePageController extends AbstractController
 {
 
-    /**
-     * @Route ("/change-locale", name="change_locale")
-     */
-    public function changeLocale(Request $request)
-    {
-
-    }
 
     /**
      * @Route("/select-profile", name="select_profile")
@@ -232,4 +225,6 @@ class ChoicePageController extends AbstractController
         }
         return $this->redirectToRoute('select_profile');
     }
+
+
 }

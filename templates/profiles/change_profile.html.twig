@@ -6,6 +6,7 @@
 {% block title %}{% trans %}Select your profile{% endtrans %}{% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js /changeUserLanguage.js') }}"></script>
 {% endblock %}
 {% block body %}
     <div class="container">
@@ -17,6 +18,24 @@
             {% endfor %}
         {% endfor %}
     </div>
+    <form action="{{ path('change_user_language') }}">
+        <select   class="ml-3" name="userLanguage" id="userLanguage">
+            <option selected value="{{ app.request.getLocale() }}">{{app.request.getLocale() }}</option>
+            {% if app.request.getLocale() !="en" %}
+                {% if app.request.getLocale()!="pl" %}
+                    <option value="en">en</option>
+                    <option value="pl">pl</option>
+                {% else %}
+                    <option value="en">en</option>
+                    <option value="fr">fr</option>
+                {% endif %}
+
+            {% else %}
+                <option value="pl">pl</option>
+                <option value="fr">fr</option>
+            {% endif %}
+        </select>
+    </form>
     <a style="position: absolute; top: 100px; right: 20px;" class=" bg-light" href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a>
     {% if is_granted('ROLE_ADMIN') %}
 

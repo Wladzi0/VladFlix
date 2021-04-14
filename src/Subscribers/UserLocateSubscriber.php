@@ -21,7 +21,9 @@ class UserLocateSubscriber implements EventSubscriberInterface
         $user = $loginEvent->getAuthenticationToken()->getUser();
         if (!is_null($user->getDefaultLanguage())) {
             $this->session->set('_locale', $user->getDefaultLanguage());
+
         }
+
     }
 
     public static function getSubscribedEvents()
