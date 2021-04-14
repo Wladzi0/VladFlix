@@ -1,5 +1,6 @@
 $(document).ready(function () {
     document.getElementById('profile_profilePin').disabled = true;
+
 $("#profile_age").on('change', function () {
 
     if ($(this).val() === '1' || $(this).val() === '2') {

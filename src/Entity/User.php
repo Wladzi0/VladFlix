@@ -37,7 +37,6 @@ class User implements UserInterface, EquatableInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Password may not be empty")
      * @Assert\Length(
      *      min = 6,
      *      max = 4096,

@@ -6,6 +6,10 @@ namespace App\Controller;
 use App\Repository\CategoryRepository;
 use App\Repository\FilmRepository;
 use App\Repository\SerialRepository;
+use Monolog\Handler\FirePHPHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,11 +27,14 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="main_page")
      */
-    public function index(SessionInterface $session, CategoryRepository $categoryRepository)
+    public function index(SessionInterface $session, CategoryRepository $categoryRepository, LoggerInterface $logger)
     {
+
+
         if (!$session->get('profileId')) {
             return $this->redirectToRoute('select_profile');
         }
+
         $categories = $categoryRepository->findAll();
         $allSerialsAndFilms = $categoryRepository->findallSerialsAndFilms();
 

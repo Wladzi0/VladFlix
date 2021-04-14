@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Repository\UserRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,9 +20,11 @@ class RegistrationController extends AbstractController
 {
     private $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    private $logger;
+    public function __construct(EmailVerifier $emailVerifier, LoggerInterface $registrationAuditLogger)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->logger = $registrationAuditLogger;
     }
 
     /**
@@ -31,10 +34,9 @@ class RegistrationController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
 
+            $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
             $fistName = $form->get('firstName')->getData();
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -61,6 +63,7 @@ class RegistrationController extends AbstractController
                 ->add('success', ' ' . $fistName . ', Link with confirm was sent to your mail!');
             return $this->render('registration/waiting_to_confirm_email.html.twig');
         }
+
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
