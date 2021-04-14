@@ -24,13 +24,15 @@ class Category
      */
     private $name;
 
+
+
     /**
-     * @ORM\ManyToMany(targetEntity=Film::class, inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity=Film::class, mappedBy="categories",cascade={"persist", "remove"})
      */
     private $films;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Serial::class, inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity=Serial::class, mappedBy="categories",cascade={"persist", "remove"})
      */
     private $serials;
 
@@ -57,6 +59,12 @@ class Category
         return $this;
     }
 
+
+    public function __toString()
+    {
+       return $this->name;
+    }
+
     /**
      * @return Collection|Film[]
      */
@@ -69,6 +77,7 @@ class Category
     {
         if (!$this->films->contains($film)) {
             $this->films[] = $film;
+            $film->addCategory($this);
         }
 
         return $this;
@@ -76,7 +85,9 @@ class Category
 
     public function removeFilm(Film $film): self
     {
-        $this->films->removeElement($film);
+        if ($this->films->removeElement($film)) {
+            $film->removeCategory($this);
+        }
 
         return $this;
     }
@@ -93,6 +104,7 @@ class Category
     {
         if (!$this->serials->contains($serial)) {
             $this->serials[] = $serial;
+            $serial->addCategory($this);
         }
 
         return $this;
@@ -100,14 +112,11 @@ class Category
 
     public function removeSerial(Serial $serial): self
     {
-        $this->serials->removeElement($serial);
+        if ($this->serials->removeElement($serial)) {
+            $serial->removeCategory($this);
+        }
 
         return $this;
-    }
-
-    public function __toString()
-    {
-       return $this->name;
     }
 
 

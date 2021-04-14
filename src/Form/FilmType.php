@@ -55,8 +55,6 @@ class FilmType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ]);
-//            ->add('save', SubmitType::class, ['label' => 'Add new film'])
-//            ->getForm();
     }
 
     public function configureOptions(OptionsResolver $resolver)

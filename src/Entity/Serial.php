@@ -39,10 +39,6 @@ class Serial
      */
     private $season;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="serials",cascade={"persist", "remove"})
-     */
-    private $categories;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -53,6 +49,11 @@ class Serial
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $ageCategory;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="serials")
+     */
+    private $categories;
 
     public function __construct()
     {
@@ -122,33 +123,6 @@ class Serial
     }
 
     /**
-     * @return Collection|Category[]
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->addSerial($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removeSerial($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return mixed
      */
     public function getYearStart()
@@ -195,6 +169,30 @@ class Serial
     public function __toString()
     {
        return $this->name;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
     }
 
 }

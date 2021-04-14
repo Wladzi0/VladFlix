@@ -33,8 +33,9 @@ class RegistrationFormType extends AbstractType
                 'placeholder' => false,
                 'required' => true,
             ])
-            ->add('pin', TextType::class, [
+            ->add('pin', PasswordType::class, [
                 'required' => true,
+                'label'=>'PIN code (4 digits)',
                 'attr' => ['autocomplete' => 'off'],
                 'constraints' => [
                     new Regex(array(

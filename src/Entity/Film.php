@@ -34,12 +34,6 @@ class Film
      */
     private $year;
 
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="films",cascade={"persist", "remove"})
-     */
-    private $categories;
-
     /**
      * @ORM\OneToOne(targetEntity=File::class, inversedBy="film", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
@@ -50,6 +44,11 @@ class Film
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $ageCategory;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="films",cascade={"persist", "remove"})
+     */
+    private $categories;
 
     public function __construct()
     {
@@ -102,36 +101,6 @@ class Film
         $this->year = $year;
     }
 
-
-
-
-    /**
-     * @return Collection|Category[]
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->addFilm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removeFilm($this);
-        }
-
-        return $this;
-    }
-
     public function getFile(): ?File
     {
         return $this->file;
@@ -152,6 +121,30 @@ class Film
     public function setAgeCategory(?bool $ageCategory): self
     {
         $this->ageCategory = $ageCategory;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }

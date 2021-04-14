@@ -64,12 +64,16 @@ class AdminController extends AbstractController
         $formFilm->handleRequest($request);
 
         if ($formFilm->isSubmitted() && $formFilm->isValid()) {
-
+            $film = $formFilm->getData();
             $file = $formFile->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
-            $film = $formFilm->getData();
             $film->setFile($file);
+            $categories=$formFilm['categories']->getData();
+            foreach($categories as $category ){
+
+                $film->addCategory($category);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($film);
             $em->flush();
@@ -99,14 +103,14 @@ class AdminController extends AbstractController
 
         if ($formSerial->isSubmitted() && $formSerial->isValid()) {
 
-            $serialData = $formSerial->getData();
+            $serial = $formSerial->getData();
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($serialData);
+            $em->persist($serial);
             $em->flush();
 
             return $this->redirectToRoute("add_new_season", array(
-                'serial' => $serialData->getId()
+                'serial' => $serial->getId()
             ));
         }
 
@@ -382,7 +386,9 @@ class AdminController extends AbstractController
             $file = $formFile->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
+
             $film = $formFilm->getData();
+
             $film->setFile($file);
             $em->persist($film);
             $em->flush();

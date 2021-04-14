@@ -8,6 +8,7 @@ $("#profile_age").on('change', function () {
         document.getElementById('profile_profilePin').disabled = false;
     }
     else{
+        document.getElementById('profile_profilePin').value="";
         document.getElementById('profile_profilePin').disabled = true;
         document.getElementById('profile_profilePin').required = false;
     }
