@@ -32,17 +32,24 @@
     <div class="container flex-column d-flex pt-5">
         {% set sessionAge = app.session.get('age') %}
         {% if allFilmsFromCategory %}
+
             {% for film in allFilmsFromCategory %}
                 {% if sessionAge is null %}
                     {% if film.ageCategory is null %}
+
                         <div class="card d-flex flex-row mb-1 ">
                             <img src="" alt="">
                             <a href="{{ path('film_page', {'filmId': film.id}) }}"> <img alt=""
                                                                                          src="{{ asset('images/defaultImage.png') }}"/></a>
                             <div class="card pl-3 pt-3" style="width: 100%">
-                                <p style="color: #000000">{{ film.name|trans }}
+                                <p style="color: #000000">{% trans %}Name{% endtrans %}:{{ film.name|trans }}
                                 </p>
-                                <p style="color: #000000">{{ film.country|trans }}
+                                <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
+                                    {% for category in film.categories %}
+                                        {{ category }},
+                                    {% endfor %}
+                                </p>
+                                <p style="color: #000000">{% trans %}Country{% endtrans %}:{{ film.country|trans }}
                                 </p>
                                 <p style="color: #000000">{{ film.year }}
                                 </p>
@@ -50,6 +57,7 @@
 
                         </div>
                     {% endif %}
+
                 {% endif %}
 
                 {% if sessionAge is same as (false) %}
@@ -59,27 +67,37 @@
                             <a href="{{ path('film_page', {'filmId': film.id}) }}"> <img alt=""
                                                                                          src="{{ asset('images/defaultImage.png') }}"/></a>
                             <div class="card pl-3 pt-3" style="width: 100%">
-                                <p style="color: #000000">{{ film.name|trans }}
+                                <p style="color: #000000">{% trans %}Name{% endtrans %}:{{ film.name|trans }}
                                 </p>
-                                <p style="color: #000000">{{ film.country|trans }}
+                                <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
+                                    {% for category in film.categories %}
+                                        {{ category }},
+                                    {% endfor %}
+                                </p>
+                                <p style="color: #000000">{% trans %}Country{% endtrans %}:{{ film.country|trans }}
                                 </p>
                                 <p style="color: #000000">{{ film.year }}
                                 </p>
                             </div>
 
                         </div>
+
                     {% endif %}
                 {% endif %}
                 {% if sessionAge is same as (true) %}
-
                     <div class="card d-flex flex-row mb-1 ">
                         <img src="" alt="">
                         <a href="{{ path('film_page', {'filmId': film.id}) }}"> <img alt=""
                                                                                      src="{{ asset('images/defaultImage.png') }}"/></a>
                         <div class="card pl-3 pt-3" style="width: 100%">
-                            <p style="color: #000000">{{ film.name|trans }}
+                            <p style="color: #000000">{% trans %}Name{% endtrans %}:{{ film.name|trans }}
                             </p>
-                            <p style="color: #000000">{{ film.country|trans }}
+                            <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
+                                {% for category in film.categories %}
+                                    {{ category }},
+                                {% endfor %}
+                            </p>
+                            <p style="color: #000000">{% trans %}Country{% endtrans %}:{{ film.country|trans }}
                             </p>
                             <p style="color: #000000">{{ film.year }}
                             </p>

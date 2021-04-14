@@ -35,19 +35,25 @@
             {% for serial in serials %}
                 {% if sessionAge is null %}
                     {% if serial.ageCategory is null %}
+
                         <div class="card d-flex flex-row mb-1 ">
                             <a href="{{ path('all_seasons_from_serial',{serialId: serial.id, serialId: serial.id}) }}">
                                 <img src="{{ asset('images/defaultImage.png') }}"/></a>
                             <div class="card pl-3 pt-3" style="width: 100%">
                                 <p style="color: #000000">{{ serial.name }}
                                 </p>
-                                <p style="color: #000000">{{ serial.country|trans }}
+                                <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
+                                    {% for category in serial.categories %}
+                                        {{ category }},
+                                    {% endfor %}
+                                </p>
+                                <p style="color: #000000">{% trans %}Country{% endtrans %}:{{ serial.country|trans }}
                                 </p>
                                 {% if serial.yearFinish %}
-                                    <p style="color: #000000">{{ serial.yearStart }}
+                                    <p style="color: #000000">{% trans %}Start{% endtrans %}:{{ serial.yearStart }}
                                         - {{ serial.yearFinish }}  </p>
                                 {% else %}
-                                    <p style="color: #000000">{{ serial.yearStart }}
+                                    <p style="color: #000000">{% trans %}Start{% endtrans %}:{{ serial.yearStart }}
                                     </p>
                                 {% endif %}
                             </div>
@@ -57,19 +63,25 @@
                 {% endif %}
                 {% if sessionAge is same as (false) %}
                     {% if (serial.ageCategory is null)  or (serial.ageCategory is same as (false)) %}
+
                         <div class="card d-flex flex-row mb-1 ">
                             <a href="{{ path('all_seasons_from_serial',{serialId: serial.id, serialId: serial.id}) }}">
                                 <img src="{{ asset('images/defaultImage.png') }}" alt=""/></a>
                             <div class="card pl-3 pt-3" style="width: 100%">
                                 <p style="color: #000000">{{ serial.name }}
                                 </p>
-                                <p style="color: #000000">{{ serial.country|trans }}
+                                <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
+                                    {% for category in serial.categories %}
+                                        {{ category }},
+                                    {% endfor %}
+                                </p>
+                                <p style="color: #000000">{% trans %}Country{% endtrans %}:{{ serial.country|trans }}
                                 </p>
                                 {% if serial.yearFinish %}
-                                    <p style="color: #000000">{{ serial.yearStart }}
+                                    <p style="color: #000000">{% trans %}Start{% endtrans %}:{{ serial.yearStart }}
                                         - {{ serial.yearFinish }}  </p>
                                 {% else %}
-                                    <p style="color: #000000">{{ serial.yearStart }}
+                                    <p style="color: #000000">{% trans %}Start{% endtrans %}:{{ serial.yearStart }}
                                     </p>
                                 {% endif %}
                             </div>
@@ -78,19 +90,25 @@
                     {% endif %}
                 {% endif %}
                 {% if sessionAge is same as (true) %}
+
                     <div class="card d-flex flex-row mb-1 ">
                         <a href="{{ path('all_seasons_from_serial',{serialId: serial.id, serialId: serial.id}) }}"> <img
                                     src="{{ asset('images/defaultImage.png') }}"/></a>
                         <div class="card pl-3 pt-3" style="width: 100%">
-                            <p style="color: #000000">{{ serial.name }}
+                            <p style="color: #000000">Name:{{ serial.name }}
                             </p>
-                            <p style="color: #000000">{{ serial.country|trans }}
+                            <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
+                                {% for category in serial.categories %}
+                                    {{ category }},
+                                {% endfor %}
+                            </p>
+                            <p style="color: #000000">{% trans %}Country{% endtrans %}::{{ serial.country|trans }}
                             </p>
                             {% if serial.yearFinish %}
-                                <p style="color: #000000">{{ serial.yearStart }}
+                                <p style="color: #000000">{% trans %}Start{% endtrans %}:{{ serial.yearStart }}
                                     - {{ serial.yearFinish }}  </p>
                             {% else %}
-                                <p style="color: #000000">{{ serial.yearStart }}
+                                <p style="color: #000000">{% trans %}Start{% endtrans %}: {{ serial.yearStart }}
                                 </p>
                             {% endif %}
                         </div>

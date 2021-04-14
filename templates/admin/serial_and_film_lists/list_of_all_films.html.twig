@@ -46,6 +46,10 @@
                 <p style="color: #4d90fe">{% trans %}Year{% endtrans %}
                 </p>
             </div>
+            <div style="width: 80px; " class="d-flex flex-col float-left mr-3">
+                <p style="color: #4d90fe">{% trans %}Age category{% endtrans %}
+                </p>
+            </div>
 
             <div style="width: 200px; " class="d-flex flex-col float-left mr-4">
                 <p style="color: #4d90fe">{% trans %}Path{% endtrans %}
@@ -80,6 +84,22 @@
                 </div>
                 <div style="width: 80px; " class="d-flex flex-col float-left mr-4">
                     <p style="color: #000000">{{ film.year }}
+                    </p>
+                </div>
+                <div style="width: 80px; " class="d-flex flex-col float-left mr-4">
+
+                    {% if film.ageCategory is same as(null) %}
+                        <p style="color: #000000">{% trans %}Kids{% endtrans %}
+                        </p>
+                    {% elseif film.ageCategory is same as(false) %}
+                        <p style="color: #000000">{% trans %}Teenagers{% endtrans %}
+                        </p>
+                        {% else %}
+                            <p style="color: #000000">{% trans %}Adults{% endtrans %}
+                            </p>
+                    {% endif %}
+
+                    <p style="color: #000000">{{ film.ageCategory }}
                     </p>
                 </div>
                 <div style="width: 200px; " class="d-flex flex-col float-left mr-4">

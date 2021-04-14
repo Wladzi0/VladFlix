@@ -36,11 +36,16 @@
                         <a style="right: 10px;" class=" btn btn-success position-absolute " href="{{ path('add_new_episode_file',{'serial':serial.id}) }}">{% trans %}Add new episode{% endtrans %}</a>
                     <p style="color: #000000">Country: {{ serial.country|trans }}
                     </p>
+                        <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
+                        {% for category in serial.categories %}
+                        {{ category }},
+                        {% endfor %}
+                        </p>
                     {% if serial.yearFinish %}
-                        <p style="color: #000000">Year:{{ serial.yearStart }}
+                        <p style="color: #000000">{% trans %}Year{% endtrans %}:{{ serial.yearStart }}
                             - {{ serial.yearFinish }}  </p>
                     {% else %}
-                        <p style="color: #000000">Year: {{ serial.yearStart }}
+                        <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serial.yearStart }}
                         </p>
                     {% endif %}
                     {% set count = 0 %}

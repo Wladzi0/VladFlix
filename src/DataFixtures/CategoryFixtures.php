@@ -50,7 +50,7 @@ class CategoryFixtures extends Fixture
 
         $western = new Category();
         $western->setName("Western");
-        
+
         $manager->persist($action);
         $manager->persist($animation);
         $manager->persist($comedy);
