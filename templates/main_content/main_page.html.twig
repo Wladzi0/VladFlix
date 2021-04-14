@@ -32,16 +32,16 @@
                                         src="{{ asset('images/defaultImage.png') }}"/></a>
                         {% endif %}
                         <div class="card pl-3 pt-3" style="width: 100%">
-                            <p style="color: #000000">{{ serialOrFilm.name|trans }}
+                            <p style="color: #000000">{% trans %}Name{% endtrans %}: {{ serialOrFilm.name|trans }}
                             </p>
-                            <p style="color: #000000">{{ serialOrFilm.country|trans }}
+                            <p style="color: #000000">{% trans %}Country{% endtrans %}: {{ serialOrFilm.country|trans }}
                             </p>
                             {% if serialOrFilm.yearStart  is defined %}
                                 {% if serialOrFilm.yearFinish is defined %}
-                                    <p style="color: #000000">{{ serialOrFilm.yearStart }}
+                                    <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serialOrFilm.yearStart }}
                                         - {{ serialOrFilm.yearFinish }}  </p>
                                 {% else %}
-                                    <p style="color: #000000">{{ serialOrFilm.yearStart}}
+                                    <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serialOrFilm.yearStart}}
                                     </p>
                                 {% endif %}
                             {% else %}
@@ -65,16 +65,16 @@
                                             src="{{ asset('images/defaultImage.png') }}"/></a>
                             {% endif %}
                             <div class="card pl-3 pt-3" style="width: 100%">
-                                <p style="color: #000000">{{ serialOrFilm.name|trans }}
+                                <p style="color: #000000">{% trans %}Name{% endtrans %}: {{ serialOrFilm.name|trans }}
                                 </p>
-                                <p style="color: #000000">{{ serialOrFilm.country|trans }}
+                                <p style="color: #000000">{% trans %}Country{% endtrans %}: {{ serialOrFilm.country|trans }}
                                 </p>
                                 {% if serialOrFilm.yearStart  is defined %}
                                     {% if serialOrFilm.yearFinish is defined %}
-                                        <p style="color: #000000">{{ serialOrFilm.yearStart }}
-                                            - {{ serialOrFilm.yearFinish| date("Y") }}  </p>
+                                        <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serialOrFilm.yearStart }}
+                                            - {{ serialOrFilm.yearFinish }}  </p>
                                     {% else %}
-                                        <p style="color: #000000">{{ serialOrFilm.yearStart }}
+                                        <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serialOrFilm.yearStart}}
                                         </p>
                                     {% endif %}
                                 {% else %}
@@ -97,20 +97,20 @@
                                         src="{{ asset('images/defaultImage.png') }}"/></a>
                         {% endif %}
                         <div class="card pl-3 pt-3" style="width: 100%">
-                            <p style="color: #000000">{{ serialOrFilm.name|trans }}
+                            <p style="color: #000000">{% trans %}Name{% endtrans %}: {{ serialOrFilm.name|trans }}
                             </p>
-                            <p style="color: #000000">{{ serialOrFilm.country|trans }}
+                            <p style="color: #000000">{% trans %}Country{% endtrans %}: {{ serialOrFilm.country|trans }}
                             </p>
                             {% if serialOrFilm.yearStart  is defined %}
                                 {% if serialOrFilm.yearFinish is defined %}
-                                    <p style="color: #000000">{{ serialOrFilm.yearStart }}
+                                    <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serialOrFilm.yearStart }}
                                         - {{ serialOrFilm.yearFinish }}  </p>
                                 {% else %}
-                                    <p style="color: #000000">{{ serialOrFilm.yearStart }}
+                                    <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serialOrFilm.yearStart}}
                                     </p>
                                 {% endif %}
                             {% else %}
-                                <p style="color: #000000">{{ serialOrFilm.year}}
+                                <p style="color: #000000">{{ serialOrFilm.year }}
                                 </p>
                             {% endif %}
                         </div>

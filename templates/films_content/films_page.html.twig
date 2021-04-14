@@ -42,14 +42,14 @@
                             <a href="{{ path('film_page', {'filmId': film.id}) }}"> <img alt=""
                                                                                          src="{{ asset('images/defaultImage.png') }}"/></a>
                             <div class="card pl-3 pt-3" style="width: 100%">
-                                <p style="color: #000000">{% trans %}Name{% endtrans %}:{{ film.name|trans }}
+                                <p style="color: #000000">{% trans %}Name{% endtrans %}: {{ film.name|trans }}
                                 </p>
                                 <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
                                     {% for category in film.categories %}
                                         {{ category }},
                                     {% endfor %}
                                 </p>
-                                <p style="color: #000000">{% trans %}Country{% endtrans %}:{{ film.country|trans }}
+                                <p style="color: #000000">{% trans %}Country{% endtrans %}: {{ film.country|trans }}
                                 </p>
                                 <p style="color: #000000">{{ film.year }}
                                 </p>
@@ -67,14 +67,14 @@
                             <a href="{{ path('film_page', {'filmId': film.id}) }}"> <img alt=""
                                                                                          src="{{ asset('images/defaultImage.png') }}"/></a>
                             <div class="card pl-3 pt-3" style="width: 100%">
-                                <p style="color: #000000">{% trans %}Name{% endtrans %}:{{ film.name|trans }}
+                                <p style="color: #000000">{% trans %}Name{% endtrans %}: {{ film.name|trans }}
                                 </p>
                                 <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
                                     {% for category in film.categories %}
                                         {{ category }},
                                     {% endfor %}
                                 </p>
-                                <p style="color: #000000">{% trans %}Country{% endtrans %}:{{ film.country|trans }}
+                                <p style="color: #000000">{% trans %}Country{% endtrans %}: {{ film.country|trans }}
                                 </p>
                                 <p style="color: #000000">{{ film.year }}
                                 </p>
@@ -90,14 +90,14 @@
                         <a href="{{ path('film_page', {'filmId': film.id}) }}"> <img alt=""
                                                                                      src="{{ asset('images/defaultImage.png') }}"/></a>
                         <div class="card pl-3 pt-3" style="width: 100%">
-                            <p style="color: #000000">{% trans %}Name{% endtrans %}:{{ film.name|trans }}
+                            <p style="color: #000000">{% trans %}Name{% endtrans %}: {{ film.name|trans }}
                             </p>
-                            <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}:
+                            <p style="color: #000000" class="float-left" >{% trans %}Categories{% endtrans %}: 
                                 {% for category in film.categories %}
                                     {{ category }},
                                 {% endfor %}
                             </p>
-                            <p style="color: #000000">{% trans %}Country{% endtrans %}:{{ film.country|trans }}
+                            <p style="color: #000000">{% trans %}Country{% endtrans %}: {{ film.country|trans }}
                             </p>
                             <p style="color: #000000">{{ film.year }}
                             </p>
