@@ -428,7 +428,7 @@ class AdminController extends AbstractController
                 $request->getSession()
                     ->getFlashBag()
                     ->add('danger', $message);
-//                return $this->redirectToRoute($request->get('_route'), $request->query->all());
+//               / return $this->redirectToRoute($request->get('_route'), $request->query->all());
                 $referer = $request->headers->get('referer');
                 return new RedirectResponse($referer);
             }

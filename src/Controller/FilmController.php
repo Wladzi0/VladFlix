@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Film;
 use App\Repository\CategoryRepository;
 use App\Repository\FileRepository;
 use App\Repository\FilmRepository;
 use App\Repository\ProfileRepository;
 use App\Repository\TimeDataRepository;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,6 +24,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FilmController extends AbstractController
 {
+    private $startVideoLogger;
+    public function __construct(loggerInterface $startVideoLogger){
+        $this->startVideoLogger=$startVideoLogger;
+    }
     /**
      * @Route("/all-films-from-category/{category}", name="all_films_from_category")
      */
@@ -74,6 +82,16 @@ class FilmController extends AbstractController
             'filmData' => $filmData
         ]);
 
+    }
+
+    /**
+     * @Route("/log-start-video", name="startVideo")
+     */
+    public function filmLog(Request $request,FilmRepository $filmRepository, SessionInterface $session): Response
+    {
+        $film=$filmRepository->find($request->get('filmId'));
+        $this->startVideoLogger->log(LogLevel::INFO,'Video started',['id'=>$film->getId(),'title'=>$film->getName(),'profileId'=>$session->get('profileId')]);
+        return new Response();
     }
 
 }

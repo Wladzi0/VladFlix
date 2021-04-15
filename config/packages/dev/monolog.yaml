@@ -1,16 +1,16 @@
 monolog:
-    channels: ["registration_audit"]
+    channels: ["start_video"]
     handlers:
         main:
             type: stream
             path: '%kernel.logs_dir%/example.log'
             level: error
             channels: ["!event"]
-        registration:
+        video:
             type: stream
-            path: '%kernel.logs_dir%/registration.log'
-            level: debug
-            channels: ["registration_audit"]
+            path: '%kernel.logs_dir%/startVideo.log'
+            level: info
+            channels: ["start_video"]
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:

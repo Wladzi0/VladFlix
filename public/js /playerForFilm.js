@@ -27,7 +27,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function startTime() {
+        $.ajax({
+            type: "POST",
+            url: "/log-start-video",
+            data: {
+                'filmId': filmId
+            },
+            dataType: "text",
+            async: true,
 
+        });
         if (curStarTime === "0") {
             time.setMilliseconds(0);
         } else {
