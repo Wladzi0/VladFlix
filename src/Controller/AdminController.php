@@ -59,7 +59,7 @@ class AdminController extends AbstractController
         $formFilm->handleRequest($request);
 
         if ($formFilm->isSubmitted() && $formFilm->isValid()) {
-
+            //            $year=$formFile['audio']->setData('asdfasdf');
             $categories=$formFilm['categories']->getData();
             $audio=$formFile['audio']->getData();
             if((0 === count($categories)) || (empty($audio))){
@@ -73,6 +73,7 @@ class AdminController extends AbstractController
                 $request->getSession()
                     ->getFlashBag()
                     ->add('danger', $message);
+//                return $this->redirectToRoute($request->get('_route'), $request->query->all());
                 $referer = $request->headers->get('referer');
                 return new RedirectResponse($referer);
             }
@@ -357,6 +358,14 @@ class AdminController extends AbstractController
         $formFile->handleRequest($request);
         $formEpisode->handleRequest($request);
         if ($formEpisode->isSubmitted() && $formEpisode->isValid()) {
+            $audio=$formFile['audio']->getData();
+            if(empty($audio)){
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('danger', 'It is not possible to delete all audio');
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
             $file = $formFile->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
@@ -406,6 +415,23 @@ class AdminController extends AbstractController
         $formFile->handleRequest($request);
 
         if ($formFilm->isSubmitted() && $formFilm->isValid()) {
+            $categories=$formFilm['categories']->getData();
+            $audio=$formFile['audio']->getData();
+            if((0 === count($categories)) || (empty($audio))){
+                if(0 === count($categories)){
+                    $message='You forgot to select a category';
+                }
+                else{
+                    $message='It is not possible to delete all audio';
+
+                }
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('danger', $message);
+//                return $this->redirectToRoute($request->get('_route'), $request->query->all());
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
             $file = $formFile->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
