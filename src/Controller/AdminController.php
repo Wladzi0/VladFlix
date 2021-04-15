@@ -23,6 +23,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -36,12 +37,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class AdminController extends AbstractController
 {
-    private $passwordEncoder;
-
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $this->passwordEncoder = $passwordEncoder;
-    }
 
     /**
      * @Route("/admin", name="admin")
@@ -64,17 +59,28 @@ class AdminController extends AbstractController
         $formFilm->handleRequest($request);
 
         if ($formFilm->isSubmitted() && $formFilm->isValid()) {
+
+            $categories=$formFilm['categories']->getData();
+            $audio=$formFile['audio']->getData();
+            if((0 === count($categories)) || (empty($audio))){
+            if(0 === count($categories)){
+                $message='You forgot to select a category';
+            }
+            else{
+                    $message='You forgot to select a audio';
+
+            }
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('danger', $message);
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
             $film = $formFilm->getData();
             $file = $formFile->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
             $film->setFile($file);
-            $categories=$formFilm['categories']->getData();
-            foreach($categories as $category ){
-
-                $film->addCategory($category);
-            }
-            $em = $this->getDoctrine()->getManager();
             $em->persist($film);
             $em->flush();
             $request->getSession()
@@ -101,8 +107,17 @@ class AdminController extends AbstractController
 
         $formSerial->handleRequest($request);
 
+
         if ($formSerial->isSubmitted() && $formSerial->isValid()) {
 
+            $categories=$formSerial['categories']->getData();
+            if(0 === count($categories)){
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('danger', 'You forgot to select a category');
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+        }
             $serial = $formSerial->getData();
 
             $em = $this->getDoctrine()->getManager();
@@ -171,6 +186,14 @@ class AdminController extends AbstractController
         $formFile->handleRequest($request);
         $formEpisode->handleRequest($request);
         if ($formEpisode->isSubmitted() && $formEpisode->isValid()) {
+            $audio=$formFile['audio']->getData();
+            if(empty($audio)){
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('danger', 'You forgot to select a audio');
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
             $file = $formFile->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);

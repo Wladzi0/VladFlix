@@ -26,6 +26,7 @@
     <div class="container col-5">
         <h1>{{filmAction|trans}}</h1>
         {{ form_start(formFilm, {'attr': {'class': 'form-horizontal', 'id':'addFormFilm'}}) }}
+        {{ form_errors(formFilm) }}
         {{ form_label(formFilm.name) }}<br>
         {{ form_widget(formFilm.name, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
         {{ form_label(formFilm.country) }}<br>
@@ -42,7 +43,7 @@
         {{ form_label(formFile.path) }}<br>
         {{ form_widget(formFile.path, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
         {{ form_label(formFile.subtitle) }}<br>
-        {{ form_widget(formFile.subtitle, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_widget(formFile.subtitle, {'attr': {'class': 'form-control'}}) }}<br>
         {{ form_label(formFile.audio) }}<br>
         {{ form_widget(formFile.audio, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
 

@@ -38,9 +38,10 @@ class SerialType extends AbstractType
                 'label' => $this->translator->trans('Year of production'),
                 'choices' => $this->getYears(1950)])
             ->add('yearFinish', ChoiceType::class, [
+//                'preferred_choices' => ['None', null],
                 'required' => false,
                 'empty_data'=>null,
-                'expanded' => true,
+//                'expanded' => true,
                 'preferred_choices' => array(null),
 
                 'label' => $this->translator->trans('Year of finish'),

@@ -6,6 +6,7 @@ use App\Repository\FileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FileRepository::class)
@@ -40,12 +41,12 @@ class File
     private $timeData;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      */
     private $subtitle = [];
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=false)
      */
     private $audio = [];
 

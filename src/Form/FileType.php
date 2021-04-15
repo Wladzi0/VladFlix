@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 
 class FileType extends AbstractType
@@ -20,16 +21,21 @@ class FileType extends AbstractType
                 'required' => true,
             ))
             ->add('subtitle',ChoiceType::class,array(
-                'required' => true,
+                'required' => false,
                     'choices' => [
                         'English' => 'en',
                         'Polish' => 'pl',
                         'French' => 'fr',
                     ],
+                'constraints' => [
+                    new NotBlank()],
                 'multiple' => true,
                 'expanded' => true,))
             ->add('audio',ChoiceType::class,array(
                 'required' => true,
+                'empty_data' => false,
+                'constraints' => [
+                    new NotBlank()],
                 'choices' => [
                     'English' => 'en',
                     'Polish' => 'pl',
@@ -38,8 +44,6 @@ class FileType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ))
-//            ->add('save', SubmitType::class, ['label' => 'Add new film'])
-//            ->getForm()
         ;
     }
 

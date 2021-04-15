@@ -24,8 +24,6 @@ class Category
      */
     private $name;
 
-
-
     /**
      * @ORM\ManyToMany(targetEntity=Film::class, mappedBy="categories",cascade={"persist", "remove"})
      */

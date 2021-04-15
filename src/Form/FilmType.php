@@ -50,6 +50,7 @@ class FilmType extends AbstractType
                 ],])
             ->add('categories', EntityType::class, [
                 'required' => true,
+//                'empty_data' => false,
                 'label' => $this->translator->trans('Categories'),
                 'class' => Category::class,
                 'multiple' => true,
