@@ -23,6 +23,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,6 +61,8 @@ class AdminController extends AbstractController
 
         if ($formFilm->isSubmitted() && $formFilm->isValid()) {
             //            $year=$formFile['audio']->setData('asdfasdf');
+            $film = $formFilm->getData();
+            $file = $formFile->getData();
             $categories=$formFilm['categories']->getData();
             $audio=$formFile['audio']->getData();
             if((0 === count($categories)) || (empty($audio))){
@@ -70,15 +73,18 @@ class AdminController extends AbstractController
                     $message='You forgot to select a audio';
 
             }
+
                 $request->getSession()
                     ->getFlashBag()
                     ->add('danger', $message);
-//                return $this->redirectToRoute($request->get('_route'), $request->query->all());
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
+                return $this->render('admin/add_or_edit_film.html.twig', [
+                        'formFilm' => $formFilm->createView(),
+                        'filmAction' => 'Add new film',
+                        'formFile' => $formFile->createView()
+                    ]
+                );
             }
-            $film = $formFilm->getData();
-            $file = $formFile->getData();
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
             $film->setFile($file);
@@ -116,8 +122,11 @@ class AdminController extends AbstractController
                 $request->getSession()
                     ->getFlashBag()
                     ->add('danger', 'You forgot to select a category');
-            $referer = $request->headers->get('referer');
-            return new RedirectResponse($referer);
+                return $this->render('admin/adding_of_serial/add_or_edit_serial.html.twig', [
+                        'edit' => false,
+                        'formSerial' => $formSerial->createView()
+                    ]
+                );
         }
             $serial = $formSerial->getData();
 
@@ -192,8 +201,13 @@ class AdminController extends AbstractController
                 $request->getSession()
                     ->getFlashBag()
                     ->add('danger', 'You forgot to select a audio');
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
+                return $this->render('admin/adding_of_serial/add_or_edit_episode_file.html.twig', [
+                        'formEpisodeFile' => $formEpisode->createView(),
+                        'formFile' => $formFile->createView(),
+                        'serial' => $serialId,
+                        'edit' => false,
+                    ]
+                );
             }
             $file = $formFile->getData();
             $em = $this->getDoctrine()->getManager();

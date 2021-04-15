@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Film;
 use App\Repository\CategoryRepository;
 use App\Repository\FileRepository;
 use App\Repository\FilmRepository;
