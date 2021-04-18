@@ -46,7 +46,7 @@ class Film
     private $ageCategory;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="films",cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="films")
      */
     private $categories;
 
