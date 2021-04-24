@@ -68,6 +68,7 @@
                 </div>
                 <div class="stopwatch d-flex flex-row mb-4">
                     <input type="hidden" id="js-cur-time" data-start-time="{{ curVideoData}}">
+                    <input type="hidden" id="js-duration-time" data-duration-time="{{ filmData.file.duration|date('H:i:s')}}">
                     <div class="controls mr-2">
                         <button class="fas fa-play start " id="start"></button>
 
