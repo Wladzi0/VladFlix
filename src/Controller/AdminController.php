@@ -84,7 +84,15 @@ class AdminController extends AbstractController
                     ]
                 );
             }
-
+            $timeArray=[
+                '00:05:55',
+                '01:04:51',
+                '03:11:11',
+                '00:59:23'
+            ];
+            $random = array_rand($timeArray);
+            $randomTime = (\DateTime::createFromFormat('H:i:s', $timeArray[$random]));
+            $file->setDuration($randomTime);
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);
             $film->setFile($file);
@@ -209,6 +217,16 @@ class AdminController extends AbstractController
                     ]
                 );
             }
+            $timeArray=[
+                '00:55:55',
+                '00:49:00',
+                '00:11:11',
+                '00:36:23'
+            ];
+            $random = array_rand($timeArray);
+            $randomTime = (\DateTime::createFromFormat('H:i:s', $timeArray[$random]));
+            $file->setDuration($randomTime);
+
             $file = $formFile->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($file);

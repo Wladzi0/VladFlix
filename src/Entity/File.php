@@ -50,6 +50,11 @@ class File
      */
     private $audio = [];
 
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $duration;
+
 
     public function __construct()
     {
@@ -172,5 +177,17 @@ public function __toString()
 {
 
  return $this->path;
+}
+
+public function getDuration(): ?\DateTimeInterface
+{
+    return $this->duration;
+}
+
+public function setDuration(\DateTimeInterface $duration): self
+{
+    $this->duration = $duration;
+
+    return $this;
 }
 }

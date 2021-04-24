@@ -20,13 +20,50 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
     public function findAllSerialsAndFilms()
     {
-        return $this->createQueryBuilder('c')
-            ->select('serial', 'film')
-            ->from('App:Serial', 'serial')
-            ->from('App:Film', 'film')
-            ->getQuery()
-            ->getResult();
+
+
+       $queryFilm= $this->_em->createQueryBuilder()
+        ->select('count(f) as count')
+        ->from('App\Entity\Film', 'f')
+        ->getQuery();
+       $querySerial= $this->_em->createQueryBuilder()
+            ->select('count(s) as count')
+            ->from('App\Entity\Serial', 's')
+            ->getQuery();
+
+       if($queryFilm->getSingleScalarResult() > "0" && $querySerial->getSingleScalarResult() > "0"){
+
+           return $this->_em->createQueryBuilder()
+               ->select('f','s')
+               ->from('App\Entity\Film', 'f')
+               ->from('App\Entity\Serial', 's')
+               ->getQuery()
+               ->getResult();
+       }
+        elseif ($queryFilm->getSingleScalarResult() === "0" ){
+
+            return $this->_em->createQueryBuilder()
+                ->select('s')
+                ->from('App\Entity\Serial', 's')
+                ->getQuery()
+                ->getResult();
+        }
+       elseif($querySerial->getSingleScalarResult() === "0" ){
+
+           return $this->_em->createQueryBuilder()
+               ->select('f')
+               ->from('App\Entity\Film', 'f')
+               ->getQuery()
+               ->getResult();
+       }
+
+
     }
+
 }

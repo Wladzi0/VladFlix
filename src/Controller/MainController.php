@@ -43,12 +43,9 @@ class MainController extends AbstractController
         if (!$session->get('profileId')) {
             return $this->redirectToRoute('select_profile');
         }
-
-        $categories = $categoryRepository->findAll();
         $allSerialsAndFilms = $categoryRepository->findallSerialsAndFilms();
 
         return $this->render('main_content/main_page.html.twig', [
-            'categories' => $categories,
             'allSerialsAndFilms' => $allSerialsAndFilms,
         ]);
     }
