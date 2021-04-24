@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let duration = new Date(0);
     let videoHistoryData;
     let time = new Date(0);
-    let data = [0o0, 0o0, 10, 0];
+    let durTime = document.querySelector('#js-duration-time').dataset.durationTime;
+    let splitDurTime=durTime.split(':');
+
     let serialId = document.querySelector('#js-serialId').dataset.serialId;
     let seasonId = document.querySelector('#js-seasonId').dataset.seasonId;
     const paramsString = window.location.search;
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let episodeId = urlParams.get("episodeId");
 
 
-    duration.setUTCHours(data[0], data[1], data[2], data[3]);
+    duration.setUTCHours(splitDurTime[0], splitDurTime[1], splitDurTime[2],0);
     let start = document.getElementById('start');
     document.getElementById("max_time").innerHTML = duration.toUTCString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
 
