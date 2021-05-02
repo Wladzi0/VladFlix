@@ -3,7 +3,7 @@ $(document).ready(function () {
         let preferredSubtitles = $(this).val();
         let subtitles = $.ajax({
             type: "POST",
-            url: "/profile-preferences",
+            url: "/profile/preferences",
             data: {
                 'subtitles': preferredSubtitles
             },

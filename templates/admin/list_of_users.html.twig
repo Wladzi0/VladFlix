@@ -1,20 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block title %}{% trans %}Users{% endtrans %}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
+
 {% block body %}
 
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message|trans }}
-            </div>
-        {% endfor %}
-    {% endfor %}
     <div class="container mt-4">
         <a style="text-decoration: none" class=" btn pl-4 mt-4 bg-light col-3 mr-3" href="{{ path('select_profile') }}">
             {% trans %}Back to selection of profile{% endtrans %}

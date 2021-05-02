@@ -1,22 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ serial.name|trans }}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
 
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
+
 {% block body %}
 
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message|trans }}
-            </div>
-        {% endfor %}
-    {% endfor %}
     <a href="{{ path('admin') }}" class="btn  btn-info  float-left mr-5" >
         {% trans %}Back to Admin panel{% endtrans %}
     </a>
@@ -48,7 +36,6 @@
                         <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serial.yearStart }}
                         </p>
                     {% endif %}
-                    {% set count = 0 %}
                         {% for season in serial.season  %}
                             <div class="border mb-2">
                             <h4 style="color: #000000">{{ season.name|trans }} ({{ season.episode|length }})
@@ -62,7 +49,8 @@
                                 <br>
                                 {% for episode in season.episode  %}
 
-                                <p class="float-left mr-4" style="color: #000000">{% set count=count+1 %}{{ count }}) {{ episode.name|trans }}
+                                <p class="float-left mr-4" style="color: #000000">
+                                    {{ loop.index }}) {{ episode.name|trans }}
                                 </p>
                                     <p class="float-left  mr-4" style="color: #000000">{{ episode.file }}
                                     </p>

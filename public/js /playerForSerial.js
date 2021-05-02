@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         $.ajax({
             type: "POST",
-            url: "/time-data-file-saving",
+            url: "/file/time-data/saving",
             data: {
                 'isSerial': isSerial,
                 'filmOrEpisodeId': episodeId,

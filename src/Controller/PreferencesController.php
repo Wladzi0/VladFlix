@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PreferencesController extends AbstractController
 {
     /**
-     * @Route("/profile-preferences", name="profilePreferences")
+     * @Route("/profile/preferences", name="profilePreferences")
      */
     public function index(SessionInterface $session, Request $request, ProfileRepository $profileRepository)
     {

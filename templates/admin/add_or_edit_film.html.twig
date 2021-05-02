@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{filmAction|trans}}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
+
 {% block javascripts %}
     <script src="{{ asset('js /formSerialize.js') }}"></script>
     {{ parent() }}
@@ -17,13 +15,7 @@
             {% endfor %}
         </ul>
     {% endif %}
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message|trans }}
-            </div>
-        {% endfor %}
-    {% endfor %}
+
     <div class="container col-5">
         <h1>{{filmAction|trans}}</h1>
         {{ form_start(formFilm, {'attr': {'class': 'form-horizontal', 'id':'addFormFilm'}}) }}
@@ -38,21 +30,18 @@
         {{ form_widget(formFilm.ageCategory, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
         {{ form_label(formFilm.categories) }}<br>
         {{ form_widget(formFilm.categories, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
-
-
-        {{ form_start(formFile) }}
-        {{ form_label(formFile.path) }}<br>
-        {{ form_widget(formFile.path, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
-        {{ form_label(formFile.subtitle) }}<br>
-        {{ form_widget(formFile.subtitle, {'attr': {'class': 'form-control'}}) }}<br>
-        {{ form_label(formFile.audio) }}<br>
-        {{ form_widget(formFile.audio, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formFilm.file.path) }}<br>
+        {{ form_widget(formFilm.file.path, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formFilm.file.subtitle) }}<br>
+        {{ form_widget(formFilm.file.subtitle, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formFilm.file.audio) }}<br>
+        {{ form_widget(formFilm.file.audio, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
 
         <button class="btn  btn-success" type="submit">
             {{filmAction|trans}}
         </button>
         {{ form_end(formFilm) }}
-        {{ form_end(formFile) }}
+
 
 
     </div>

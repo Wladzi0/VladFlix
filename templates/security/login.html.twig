@@ -1,24 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block title %}{% trans %}Login {% endtrans %}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
-
 {% block body %}<br>
     <div class="container col-3"><br>
         <form class="form " method="post"><br>
 
-            {% for type, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="alert-{{ type }}" role="alert">
-                        {{ message|trans }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
             {% if error %}
                 <div class="alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}

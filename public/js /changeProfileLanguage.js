@@ -3,7 +3,7 @@ $(document).ready(function () {
         let interfaceLanguage = $(this).val();
         let language = $.ajax({
             type: "POST",
-            url: "/change-profile-language",
+            url: "/profile/change/language",
             data: {
                 'interfaceLanguage': interfaceLanguage
             },

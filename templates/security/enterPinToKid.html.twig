@@ -1,13 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{% trans %}Enter PIN{% endtrans %}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
 
 {% block body %}<br>
     {% if profile %}
@@ -25,7 +18,7 @@
         </form>
     {% endif %}
     <div class="container d-flex col-3">
-        <button class="btn registration " onclick="window.location.href='/select-profile'">
+        <button class="btn registration " onclick="window.location.href='/profile/select'">
             {% trans %}Back to profile selection {% endtrans %}
         </button>
     </div>

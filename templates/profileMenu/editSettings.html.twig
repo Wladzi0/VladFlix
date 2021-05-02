@@ -1,12 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} {% trans %}Edit profile settings {% endtrans %}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
+
 {% block body %}
 
     <div class="container"><br>
@@ -37,7 +32,7 @@
             </button>
             {{ form_end(profileForm) }}
             <hr>
-            <button class="btn btn-info" onclick="window.location.href='/profile-menu'">
+            <button class="btn btn-info" onclick="window.location.href='/profile/menu'">
                 {% trans %}  Back to menu {% endtrans %}</button>
         </div>
     </div>

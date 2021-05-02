@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SerialController extends AbstractController
 {
     /**
-     * @Route("/all-serials-from-category/{category}", name="all_serials_from_category")
+     * @Route("/serials/from/category/{category}", name="all_serials_from_category")
      */
     public function AllSerialsFromCategory(Request $request, CategoryRepository $categoryRepository, SerialRepository $serialRepository)
     {
@@ -66,16 +66,16 @@ class SerialController extends AbstractController
     }
 
     /**
-     * @Route ("/serial/{serialId}/all-episodes-of-season/{seasonId}", name="all_episodes_of_season")
+     * @Route ("/serial/{serialId}/season/{seasonId}/episodes", name="all_episodes_of_season")
      */
     public function showEpisodes(SessionInterface $session, Request $request, SeasonRepository $seasonRepository, EpisodeRepository $episodeRepository, SerialRepository $serialRepository)
     {
         $seasonId = $request->get('seasonId');
         $serial = $serialRepository->findSerialBySeason($seasonId);
-        $dataToCheck = array(
+        $dataToCheck = [
             'profileAgeCategory' => $session->get('age'),
             'contentAgeCategory' => $serial->getAgeCategory()
-        );
+        ];
         if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
             $request->getSession()
                 ->getFlashBag()
@@ -102,10 +102,10 @@ class SerialController extends AbstractController
         $episodeId = $request->get('episodeId');
         $seasonId = $request->get('seasonId');
         $serial = $serialRepository->find($request->get('serialId'));
-        $dataToCheck = array(
+        $dataToCheck = [
             'profileAgeCategory' => $session->get('age'),
             'contentAgeCategory' => $serial->getAgeCategory()
-        );
+        ];
         if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
             $request->getSession()
                 ->getFlashBag()

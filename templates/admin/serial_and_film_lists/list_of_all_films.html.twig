@@ -1,11 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}{% trans %}Films{% endtrans %}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
+
 {% block body %}
 
     {% for type, messages in app.session.flashbag.all() %}

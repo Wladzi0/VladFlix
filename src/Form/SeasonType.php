@@ -21,10 +21,10 @@ class SeasonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'required' => true,
                 'label' => $this->translator->trans('Name of season'),
-            ))
+            ])
 
             ->add('year',ChoiceType::class, [
                 'empty_data' => null,

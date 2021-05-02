@@ -28,7 +28,7 @@ class FilmController extends AbstractController
         $this->startVideoLogger=$startVideoLogger;
     }
     /**
-     * @Route("/all-films-from-category/{category}", name="all_films_from_category")
+     * @Route("/films/all/from/category/{category}", name="all_films_from_category")
      */
     public function AllFilmsFromCategory(Request $request, CategoryRepository $categoryRepository, FilmRepository $filmRepository)
     {
@@ -63,10 +63,10 @@ class FilmController extends AbstractController
             $curVideoData = $videoData->getCurTime();
         }
         $filmData = $filmRepository->find($filmRequest);
-        $dataToCheck = array(
+        $dataToCheck = [
             'profileAgeCategory' => $profile->getAge(),
             'contentAgeCategory' => $filmData->getAgeCategory()
-        );
+        ];
         if (!$this->isGranted("SHOW_ACCESS", $dataToCheck)) {
             $request->getSession()
                 ->getFlashBag()
@@ -84,7 +84,7 @@ class FilmController extends AbstractController
     }
 
     /**
-     * @Route("/log-start-video", name="startVideo")
+     * @Route("/video/start/log", name="start_video")
      */
     public function filmLog(Request $request,FilmRepository $filmRepository, SessionInterface $session): Response
     {

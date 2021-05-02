@@ -79,6 +79,9 @@ class Profile
 
     public function __construct()
     {
+        $this->interfaceLanguage= 'en';
+        $this->preferredLanguage= 'en';
+        $this->preferredAudio= 'en';
         $this->timeData = new ArrayCollection();
     }
 

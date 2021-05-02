@@ -22,7 +22,7 @@ class ChoicePageController extends AbstractController
 
 
     /**
-     * @Route("/select-profile", name="select_profile")
+     * @Route("/profile/select", name="select_profile")
      */
     public function index(UserInterface $user, ProfileRepository $profileRepository): Response
     {
@@ -33,7 +33,7 @@ class ChoicePageController extends AbstractController
     }
 
     /**
-     * @Route("/addProfile", name="add_profile")
+     * @Route("/profile/add", name="add_profile")
      */
     public function addProfile(Request $request, UserInterface $user, ProfileRepository $profileRepository): Response
     {
@@ -116,10 +116,6 @@ class ChoicePageController extends AbstractController
                     $randomColor = 'rgb(' . $colorArray[$random] . ')';
                 }
             }
-
-            $profile->setInterfaceLanguage("en");
-            $profile->setPreferredLanguage("en");
-            $profile->setPreferredAudio("en");
             $profile->setProfilePin($profilePin);
             $profile->setBackgroundColor($randomColor);
 
@@ -142,7 +138,7 @@ class ChoicePageController extends AbstractController
     }
 
     /**
-     * @Route("/enterPin", name="enter_pin", methods={"GET", "POST"})
+     * @Route("/pin/enter", name="enter_pin", methods={"GET", "POST"})
      */
     public function enterPin( Request $request, ProfileRepository $profileRepository): Response
     {
@@ -155,7 +151,7 @@ class ChoicePageController extends AbstractController
         $profile = $profileRepository->find($profileId);
         if ($profile->getAge() === null) {
 
-            return $this->redirectToRoute('check_sub_pin', array('profile' => $profileId));
+            return $this->redirectToRoute('check_sub_pin', ['profile' => $profileId]);
 
         } else {
             return $this->render('security/enterPinSub.html.twig', [
@@ -166,7 +162,7 @@ class ChoicePageController extends AbstractController
 
 
     /**
-     * @Route("/check-pin", name="check_sub_pin")
+     * @Route("/pin/check", name="check_sub_pin")
      */
     public function checkSubPin(Request $request, ProfileRepository $profileRepository, SessionInterface $session): RedirectResponse
     {
@@ -180,9 +176,9 @@ class ChoicePageController extends AbstractController
         $profileDB = $profileRepository->find($profile);
         $profilePin = $profileDB->getProfilePin();
         if ($profilePin === null) {
-            $requestedData = array(
+            $requestedData = [
                 'enteredPin' => null,
-                'profilePin' => $profilePin);
+                'profilePin' => $profilePin];
 
         } else {
             if (!$pin || !$profile) {
@@ -192,9 +188,9 @@ class ChoicePageController extends AbstractController
                 return $this->redirectToRoute('select_profile');
             } else {
 
-                $requestedData = array(
+                $requestedData = [
                     'enteredPin' => $pin,
-                    'profilePin' => $profilePin);
+                    'profilePin' => $profilePin];
             }
 
         }
@@ -214,7 +210,7 @@ class ChoicePageController extends AbstractController
     }
 
     /**
-     * @Route("/forgot-profile", name="forgot_profile")
+     * @Route("/profile/forgot", name="forgot_profile")
      */
     public function changeProfile(SessionInterface $session): RedirectResponse
     {

@@ -6,9 +6,6 @@ namespace App\Controller;
 use App\Repository\CategoryRepository;
 use App\Repository\FilmRepository;
 use App\Repository\SerialRepository;
-use Monolog\Handler\FirePHPHandler;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,7 +49,7 @@ class MainController extends AbstractController
 
 
     /**
-     * @Route("/all-Films-Serials", name="all_films_serials")
+     * @Route("/films-serials/all", name="all_films_serials")
      */
     public function allFilms(CategoryRepository $categoryRepository, SessionInterface $session, Request $request, FilmRepository $filmRepository, SerialRepository $serialRepository): Response
     {
@@ -79,7 +76,7 @@ class MainController extends AbstractController
         }
     }
     /**
-     * @Route ("/change-user-language", name="change_user_language")
+     * @Route ("/user/change/language", name="change_user_language")
      */
     public function changeUserLanguage(Request $request, Session $session): RedirectResponse
     {

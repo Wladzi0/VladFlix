@@ -6,13 +6,7 @@
           {% trans %}Add new season{% endtrans %}
       {% endif %}
 {% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
 
-{% endblock %}
 {% block body %}
     {% set formErrors = formSeason.vars.errors.form.getErrors(true) %}
     {% if formErrors | length %}
@@ -23,13 +17,6 @@
             {% endfor %}
         </ul>
     {% endif %}
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message|trans }}
-            </div>
-        {% endfor %}
-    {% endfor %}
         <div class="container col-5">
 
             {% if edit is same as (true) %}

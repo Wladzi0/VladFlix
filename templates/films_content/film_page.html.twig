@@ -1,10 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ filmData.name|trans }}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-
-{% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js /profileSubtitles.js') }}"></script>
@@ -13,13 +9,6 @@
 {% endblock %}
 {% block body %}
 
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message|trans }}
-            </div>
-        {% endfor %}
-    {% endfor %}
     {% include 'navigation.html.twig' %}
 
     <div class="container flex-column d-flex pt-5">
@@ -74,7 +63,7 @@
 
                     </div>
                     <span class="bg-info mr-2" id="current_time">00:00:00</span>
-                    <input class="mr-2 ml-2" style="width: 700px; " type="range" min="0"  value="0" id="duration_slider">
+                    <input class="mr-2 ml-2" style="width: 700px; " type="range" step="1" min="0" max="0" value="0" onchange="position()" id="duration_slider">
                     <span class="bg-dark" id="max_time">00:00:00</span>
 
 

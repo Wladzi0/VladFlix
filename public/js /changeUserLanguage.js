@@ -3,7 +3,7 @@ $(document).ready(function () {
         let userLanguage = $(this).val();
         let language = $.ajax({
             type: "POST",
-            url: "/change-user-language",
+            url: "/user/change/language",
             data: {
                 'userLanguage': userLanguage
             },

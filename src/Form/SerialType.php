@@ -25,23 +25,21 @@ class SerialType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'required' => true,
                 'label' => $this->translator->trans('Name of serial'),
-            ))
-            ->add('country', CountryType::class, array(
+            ])
+            ->add('country', CountryType::class, [
                 'required' => true,
                 'label' => $this->translator->trans('Country'),
-            ))
+            ])
             ->add('yearStart', ChoiceType::class, [
                 'required' => true,
                 'label' => $this->translator->trans('Year of production'),
                 'choices' => $this->getYears(1950)])
             ->add('yearFinish', ChoiceType::class, [
-//                'preferred_choices' => ['None', null],
                 'required' => false,
                 'empty_data'=>null,
-//                'expanded' => true,
                 'preferred_choices' => array(null),
 
                 'label' => $this->translator->trans('Year of finish'),

@@ -6,10 +6,7 @@ use App\Entity\File;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -20,10 +17,10 @@ class FileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('path', TextType::class,array(
+            ->add('path', TextType::class,[
                 'required' => true,
-            ))
-            ->add('subtitle',ChoiceType::class,array(
+            ])
+            ->add('subtitle',ChoiceType::class,[
                 'required' => false,
                     'choices' => [
                         'English' => 'en',
@@ -33,12 +30,9 @@ class FileType extends AbstractType
                 'constraints' => [
                     new NotBlank()],
                 'multiple' => true,
-                'expanded' => true,))
-            ->add('audio',ChoiceType::class,array(
+                'expanded' => true,])
+            ->add('audio',ChoiceType::class,[
                 'required' => true,
-                'empty_data' => false,
-                'constraints' => [
-                    new NotBlank()],
                 'choices' => [
                     'English' => 'en',
                     'Polish' => 'pl',
@@ -46,18 +40,7 @@ class FileType extends AbstractType
                 ],
                 'multiple' => true,
                 'expanded' => true,
-            ))
-//            ->add('duration',DateIntervalType::class, [
-//                'with_years'  => false,
-//                'with_months' => false,
-//                'with_days'   => false,
-//                'with_hours'  => true,
-//                'with_minutes'  => true,
-//                'with_seconds'  => true,
-//                'hours' => range(0, 23),
-//                'minutes' => range(0, 59),
-//                'seconds' => range(0, 59),
-//            ])
+            ])
             ;
     }
 

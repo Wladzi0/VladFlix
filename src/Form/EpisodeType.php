@@ -28,10 +28,10 @@ class EpisodeType extends AbstractType
     {
         $serialId = $options['bySerial'];
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'required' => true,
                 'label' => $this->translator->trans('Name of episode'),
-            ))
+            ])
             ->add('year', ChoiceType::class, [
                 'empty_data' => null,
                 'required' => false,
@@ -44,7 +44,8 @@ class EpisodeType extends AbstractType
                     'choices' => $this->seasonRepository->findBySerial($serialId)
 
                 ]
-            );
+            )
+            ->add('file',FileType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

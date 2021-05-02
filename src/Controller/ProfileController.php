@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route ("/profile-menu", name="profile_menu")
+     * @Route ("/profile/menu", name="profile_menu")
      */
     public function profileMenu(SessionInterface $session, ProfileRepository $profileRepository)
     {
@@ -34,7 +34,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/edit-profile-settings", name="edit_profile_settings")
+     * @Route("/profile/settings/edit", name="edit_profile_settings")
      */
     public function editSettings(SessionInterface $session, Request $request, ProfileRepository $profileRepository)
     {
@@ -62,7 +62,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/change-profile-language",name="change_profile_language")
+     * @Route("/profile/change/language",name="change_profile_language")
      */
     public function changeProfileLanguage(SessionInterface $session, Request $request, ProfileRepository $profileRepository): RedirectResponse
     {

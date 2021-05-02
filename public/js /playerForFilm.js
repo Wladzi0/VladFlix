@@ -8,9 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const paramsString = window.location.search;
     const urlParams = new URLSearchParams(paramsString);
     const filmId = urlParams.get("filmId");
-    let durTime = document.querySelector('#js-duration-time').dataset.durationTime;
-    let splitDurTime=durTime.split(':');
-    duration.setUTCHours(splitDurTime[0], splitDurTime[1], splitDurTime[2],0);
+
+    duration.setUTCHours(data[0], data[1], data[2], data[3]);
     let start = document.getElementById('start');
     document.getElementById("max_time").innerHTML = duration.toUTCString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
 
@@ -30,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function startTime() {
         $.ajax({
             type: "POST",
-            url: "/log-start-video",
+            url: "/video/start/log",
             data: {
                 'filmId': filmId
             },
@@ -92,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         $.ajax({
             type: "POST",
-            url: "/time-data-file-saving",
+            url: "/file/time-data/saving",
             data: {
                 'isSerial': isSerial,
                 'filmOrEpisodeId': filmId,

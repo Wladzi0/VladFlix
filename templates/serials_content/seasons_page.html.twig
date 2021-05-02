@@ -1,21 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{% trans %}All seasons from{% endtrans %}{{ serial.name|trans }}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
+
 {% block body %}
 
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
     {% include 'navigation.html.twig' %}
 
     <div class="container flex-column d-flex pt-5">

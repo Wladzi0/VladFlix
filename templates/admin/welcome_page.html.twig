@@ -1,20 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block title %}{% trans %}Welcome Admin {% endtrans %}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
+
 {% block body %}
 
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message|trans }}
-            </div>
-        {% endfor %}
-    {% endfor %}
     <div class=" ">
         <a style="text-decoration: none" class=" ml-4 btn pl-4 mt-4 bg-light col-2 mr-3"
            href="{{ path('select_profile') }}">

@@ -1,21 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Main page{% endtrans %}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
+{% block title %}
+    {{  'Main page'|trans}}
 {% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
+
 {% block body %}
 
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message|trans }}
-            </div>
-        {% endfor %}
-    {% endfor %}
     {% include 'navigation.html.twig' %}
     <div class="container mt-5  ">
         {% set sessionAge = app.session.get('age') %}
@@ -32,16 +22,16 @@
                                         src="{{ asset('images/defaultImage.png') }}"/></a>
                         {% endif %}
                         <div class="card pl-3 pt-3" style="width: 100%">
-                            <p style="color: #000000">{% trans %}Name{% endtrans %}: {{ serialOrFilm.name|trans }}
+                            <p style="color: #000000">{{ 'Name'|trans }}: {{ serialOrFilm.name|trans }}
                             </p>
-                            <p style="color: #000000">{% trans %}Country{% endtrans %}: {{ serialOrFilm.country|trans }}
+                            <p style="color: #000000">{{ 'Country'|trans }}: {{ serialOrFilm.country|trans }}
                             </p>
                             {% if serialOrFilm.yearStart  is defined %}
                                 {% if serialOrFilm.yearFinish is defined %}
-                                    <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serialOrFilm.yearStart }}
+                                    <p style="color: #000000">{{ 'Year'|trans }}: {{ serialOrFilm.yearStart }}
                                         - {{ serialOrFilm.yearFinish }}  </p>
                                 {% else %}
-                                    <p style="color: #000000">{% trans %}Year{% endtrans %}: {{ serialOrFilm.yearStart}}
+                                    <p style="color: #000000">{{ 'Year'|trans }}: {{ serialOrFilm.yearStart}}
                                     </p>
                                 {% endif %}
                             {% else %}

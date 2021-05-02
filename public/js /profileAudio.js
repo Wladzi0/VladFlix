@@ -3,7 +3,7 @@ $(document).ready(function () {
         let preferredAudio = $(this).val();
         let audio = $.ajax({
             type: "POST",
-            url: "/profile-preferences",
+            url: "/profile/preferences",
             data: {
                 'audio': preferredAudio
             },

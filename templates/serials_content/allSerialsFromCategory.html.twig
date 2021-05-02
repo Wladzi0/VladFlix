@@ -1,21 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{% trans %}All serials from {% endtrans %} "{{ category.name|trans }}"{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
-{% block body %}
 
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message|trans }}
-            </div>
-        {% endfor %}
-    {% endfor %}
+{% block body %}
     {% include 'navigation.html.twig' %}
     <div class="row col-2 bg-light mt-5" style="float:left">
         {% for category in categories %}

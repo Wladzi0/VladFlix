@@ -26,14 +26,14 @@ class FilmType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
+            ->add('name', TextType::class, [
                 'required' => true,
                 'label' => $this->translator->trans('Name of film'),
-            ))
-            ->add('country', CountryType::class, array(
+            ])
+            ->add('country', CountryType::class, [
                 'required' => true,
                 'label' => $this->translator->trans('Country'),
-            ))
+            ])
             ->add('year', ChoiceType::class, [
                 'required' => true,
                 'empty_data' => null,
@@ -50,12 +50,12 @@ class FilmType extends AbstractType
                 ],])
             ->add('categories', EntityType::class, [
                 'required' => true,
-//                'empty_data' => false,
                 'label' => $this->translator->trans('Categories'),
                 'class' => Category::class,
                 'multiple' => true,
                 'expanded' => true,
-            ]);
+            ])
+        ->add('file',FileType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -6,12 +6,6 @@
         {% trans %}Additing of episode{% endtrans %}
     {% endif %}
 {% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
 {% block body %}
     {% set formErrors = formEpisodeFile.vars.errors.form.getErrors(true) %}
     {% if formErrors | length %}
@@ -22,13 +16,6 @@
             {% endfor %}
         </ul>
     {% endif %}
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert-{{ type }}" role="alert">
-                {{ message|trans }}
-            </div>
-        {% endfor %}
-    {% endfor %}
     <div class="container col-5">
         {% if edit is same as (true) %}
             <h2>  {% trans %}Edit episode{% endtrans %}</h2>
@@ -42,15 +29,12 @@
         {{ form_widget(formEpisodeFile.year, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
         {{ form_label(formEpisodeFile.season) }}<br>
         {{ form_widget(formEpisodeFile.season, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
-
-        {{ form_start(formFile) }}
-        {{ form_label(formFile.path) }}<br>
-        {{ form_widget(formFile.path, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
-        {{ form_label(formFile.subtitle) }}<br>
-        {{ form_widget(formFile.subtitle, {'attr': {'class': 'form-control'}}) }}<br>
-        {{ form_label(formFile.audio) }}<br>
-        {{ form_widget(formFile.audio, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
-
+        {{ form_label(formEpisodeFile.file.path) }}<br>
+        {{ form_widget(formEpisodeFile.file.path, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formEpisodeFile.file.subtitle) }}<br>
+        {{ form_widget(formEpisodeFile.file.subtitle, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
+        {{ form_label(formEpisodeFile.file.audio) }}<br>
+        {{ form_widget(formEpisodeFile.file.audio, {'attr': {'class': 'form-control', 'required': 'true'}}) }}<br>
 
         {% if edit is same as (true) %}
             <button class="btn  btn-success float-left mr-5 "  id="add_season" type="submit">
@@ -62,7 +46,7 @@
             </button>
         {% endif %}
         {{ form_end(formEpisodeFile) }}
-        {{ form_end(formFile) }}
+
         <a href="{{ path('admin') }}" class="btn  btn-info  float-left mr-5" >
             {% trans %}Back to Admin panel{% endtrans %}
         </a>
